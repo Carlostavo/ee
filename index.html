@@ -195,6 +195,7 @@
     gap:18px;
     align-items:flex-start;
     transition:transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
   }
   .card:hover{transform:translateY(-5px);box-shadow:0 12px 20px rgba(0,0,0,0.1)}
   .card-icon {
@@ -215,6 +216,18 @@
   .card-content{display:flex;flex-direction:column;gap:6px;}
   .card-title{font-weight:700;font-size:1.2rem; margin: 0;}
   .card-desc{font-size:1rem;color:var(--muted); margin: 0;}
+
+  /* New style for disabled cards */
+  .card.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #f1f5f9;
+  }
+  .card.disabled:hover {
+    transform: none;
+    box-shadow: var(--shadow);
+  }
 
   /* Auth modal */
   .modal{position:fixed;inset:0;background:rgba(2,6,23,.55);display:none;align-items:center;justify-content:center;z-index:50}
@@ -559,14 +572,23 @@
   navLinks.forEach(link => {
       link.addEventListener('click', (e) => {
           e.preventDefault();
-          navLinks.forEach(l => l.classList.remove('active'));
-          link.classList.add('active');
-          
           const pageName = link.dataset.page;
-          savePageContent();
-          loadPageContent(pageName);
+          navigateToPage(pageName);
       });
   });
+
+  function navigateToPage(pageName) {
+    if (currentPage === pageName) return;
+
+    savePageContent();
+    loadPageContent(pageName);
+    
+    navLinks.forEach(l => l.classList.remove('active'));
+    const newActiveLink = qs(`[data-page="${pageName}"]`);
+    if (newActiveLink) {
+      newActiveLink.classList.add('active');
+    }
+  }
 
   function loadPageContent(pageName) {
       currentPage = pageName;
@@ -588,11 +610,11 @@
               title: "Sistema de Gestión de Residuos Sólidos",
               subtitle: "La plataforma para monitorear indicadores, gestionar metas y generar reportes para una gestión ambiental eficiente.",
               cards: [
-                  { title: "Gestión de Metas", desc: "Establece y sigue tus objetivos de sostenibilidad de manera intuitiva.", icon: "fa-bullseye", color: "#38a169", class: "metas" },
-                  { title: "Dashboard de Indicadores", desc: "Visualiza en tiempo real el rendimiento del sistema de gestión.", icon: "fa-chart-line", color: "#4299e1", class: "indicadores" },
-                  { title: "Seguimiento de Avances", desc: "Revisa el progreso de tus proyectos de reciclaje y reducción de residuos.", icon: "fa-chart-area", color: "#ecc94b", class: "avances" },
-                  { title: "Generación de Reportes", desc: "Crea y exporta informes detallados para auditorías o análisis.", icon: "fa-file-lines", color: "#e53e3e", class: "reportes" },
-                  { title: "Formularios de Datos", desc: "Ingresa y gestiona datos a través de formularios personalizados.", icon: "fa-file-alt", color: "#673ab7", class: "formularios" },
+                  { title: "Gestión de Metas", desc: "Establece y sigue tus objetivos de sostenibilidad de manera intuitiva.", icon: "fa-bullseye", color: "#38a169", class: "metas", page: "metas", disabled: true },
+                  { title: "Dashboard de Indicadores", desc: "Visualiza en tiempo real el rendimiento del sistema de gestión.", icon: "fa-chart-line", color: "#4299e1", class: "indicadores", page: "indicadores", disabled: false },
+                  { title: "Seguimiento de Avances", desc: "Revisa el progreso de tus proyectos de reciclaje y reducción de residuos.", icon: "fa-chart-area", color: "#ecc94b", class: "avances", page: "avances", disabled: true },
+                  { title: "Generación de Reportes", desc: "Crea y exporta informes detallados para auditorías o análisis.", icon: "fa-file-lines", color: "#e53e3e", class: "reportes", page: "reportes", disabled: true },
+                  { title: "Formularios de Datos", desc: "Ingresa y gestiona datos a través de formularios personalizados.", icon: "fa-file-alt", color: "#673ab7", class: "formularios", page: "formularios", disabled: false },
               ]
           },
           indicadores: {
@@ -651,8 +673,12 @@
       let cardHTML = '';
       if (data && data.cards) {
           data.cards.forEach(card => {
+              const isDisabled = card.disabled;
+              const cardClass = `card ${card.class} ${isDisabled ? 'disabled' : ''}`;
+              const dataAttr = isDisabled ? `data-disabled-message="Acceso denegado. Esta función no está disponible en este momento."` : '';
+
               cardHTML += `
-              <div class="card ${card.class}">
+              <div class="${cardClass}" data-page="${card.page || ''}" ${dataAttr}>
                   <div class="card-icon" style="background:${card.color};"><i class="fa-solid ${card.icon}"></i></div>
                   <div class="card-content">
                       <div class="card-title editable-text">${card.title}</div>
@@ -1115,7 +1141,23 @@
   
   // New event listener for home page elements
   canvas.addEventListener('click', (e) => {
-    if (!editMode) return;
+    if (!editMode) {
+      const card = e.target.closest('.card');
+      if (card) {
+          if (card.classList.contains('disabled')) {
+              e.preventDefault();
+              const message = card.dataset.disabledMessage || "Acceso denegado.";
+              alert(message);
+              return;
+          }
+          if (card.dataset.page) {
+              e.preventDefault();
+              navigateToPage(card.dataset.page);
+              return;
+          }
+      }
+    }
+
     let target = e.target;
     let selectableElement = target.closest('.selectable, .editable-text, .hero, .card');
 
