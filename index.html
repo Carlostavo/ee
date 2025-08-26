@@ -210,6 +210,7 @@
   .card.indicadores .card-icon { background: #4299e1; }
   .card.avances .card-icon { background: #ecc94b; }
   .card.reportes .card-icon { background: #e53e3e; }
+  .card.formularios .card-icon { background: #673ab7; }
 
   .card-content{display:flex;flex-direction:column;gap:6px;}
   .card-title{font-weight:700;font-size:1.2rem; margin: 0;}
@@ -273,6 +274,59 @@
       padding: 2px;
   }
 
+
+/* ================= RESPONSIVE DESIGN ================= */
+@media (max-width: 768px) {
+  /* Topbar */
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .nav {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Sidebar -> se vuelve un panel inferior */
+  .wrap.edit-active {
+    grid-template-columns: 1fr; /* en móvil no mostrar 2 columnas */
+  }
+  .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50vh;
+    z-index: 100;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -6px 20px rgba(0,0,0,0.2);
+  }
+
+  /* Hero */
+  .hero {
+    padding: 30px 16px;
+  }
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  .hero p {
+    font-size: 1rem;
+  }
+
+  /* Cards -> 1 por fila */
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Canvas */
+  .canvas {
+    padding: 10px;
+    min-height: 60vh;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -285,6 +339,7 @@
     <a href="#" class="nav-link disabled" data-page="metas">Metas</a>
     <a href="#" class="nav-link disabled" data-page="avances">Avances</a>
     <a href="#" class="nav-link disabled" data-page="reportes">Reportes</a>
+    <a href="#" class="nav-link" data-page="formularios">Formularios</a>
     <button id="toggle-edit"><i class="fa-solid fa-pen-to-square"></i> Modo edición</button>
     <button id="open-auth"><i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión</button>
     <button id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
@@ -537,6 +592,7 @@
                   { title: "Dashboard de Indicadores", desc: "Visualiza en tiempo real el rendimiento del sistema de gestión.", icon: "fa-chart-line", color: "#4299e1", class: "indicadores" },
                   { title: "Seguimiento de Avances", desc: "Revisa el progreso de tus proyectos de reciclaje y reducción de residuos.", icon: "fa-chart-area", color: "#ecc94b", class: "avances" },
                   { title: "Generación de Reportes", desc: "Crea y exporta informes detallados para auditorías o análisis.", icon: "fa-file-lines", color: "#e53e3e", class: "reportes" },
+                  { title: "Formularios de Datos", desc: "Ingresa y gestiona datos a través de formularios personalizados.", icon: "fa-file-alt", color: "#673ab7", class: "formularios" },
               ]
           },
           indicadores: {
@@ -578,27 +634,42 @@
                   { title: "Reportes de Cumplimiento", desc: "Prepara informes para cumplir con regulaciones y normativas.", icon: "fa-balance-scale", color: "#ecc94b", class: "avances" },
                   { title: "Reportes Personalizados", desc: "Crea tus propios informes desde cero con los datos que necesites.", icon: "fa-cog", color: "#e53e3e", class: "reportes" },
               ]
+          },
+          formularios: {
+            title: "Gestión y Creación de Formularios",
+            subtitle: "Diseña, despliega y administra formularios para la recolección de datos en campo. Agiliza la entrada de información.",
+            cards: [
+              { title: "Formularios de Inspección", desc: "Crea formularios para inspecciones de calidad o seguridad en las rutas.", icon: "fa-clipboard-check", color: "#673ab7", class: "formularios" },
+              { title: "Reporte de Incidentes", desc: "Permite a los técnicos registrar incidentes o anomalías al instante.", icon: "fa-exclamation-triangle", color: "#d32f2f", class: "reportes" },
+              { title: "Encuestas de Satisfacción", desc: "Recopila feedback de comunidades o clientes de forma sencilla.", icon: "fa-smile", color: "#fbc02d", class: "avances" },
+              { title: "Registro de Recolección", desc: "Un formulario rápido para registrar el tipo y peso de los residuos recolectados.", icon: "fa-truck-loading", color: "#2e7d32", class: "metas" },
+            ]
           }
       };
       
       const data = pageData[page];
       let cardHTML = '';
-      data.cards.forEach(card => {
-          cardHTML += `
-          <div class="card ${card.class}">
-              <div class="card-icon" style="background:${card.color};"><i class="fa-solid ${card.icon}"></i></div>
-              <div class="card-content">
-                  <div class="card-title editable-text">${card.title}</div>
-                  <div class="card-desc editable-text">${card.desc}</div>
-              </div>
-          </div>`;
-      });
+      if (data && data.cards) {
+          data.cards.forEach(card => {
+              cardHTML += `
+              <div class="card ${card.class}">
+                  <div class="card-icon" style="background:${card.color};"><i class="fa-solid ${card.icon}"></i></div>
+                  <div class="card-content">
+                      <div class="card-title editable-text">${card.title}</div>
+                      <div class="card-desc editable-text">${card.desc}</div>
+                  </div>
+              </div>`;
+          });
+      }
+
+      const heroHTML = data ? `
+          <div class="hero">
+              <h1 class="editable-text">${data.title}</h1>
+              <p class="editable-text">${data.subtitle}</p>
+          </div>` : '';
 
       return `
-        <div class="hero">
-            <h1 class="editable-text">${data.title}</h1>
-            <p class="editable-text">${data.subtitle}</p>
-        </div>
+        ${heroHTML}
         <div class="cards">
             ${cardHTML}
         </div>
