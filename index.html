@@ -542,6 +542,47 @@
 
 <script>
 (() => {
+
+const SUPABASE_URL = "https://lhnluarfjyzheezfrexr.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxobmx1YXJmanl6aGVlemZyZXhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ5NzYyOTAsImV4cCI6MjA3MDU1MjI5MH0.Pc6..."; // reemplaza por tu anon key
+
+async function saveToSupabase(page, html) {
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/paginas`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "resolution=merge-duplicates"
+      },
+      body: JSON.stringify({ nombre: page, contenido_html: html })
+    });
+    console.log("✅ Guardado en Supabase");
+  } catch (err) {
+    console.error("❌ Error guardando en Supabase", err);
+  }
+}
+
+async function loadFromSupabase(page) {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/paginas?nombre=eq.${page}&select=contenido_html`, {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    const data = await res.json();
+    if (data.length > 0) {
+      return data[0].contenido_html;
+    }
+  } catch (err) {
+    console.error("❌ Error cargando de Supabase", err);
+  }
+  return null;
+}
+
+
   const qs = sel => document.querySelector(sel);
   const qsa = sel => Array.from(document.querySelectorAll(sel));
   const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
@@ -599,6 +640,7 @@
       canvas.innerHTML = content;
       postLoad();
       adjustCanvasSize();
+      updateCardAccessibility();
   }
 
   function savePageContent() {
@@ -704,6 +746,21 @@
       `;
   }
 
+  function updateCardAccessibility() {
+    const cards = qsa('.cards .card');
+    cards.forEach(card => {
+        const isRestricted = card.dataset.page === 'metas' || card.dataset.page === 'avances' || card.dataset.page === 'reportes';
+        if (isRestricted) {
+            if (role === 'admin' || role === 'tecnico') {
+                card.classList.remove('disabled');
+                card.removeAttribute('data-disabled-message');
+            } else {
+                card.classList.add('disabled');
+                card.dataset.disabledMessage = "Acceso denegado. Esta función no está disponible en este momento.";
+            }
+        }
+    });
+  }
 
   /* ======= LOGIN ======= */
   closeAuthBtn.onclick = () => auth.style.display = 'none';
@@ -744,6 +801,7 @@
         toggleEdit.style.style = 'none';
         navRestricted.forEach(a => a.classList.add('disabled'));
       }
+      updateCardAccessibility();
     } else {
       alert('Contraseña incorrecta. Use "1234".');
     }
@@ -771,6 +829,7 @@
     navRestricted.forEach(a=>a.classList.add('disabled'));
     resetCanvasSelection();
     updateEditModeStyles();
+    updateCardAccessibility();
   };
   
   function updateEditModeStyles() {
@@ -829,12 +888,20 @@
   }
 
   /* ======= EDIT MODE ======= */
-  toggleEdit.onclick = () => {
+  
+toggleEdit.onclick = () => {
     if(role!=='admin' && role!=='tecnico') return;
     editMode = !editMode;
     toggleEdit.classList.toggle('active', editMode);
     updateEditModeStyles();
+
+    // 🚀 Cuando se desactiva, guarda en Supabase
+    if (!editMode) {
+      savePageContent(); // localStorage
+      saveToSupabase(currentPage, canvas.innerHTML); // nube (Supabase)
+    }
   };
+
 
 
   /* ======= HISTORY (UNDO/REDO) ======= */
