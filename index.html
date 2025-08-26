@@ -592,16 +592,18 @@
 
   function loadPageContent(pageName) {
       currentPage = pageName;
-      if (!pageContent[pageName]) {
-          pageContent[pageName] = getDefaultContent(pageName);
+      let content = pageContent[pageName];
+      if (!content) {
+          content = getDefaultContent(pageName);
       }
-      canvas.innerHTML = pageContent[pageName];
+      canvas.innerHTML = content;
       postLoad();
       adjustCanvasSize();
   }
 
   function savePageContent() {
       pageContent[currentPage] = canvas.innerHTML;
+      localStorage.setItem('savedPageContent', JSON.stringify(pageContent));
   }
 
   function getDefaultContent(page) {
@@ -843,6 +845,7 @@
     if(saveTimeout) clearTimeout(saveTimeout);
     saveTimeout = setTimeout(()=>{
       pageContent[currentPage] = canvas.innerHTML;
+      localStorage.setItem('savedPageContent', JSON.stringify(pageContent));
       history.push(pageContent[currentPage]);
       if(history.length > 80) history.shift();
       redo.length = 0;
@@ -854,6 +857,7 @@
     redo.push(canvas.innerHTML);
     canvas.innerHTML = history.pop();
     pageContent[currentPage] = canvas.innerHTML;
+    localStorage.setItem('savedPageContent', JSON.stringify(pageContent));
     postLoad();
   };
   qs('#redo').onclick = () => {
@@ -861,6 +865,7 @@
     history.push(canvas.innerHTML);
     canvas.innerHTML = redo.pop();
     pageContent[currentPage] = canvas.innerHTML;
+    localStorage.setItem('savedPageContent', JSON.stringify(pageContent));
     postLoad();
   };
   const postLoad = () => {
@@ -870,6 +875,7 @@
     hideFloatbar();
     adjustCanvasSize();
   };
+  window.addEventListener('beforeunload', savePageContent);
 
   /* ======= INSERT ======= */
   qsa('[data-insert]').forEach(btn=>{
@@ -1502,6 +1508,20 @@
     // Ensure the canvas is at least the viewport height
     const viewportHeight = window.innerHeight - qs('.topbar').offsetHeight - 36;
     canvas.style.minHeight = Math.max(viewportHeight, canvasMinHeight) + 'px';
+  }
+
+  // Load saved content from localStorage or default content
+  const savedContent = localStorage.getItem('savedPageContent');
+  if (savedContent) {
+      Object.assign(pageContent, JSON.parse(savedContent));
+  } else {
+      // Initialize with default content
+      pageContent.home = getDefaultContent('home');
+      pageContent.indicadores = getDefaultContent('indicadores');
+      pageContent.metas = getDefaultContent('metas');
+      pageContent.avances = getDefaultContent('avances');
+      pageContent.reportes = getDefaultContent('reportes');
+      pageContent.formularios = getDefaultContent('formularios');
   }
 
   // Carga la página de inicio por defecto
