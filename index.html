@@ -546,22 +546,28 @@
     const NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxobmx1YXJmanl6aGVlemZyZXhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ5NzYyOTAsImV4cCI6MjA3MDU1MjI5MH0.igYpeqlYnWW5i9NvOHSvlow3J-yDdEGgK6LRxYwvGY0";
 
     async function saveToSupabase(page, html) {
-        try {
-            await fetch(`${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/paginas`, {
-                method: "POST",
-                headers: {
-                    "apikey": NEXT_PUBLIC_SUPABASE_ANON_KEY,
-                    "Authorization": `Bearer ${NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-                    "Content-Type": "application/json",
-                    "Prefer": "resolution=merge-duplicates"
-                },
-                body: JSON.stringify({ nombre: page, contenido_html: html })
-            });
-            console.log("✅ Guardado en Supabase");
-        } catch (err) {
-            console.error("❌ Error guardando en Supabase", err);
+    try {
+        const res = await fetch(`${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/paginas`, {
+            method: "POST",
+            headers: {
+                "apikey": NEXT_PUBLIC_SUPABASE_ANON_KEY,
+                "Authorization": `Bearer ${NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+                "Content-Type": "application/json",
+                "Prefer": "resolution=merge-duplicates"
+            },
+            body: JSON.stringify({ nombre: page, contenido_html: html })
+        });
+
+        if (!res.ok) {
+            // Si la respuesta no es exitosa, lanza un error
+            throw new Error(`Error de Supabase: ${res.status} ${res.statusText}`);
         }
+
+        console.log("✅ Guardado en Supabase");
+    } catch (err) {
+        console.error("❌ Error guardando en Supabase", err);
     }
+}
 
     async function loadFromSupabase(page) {
         try {
@@ -1665,4 +1671,5 @@ toggleEdit.onclick = () => {
 
 </body>
 </html>
+
 
