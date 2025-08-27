@@ -1596,5 +1596,74 @@ toggleEdit.onclick = () => {
   loadPageContent('home');
 })();
 </script>
+
+<!-- Supabase integration -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://lhnluarfjyzheezfrexr.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxobmx1YXJmanl6aGVlemZyZXhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ5NzYyOTAsImV4cCI6MjA3MDU1MjI5MH0.igYpeqlYnWW5i9NvOHSvlow3J-yDdEGgK6LRxYwvGY0";
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const btnEdicion = document.getElementById("btnEdicion");
+  const contenido = document.getElementById("contenido");
+
+  let editando = false;
+  let role = "admin"; // Cambia según tu implementación de roles, o intégralo con Supabase Auth
+
+  async function cargarContenido() {
+    const { data, error } = await supabase
+      .from("paginas")
+      .select("contenido_html")
+      .eq("nombre", "mi_pagina")
+      .single();
+    if (error) {
+      console.warn("No se pudo cargar contenido:", error);
+      return;
+    }
+    if (data && data.contenido_html) {
+      contenido.innerHTML = data.contenido_html;
+    }
+  }
+
+  async function guardarContenido() {
+    const nuevoContenido = contenido.innerHTML;
+    const { error } = await supabase
+      .from("paginas")
+      .upsert([
+        {
+          nombre: "mi_pagina",
+          contenido_html: nuevoContenido,
+          actualizado: new Date().toISOString()
+        }
+      ], { onConflict: ["nombre"] });
+    if (error) {
+      console.error("Error al guardar:", error);
+      alert("Error al guardar");
+    } else {
+      console.log("Contenido guardado en Supabase");
+    }
+  }
+
+  btnEdicion.addEventListener("click", async () => {
+    if (role !== "admin" && role !== "tecnico") {
+      alert("No tienes permisos para editar.");
+      return;
+    }
+    editando = !editando;
+    if (editando) {
+      contenido.setAttribute("contenteditable", "true");
+      contenido.focus();
+      btnEdicion.textContent = "Salir de edición y guardar";
+    } else {
+      contenido.setAttribute("contenteditable", "false");
+      btnEdicion.textContent = "Modo Edición";
+      await guardarContenido();
+    }
+  });
+
+  // Cargar contenido al iniciar
+  cargarContenido();
+</script>
+
 </body>
 </html>
