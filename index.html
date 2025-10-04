@@ -1,1675 +1,1426 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gestión de Residuos Sólidos — Editor Pro</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.3/css/all.min.css">
-<style>
-  :root{
-    --primary:#2e7d32;
-    --primary-600:#1b5e20;
-    --secondary:#0288d1;
-    --accent:#fbc02d;
-    --danger:#d32f2f;
-    --bg:#f4f7f9;
-    --surface:#ffffff;
-    --ink:#2d3748;
-    --muted:#718096;
-    --border:#e2e8f0;
-    --grid:#e6f3ea;
-    --shadow:0 8px 30px rgba(16,24,40,0.08);
-    --radius:14px;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema de Gestión de Residuos Sólidos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <style>
+    /* Estilos Generales y Navbar */
+    body { background-color: #f8f9fa; }
+    .navbar-brand-custom { font-size: 1.4rem; font-weight: bold; }
+    .navbar { box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
 
-  /* Topbar */
-  .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:var(--surface);box-shadow:var(--shadow);position:sticky;top:0;z-index:30}
-  .brand{display:flex;gap:10px;align-items:center;font-weight:700;color:var(--primary)}
-  .brand i{background:linear-gradient(135deg,var(--primary),#3fa34b);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .nav{display:flex;align-items:center;gap:14px}
-  .nav a{color:var(--muted);text-decoration:none;font-weight:600;padding:8px 10px;border-radius:10px}
-  .nav a.active{color:var(--primary);background:#e8f4ec}
-  .nav a.disabled{pointer-events:none;opacity:.45}
-  .nav a.active-link { color: var(--primary); background: #e8f4ec; }
+    /* Estilo para enlaces restringidos */
+    .nav-link.restricted-nav {
+      color: #ccc !important; /* Gris claro */
+      cursor: pointer;
+    }
+    .nav-link.restricted-nav:hover {
+        color: #888 !important; 
+    }
 
-  /* Login button */
-  #open-auth{border:none;padding:10px 16px;border-radius:999px;color:#fff;background:linear-gradient(135deg,var(--secondary),#00a6c7);box-shadow:0 6px 20px rgba(2,136,209,.25);font-weight:700;cursor:pointer;transition:.25s}
-  #open-auth:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(2,136,209,.35)}
-  
-  /* Logout button */
-  #logout-btn{display:none;border:none;padding:10px 16px;border-radius:999px;color:#fff;background:var(--danger);font-weight:700;cursor:pointer;transition:.25s}
-  #logout-btn:hover{background:#b71c1c}
+    /* Panel Lateral */
+    #editSidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 280px;
+      padding-top: 60px;
+      z-index: 1040;
+      border-right: 1px solid #dee2e6;
+      overflow-y: auto;
+      background: #f4f4f4;
+      transition: all 0.2s ease-in-out;
+      font-size: 0.9rem;
+    }
+    .sidebar-section { padding: 10px 0; border-bottom: 1px solid #e9ecef; }
+    .sidebar-section:last-child { border-bottom: none; }
+    .sidebar-heading { color: #007bff; font-size: 0.95rem; margin-bottom: 0.5rem; display: flex; align-items: center; }
+    .sidebar-heading i { margin-right: 8px; }
 
-  /* Edit toggle */
-  #toggle-edit{display:none;border:none;padding:10px 14px;border-radius:12px;background:var(--primary);color:#fff;font-weight:700;cursor:pointer}
-  #toggle-edit.active{background:var(--primary-600)}
+    /* Contenedor Principal */
+    .d-none-temp { display: none !important; }
+    .section-content { display: none; padding-top: 20px; } 
+    #section-inicio { display: block; padding-top: 0; }
+    #mainContentWrapper { transition: margin-left .2s ease; }
+    #mainContent {
+        position: relative;
+        max-width: 1400px;
+        padding-bottom: 50px; 
+    }
+    
+    /* Hero Section - Diseño Profesional */
+    .hero-section {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        padding: 50px 30px; 
+        border-radius: 12px;
+        margin-bottom: 40px;
+        text-align: center;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    .hero-title {
+        font-size: 2.5rem; 
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+    .hero-subtitle {
+        font-size: 1.2rem; 
+        max-width: 900px;
+        margin: 0 auto;
+        line-height: 1.7;
+        opacity: 0.9;
+    }
 
-  /* Layout */
-  .wrap{display:grid;grid-template-columns:1fr;gap:18px;align-items:start;padding:18px;min-height: calc(100vh - 86px)}
-  .wrap.edit-active{grid-template-columns:320px 1fr;}
-  .sidebar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px;display:none;position:sticky;top:86px;overflow:auto}
-  .sidebar.active{display:block}
-  .panel h3{margin:10px 0 8px;font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .row{display:flex;gap:8px}
-  .panel .field{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
-  .panel label{font-size:12px;color:#667085}
-  .panel input,.panel select,.panel textarea, .panel button{width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-size:13px}
-  .panel button.action{background:#0ea5e9;border:none;color:#fff;font-weight:700;cursor:pointer}
-  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
-  .tab{padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:#f8fafc;font-size:12px;cursor:pointer}
-  .tab.active{background:#e8f4ec;border-color:#b7dec2;color:#1f7a34}
-  .section{display:none}
-  .section.active{display:block}
+    /* Cards - Diseño más limpio */
+    .card {
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        cursor: pointer; 
+        position: relative;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: #343a40 !important;
+    }
+    .card-title { font-weight: 600; font-size: 1.15rem; }
+    .card-text { font-size: 0.9rem; opacity: 0.8; }
 
-  /* Canvas */
-  .canvas-wrap{position:relative;background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:0;overflow:hidden;flex-grow:1;display:flex;flex-direction:column}
-  .canvas-toolbar{display:none; align-items:center;gap:8px;padding:10px;background:var(--surface);border-bottom:1px solid var(--border)}
-  .canvas-toolbar.active{display:flex;}
-  .canvas-toolbar .label{display:none;}
-  .canvas-toolbar .buttons{display:none;}
-  .canvas-toolbar.active .label, .canvas-toolbar.active .buttons{display:block;}
+    /* Cards con fondo oscuro */
+    .card.text-white .card-body { color: white !important; }
+    .card.text-white .card-text { opacity: 0.9; }
 
-  .canvas{
-    position:relative;
-    background-size:20px 20px;
-    overflow: hidden; 
-    padding:20px;
-    height: auto;
-    min-height: calc(100vh - 120px);
-  }
+    /* Estilo para tarjetas restringidas */
+    .card.restricted {
+        filter: grayscale(0.7) brightness(0.8);
+        position: relative;
+        overflow: hidden;
+    }
+    .card.restricted::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+    .card.restricted .card-body {
+        position: relative;
+        z-index: 2;
+    }
+    .card.restricted .restricted-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        z-index: 3;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 10px;
+    }
+    .card.restricted:hover .restricted-overlay {
+        opacity: 1;
+    }
+    .card.restricted .restricted-overlay i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
 
-  .canvas.editing {
-    background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px), linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-    border: 1px dashed #d7e7dc;
-  }
-  
-  .canvas-item{position:absolute;min-width:80px;min-height:40px;outline:none;}
-  .canvas-item:not(.is-editing) .selectable {cursor: move;}
-  .selectable{cursor:move}
-  .selected{outline:2px solid #22c55e;box-shadow:0 8px 24px rgba(15,118,110,.18);z-index: 20;}
-  .handle{position:absolute;width:10px;height:10px;border-radius:2px;background:#22c55e;border:1px solid #0f766e}
-  .handle.n{top:-6px;left:50%;transform:translateX(-50%);cursor:n-resize}
-  .handle.s{bottom:-6px;left:50%;transform:translateX(-50%);cursor:s-resize}
-  .handle.e{right:-6px;top:50%;transform:translateY(-50%);cursor:e-resize}
-  .handle.w{left:-6px;top:50%;transform:translateY(-50%);cursor:w-resize}
-  .handle.nw{left:-6px;top:-6px;cursor:nw-resize}
-  .handle.ne{right:-6px;top:-6px;cursor:ne-resize}
-  .handle.sw{left:-6px;bottom:-6px;cursor:sw-resize}
-  .handle.se{right:-6px;bottom:-6px;cursor:se-resize}
-  .handle.rotate{top:-28px;left:50%;transform:translateX(-50%);width:14px;height:14px;border-radius:50%;background:#0ea5e9;border:2px solid #0369a1;cursor:grab}
+    /* Layout de Tarjetas en secciones internas */
+    .section-content:not(#section-inicio) .cards-row {
+        position: relative; 
+        display: block; 
+        min-height: 200px; 
+        margin-top: 0;
+    }
+    .movable-card-wrapper {
+        position: absolute; 
+        width: 48%; 
+        min-height: 150px;
+        cursor: move !important;
+        padding: 0;
+    }
+    .movable-card-wrapper .card {
+        margin: 0 !important; 
+        height: 100% !important;
+        transform: none !important; 
+    }
 
-  /* Floating tools for selected */
-  .floatbar{
-    position:absolute;
-    display:none;
-    background:var(--primary);
-    color:#fff;
-    padding: 2px;
-    border-radius: 8px;
-    font-size:12px;
-    z-index:30;
-    top: -42px;
-    white-space: nowrap;
-    box-shadow: var(--shadow);
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .floatbar button{
-    background:transparent;
-    border:none;
-    color:#fff;
-    cursor:pointer;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 8px;
-    border-radius: 6px;
-    transition: background-color 0.2s;
-  }
-  .floatbar button:hover {
-    background-color: var(--primary-600);
-  }
-  .floatbar button i {
-    color: #fff;
-    font-size: 14px;
-  }
-  .floatbar button span {
-    font-size: 12px;
-    font-weight: 500;
-  }
-  .selected .floatbar {
-    display: flex;
-  }
-  
-  /* Content sections */
-  .content-section { display: none; }
-  .content-section.active { display: block; }
-  
-  /* Home section */
-  .home{padding:0}
-  
-  /* Hero section - Updated */
-  .hero{
-    padding: 60px 28px;
-    border-radius: var(--radius);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 16px;
-    margin-bottom: 30px;
-    border: 1px solid var(--border);
-    background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M100 0L50 50L100 100V0ZM0 100L50 50L0 0V100Z" fill="%23e8f4ec" opacity=".5"%3E%3C/path%3E%3C/svg%3E'),
-                    linear-gradient(135deg, #e8f5e9, #f1f8e9);
-    background-size: 200px, cover;
-  }
-  .hero h1{margin:0;color:var(--primary);font-size:2.8rem;line-height:1.2; max-width: 800px;}
-  .hero p{margin:0;color:#48576a;font-size:1.2rem; max-width: 700px;}
-  .hero-button {
-    background: var(--primary);
-    color: #fff;
-    padding: 14px 28px;
-    border-radius: 999px;
-    font-weight: 700;
-    text-decoration: none;
-    margin-top: 10px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .hero-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(46,125,50,0.25);
-  }
-  
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;margin-top:36px}
-  .card{
-    padding:24px;
-    border-radius:20px;
-    background:var(--surface);
-    border:1px solid var(--border);
-    box-shadow:var(--shadow);
-    display:flex;
-    flex-direction: column;
-    gap:18px;
-    align-items:flex-start;
-    transition:transform 0.2s, box-shadow 0.2s;
-    cursor: pointer;
-  }
-  .card:hover{transform:translateY(-5px);box-shadow:0 12px 20px rgba(0,0,0,0.1)}
-  .card-icon {
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .card-icon i{font-size:24px; color: #fff;}
-  .card.metas .card-icon { background: #38a169; }
-  .card.indicadores .card-icon { background: #4299e1; }
-  .card.avances .card-icon { background: #ecc94b; }
-  .card.reportes .card-icon { background: #e53e3e; }
-  .card.formularios .card-icon { background: #673ab7; }
+    /* Estilos de Edición */
+    .active-editable { outline: 2px dashed #007bff; }
 
-  .card-content{display:flex;flex-direction:column;gap:6px;}
-  .card-title{font-weight:700;font-size:1.2rem; margin: 0;}
-  .card-desc{font-size:1rem;color:var(--muted); margin: 0;}
-
-  /* New style for disabled cards */
-  .card.disabled {
-    pointer-events: none;
-    opacity: 0.6;
-    cursor: not-allowed;
-    background: #f1f5f9;
-  }
-  .card.disabled:hover {
-    transform: none;
-    box-shadow: var(--shadow);
-  }
-
-  /* Auth modal */
-  .modal{position:fixed;inset:0;background:rgba(2,6,23,.55);display:none;align-items:center;justify-content:center;z-index:50}
-  .sheet{background:var(--surface);width:360px;max-width:92vw;border-radius:18px;box-shadow:var(--shadow);overflow:hidden;padding:24px;}
-  .sheet h2{text-align:center;margin:0 0 20px;color:var(--ink);font-size:22px;}
-  .sheet-body{display:flex;flex-direction:column;gap:12px;}
-  .sheet-body label{color:var(--muted); font-size: 0.9rem;}
-  .sheet-body input, .sheet-body select{width:100%;padding:12px;border:1px solid var(--border);border-radius:12px;font-size:14px;}
-  .sheet-body .submit{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--primary),#3fa34b);color:#fff;font-weight:800;cursor:pointer;transition:.2s all;}
-  .sheet-body .submit:hover{transform:translateY(-1px);box-shadow:0 6px 12px rgba(46,125,50,0.25);}
-  .sheet-body .close-modal{width:100%;padding:14px;border:1px solid var(--border);border-radius:12px;background:transparent;color:var(--muted);font-weight:800;cursor:pointer;transition:.2s all;}
-  .sheet-body .close-modal:hover{background:#f1f5f9;border-color:#cbd5e1;}
-  .close-x{position:absolute;top:10px;right:14px;background:transparent;border:none;font-size:18px;color:#334155;cursor:pointer}
-
-  /* Canvas items styling */
-  .canvas-h2 {font-size: 1.8rem; color: var(--primary); margin: 0; padding: 10px; background: rgba(255,255,255,0.9); border-radius: 10px; border: 1px solid var(--border);}
-  .canvas-p {font-size: 1rem; color: var(--ink); margin: 0; padding: 10px; background: rgba(255,255,255,0.9); border-radius: 10px; border: 1px solid var(--border); line-height: 1.5;}
-  .canvas-img {border-radius: 10px; box-shadow: var(--shadow); width: 100%; height: 100%; object-fit: cover;}
-  .canvas-button {display: inline-block; padding: 12px 20px; border-radius: 12px; background: var(--secondary); color: #fff; font-weight: 700; text-decoration: none; text-align: center; box-shadow: 0 4px 6px rgba(2,136,209,.2); transition: all 0.2s;}
-  .canvas-button:hover {background: #0277bd; transform: translateY(-2px); box-shadow: 6px 12px rgba(2,136,209,.3);}
-  .canvas-table { width: 100%; height: 100%; border-collapse: collapse; }
-  .canvas-table th, .canvas-table td { border: 1px solid var(--border); padding: 8px; text-align: left; }
-  .canvas-table td { background-color: white; }
-
-  /* New file input style */
-  #upload-image-label {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-size: 13px;
-    background: #0ea5e9;
-    border: none;
-    color: #fff;
-    font-weight: 700;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.2s;
-  }
-  #upload-image-label:hover {
-    background: #0369a1;
-  }
-  #image-upload {
-    display: none;
-  }
-
-  /* Make sure all children can be interacted with */
-  .canvas-item > *, .hero > *, .card > * {
-    pointer-events: all;
-  }
-
-  /* Added for styling of editable content */
-  [contenteditable="true"] {
-      outline: 2px dashed var(--secondary);
-      outline-offset: 4px;
-      padding: 2px;
-  }
-
-
-/* ================= RESPONSIVE DESIGN ================= */
-@media (max-width: 768px) {
-  /* Topbar */
-  .topbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  .nav {
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  /* Sidebar -> se vuelve un panel inferior */
-  .wrap.edit-active {
-    grid-template-columns: 1fr; /* en móvil no mostrar 2 columnas */
-  }
-  .sidebar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50vh;
-    z-index: 100;
-    border-radius: 16px 16px 0 0;
-    box-shadow: 0 -6px 20px rgba(0,0,0,0.2);
-  }
-
-  /* Hero */
-  .hero {
-    padding: 30px 16px;
-  }
-  .hero h1 {
-    font-size: 1.8rem;
-  }
-  .hero p {
-    font-size: 1rem;
-  }
-
-  /* Cards -> 1 por fila */
-  .cards {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  /* Canvas */
-  .canvas {
-    padding: 10px;
-    min-height: 60vh;
-  }
-}
-
-</style>
+    /* Movable Text Box */
+    .movable {
+        position: absolute !important;
+        z-index: 1000;
+        border: none !important; 
+        cursor: default !important;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .movable.active-editable {
+        border: 2px dashed #007bff !important;
+        cursor: move !important;
+    }
+    .movable[contenteditable="true"] {
+        cursor: text !important;
+        outline: 2px dashed #28a745;
+    }
+    .text-box {
+        padding: 15px;
+        min-width: 200px;
+        min-height: 100px;
+    }
+    .text-box p { margin: 0; } 
+    
+    /* Cleanup para evitar saltos en texto estático */
+    .editable-text:not([contenteditable="true"]):not(.movable) {
+        border: 1px solid transparent !important; 
+        padding: 5px;                           
+        cursor: default;
+    }
+    .editable-text[contenteditable="true"]:not(.movable) {
+        border: 1px dashed #ccc !important;
+        padding: 5px; 
+        cursor: text;
+        outline: none !important; 
+    }
+    .hero-title.editable-text,
+    .hero-subtitle.editable-text {
+        padding: 5px !important;
+        border: 1px solid transparent !important;
+    }
+    .hero-title.editable-text[contenteditable="true"],
+    .hero-subtitle.editable-text[contenteditable="true"] {
+        border: 1px dashed rgba(255, 255, 255, 0.5) !important;
+        border-radius: 5px;
+        padding: 5px !important;
+    }
+    
+    /* Grid de tarjetas de inicio */
+    .cards-row {
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .cards-row > .col {
+        flex: 0 0 auto;
+        width: 20%; 
+        padding: calc(var(--bs-gutter-x) * .5);
+        margin-top: var(--bs-gutter-y);
+    }
+  </style>
 </head>
 <body>
+  <div id="editSidebar" class="bg-light d-none-temp p-3 shadow-sm" aria-hidden="true">
+    <h5 class="text-primary mb-4"><i class="fas fa-tools"></i> Herramientas de Edición</h5>
 
-<header class="topbar">
-  <div class="brand"><i class="fa-solid fa-recycle fa-xl"></i> Gestión RS</div>
-  <nav class="nav">
-    <a href="#" class="nav-link active" data-page="home">Inicio</a>
-    <a href="#" class="nav-link" data-page="indicadores">Indicadores</a>
-    <a href="#" class="nav-link disabled" data-page="metas">Metas</a>
-    <a href="#" class="nav-link disabled" data-page="avances">Avances</a>
-    <a href="#" class="nav-link disabled" data-page="reportes">Reportes</a>
-    <a href="#" class="nav-link" data-page="formularios">Formularios</a>
-    <button id="toggle-edit"><i class="fa-solid fa-pen-to-square"></i> Modo edición</button>
-    <button id="open-auth"><i class="fa-solid fa-right-to-bracket"></i> Iniciar sesión</button>
-    <button id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button>
-    <span id="whoami" style="font-weight:700;display:none"></span>
+    <div class="sidebar-section">
+        <h6 class="sidebar-heading text-secondary"><i class="fas fa-layer-group"></i> Elementos</h6>
+        
+        <button class="btn btn-sm btn-outline-success w-100 mb-2" onclick="addRandomColoredCard()">
+          <i class="fas fa-credit-card me-1"></i> Añadir Tarjeta
+        </button>
+
+        <button class="btn btn-sm btn-outline-primary w-100 mb-2" onclick="addTextBox()">
+          <i class="fas fa-square-plus me-1"></i> Agregar Cuadro de Texto
+        </button>
+        <button class="btn btn-sm btn-outline-danger w-100 mb-4" onclick="deleteSelectedElement()">
+          <i class="fas fa-trash me-1"></i> Eliminar Seleccionado
+        </button>
+    </div>
+    
+    <div class="sidebar-section">
+        <h6 class="sidebar-heading text-secondary"><i class="fas fa-arrows-alt"></i> Posición y Tamaño</h6>
+        <label class="form-label small fw-bold">Posición (px)</label>
+        <div class="input-group input-group-sm mb-2">
+            <span class="input-group-text">X</span>
+            <input type="number" id="posLeftInput" class="form-control" min="0" oninput="changePosition('left', this.value)">
+            <span class="input-group-text">Y</span>
+            <input type="number" id="posTopInput" class="form-control" min="0" oninput="changePosition('top', this.value)">
+        </div>
+        <label class="form-label small fw-bold">Dimensiones (px)</label>
+        <div class="input-group input-group-sm mb-3">
+            <span class="input-group-text">Ancho</span>
+            <input type="number" id="widthInput" class="form-control" min="50" oninput="changeSize('width', this.value)">
+            <span class="input-group-text">Alto</span>
+            <input type="number" id="heightInput" class="form-control" min="30" oninput="changeSize('height', this.value)">
+        </div>
+        <div class="alert alert-info py-1 small">
+          Mueve con **flechas** (↑↓←→) para precisión de 1px.
+        </div>
+    </div>
+    
+    <div class="sidebar-section">
+        <h6 class="sidebar-heading text-secondary"><i class="fas fa-font"></i> Formato</h6>
+        <div class="btn-group w-100 mb-2" role="group">
+          <button class="btn btn-sm btn-outline-dark" onclick="formatText('bold')" title="Negrita"><i class="fas fa-bold"></i></button>
+          <button class="btn btn-sm btn-outline-dark" onclick="formatText('italic')" title="Cursiva"><i class="fas fa-italic"></i></button>
+          <button class="btn btn-sm btn-outline-dark" onclick="formatText('underline')" title="Subrayado"><i class="fas fa-underline"></i></button>
+          <button class="btn btn-sm btn-outline-primary" onclick="addLink()" title="Añadir enlace"><i class="fas fa-link"></i></button>
+        </div>
+
+        <h6 class="sidebar-heading text-secondary mt-3"><i class="fas fa-align-left"></i> Alineación</h6>
+        <div class="btn-group w-100 mb-2" role="group">
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyLeft')"><i class="fas fa-align-left"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyCenter')"><i class="fas fa-align-center"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyRight')"><i class="fas fa-align-right"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyFull')"><i class="fas fa-align-justify"></i></button>
+        </div>
+
+        <h6 class="sidebar-heading text-secondary mt-3"><i class="fas fa-list-ul"></i> Listas</h6>
+        <div class="btn-group w-100 mb-4" role="group">
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('insertUnorderedList')" title="Viñetas"><i class="fas fa-list-ul"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('insertOrderedList')" title="Numeración"><i class="fas fa-list-ol"></i></button>
+        </div>
+    </div>
+    
+    <div class="sidebar-section">
+        <h6 class="sidebar-heading text-secondary"><i class="fas fa-palette"></i> Estilos Visuales</h6>
+        
+        <label class="form-label small fw-bold">Tipo de Letra</label>
+        <select class="form-select form-select-sm mb-3" id="fontFamilySelect" onchange="changeStyle('fontFamily', this.value)">
+          <option value="Arial" style="font-family:Arial">Arial</option>
+          <option value="Helvetica" style="font-family:Helvetica">Helvetica</option>
+          <option value="Times New Roman" style="font-family:'Times New Roman'">Times New Roman</option>
+          <option value="Courier New" style="font-family:'Courier New'">Courier New</option>
+          <option value="Verdana" style="font-family:Verdana">Verdana</option>
+          <option value="Georgia" style="font-family:Georgia">Georgia</option>
+        </select>
+        
+        <label class="form-label small fw-bold">Tamaño de Fuente</label>
+        <div class="input-group input-group-sm mb-3">
+          <input type="number" id="fontSizeInput" class="form-control" min="8" max="128" placeholder="Ej: 16"
+                 oninput="changeStyle('fontSize', this.value)"> 
+          <span class="input-group-text">px</span>
+        </div>
+
+        <label class="form-label small fw-bold">Color de Texto</label>
+        <input type="color" class="form-control form-control-sm mb-3"
+               onchange="changeStyle('color', this.value)">
+
+        <label class="form-label small fw-bold">Fondo</label>
+        <input type="color" class="form-control form-control-sm mb-4"
+               onchange="changeStyle('hiliteColor', this.value)"> 
+    </div>
+
+    <div class="sidebar-section">
+        <h6 class="sidebar-heading text-secondary"><i class="fas fa-history"></i> Historial</h6>
+        <div class="btn-group w-100 mb-3" role="group">
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('undo')" title="Deshacer"><i class="fas fa-undo"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('redo')" title="Rehacer"><i class="fas fa-redo"></i></button>
+        </div>
+    </div>
+
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand text-success navbar-brand-custom" href="#" onclick="showSection('inicio')">
+        <i class="fas fa-recycle me-2"></i> Gestión Sostenible
+      </a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('inicio')">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link restricted-nav" href="#" onclick="showSection('metas')">Metas <i class="fas fa-lock ms-1"></i></a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('indicadores')">Indicadores</a></li>
+          <li class="nav-item"><a class="nav-link restricted-nav" href="#" onclick="showSection('avances')">Avances <i class="fas fa-lock ms-1"></i></a></li>
+          <li class="nav-item"><a class="nav-link restricted-nav" href="#" onclick="showSection('reportes')">Reportes <i class="fas fa-lock ms-1"></i></a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('formularios')">Formularios</a></li>
+        </ul>
+        <ul class="navbar-nav" id="loginBtnContainer">
+          <li class="nav-item">
+            <button class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+              <i class="fas fa-sign-in-alt me-2"></i> Iniciar Sesión
+            </button>
+          </li>
+        </ul>
+        <ul class="navbar-nav d-none" id="userNav">
+          <li class="nav-item">
+            <button id="editToggleBtn" class="btn btn-outline-primary me-2" onclick="toggleEditMode()">
+              <i class="fas fa-edit me-1"></i> Modo Edición
+            </button>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-bell"></i></a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user-circle me-1"></i> <span id="userNameDisplay">Usuario</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Gestión de Usuarios</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-address-card me-2"></i> Mi Perfil</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
   </nav>
-</header>
 
-<main class="wrap" id="main-wrap">
-  <aside class="sidebar" id="sidebar">
-    <div class="panel">
-      <h3>Insertar</h3>
-      <div class="grid-2">
-        <button class="action" data-insert="h2"><i class="fa-solid fa-heading"></i> Título</button>
-        <button class="action" data-insert="p"><i class="fa-solid fa-font"></i> Texto</button>
-        <button class="action" data-insert="img"><i class="fa-regular fa-image"></i> Imagen</button>
-        <button class="action" data-insert="button"><i class="fa-solid fa-square"></i> Botón</button>
-        <button class="action" data-insert="iframe"><i class="fa-solid fa-video"></i> Video</button>
-        <button class="action" data-insert="table"><i class="fa-solid fa-table"></i> Tabla</button>
-      </div>
-
-      <h3>Historial</h3>
-      <div class="row">
-        <button class="action" id="undo"><i class="fa-solid fa-rotate-left"></i> Deshacer</button>
-        <button class="action" id="redo"><i class="fa-solid fa-rotate-right"></i> Rehacer</button>
-      </div>
-
-      <h3>Propiedades</h3>
-      <div class="tabs" id="prop-tabs">
-        <button class="tab active" data-tab="general">General</button>
-        <button class="tab" data-tab="texto">Texto</button>
-        <button class="tab" data-tab="imagen">Imagen</button>
-        <button class="tab" data-tab="video">Video</button>
-        <button class="tab" data-tab="boton">Botón</button>
-        <button class="tab" data-tab="tabla">Tabla</button>
-        <button class="tab" data-tab="lienzo">Lienzo</button>
-      </div>
-
-      <section class="section active" id="sec-general">
-        <div class="grid-2">
-          <div class="field"><label>X</label><input type="number" id="gen-x"></div>
-          <div class="field"><label>Y</label><input type="number" id="gen-y"></div>
-          <div class="field"><label>Ancho</label><input type="number" id="gen-w"></div>
-          <div class="field"><label>Alto</label><input type="number" id="gen-h"></div>
-          <div class="field"><label>Rotación (°)</label><input type="number" id="gen-rot" value="0"></div>
-          <div class="field"><label>Índice Z</label><input type="number" id="gen-z" value="1"></div>
+  <div id="mainContentWrapper" class="container-fluid" style="margin-left:0;">
+    <div class="container mt-4" id="mainContent">
+      
+      <div id="section-inicio" class="section-content">
+        <div class="hero-section">
+          <h1 class="hero-title editable-text" id="heroTitle">Sistema de Gestión de Residuos Sólidos</h1>
+          <p class="hero-subtitle editable-text" id="heroSubtitle">
+            La plataforma para monitorear indicadores, gestionar metas y generar reportes para una gestión ambiental eficiente.
+          </p>
         </div>
-        <div class="grid-2">
-          <div class="field"><label>Fondo</label><input type="color" id="gen-bg" value="#ffffff"></div>
-          <div class="field"><label>Color Borde</label><input type="color" id="gen-bc" value="#e2e8f0"></div>
-          <div class="field"><label>Grosor Borde (px)</label><input type="number" id="gen-bw" value="0"></div>
-          <div class="field"><label>Radio (px)</label><input type="number" id="gen-br" value="8"></div>
-          <div class="field"><label>Sombra</label>
-            <select id="gen-shadow">
-              <option value="none">Sin sombra</option>
-              <option value="sm">Suave</option>
-              <option value="md">Media</option>
-              <option value="lg">Fuerte</option>
-            </select>
-          </div>
-          <div class="field"><label>Padding</label><input type="number" id="gen-pad" value="8"></div>
-        </div>
-      </section>
 
-      <section class="section" id="sec-texto">
-        <div class="field"><label>Contenido</label><textarea id="txt-content" rows="4"></textarea></div>
-        <div class="grid-2">
-          <div class="field"><label>Fuente</label>
-            <select id="txt-font">
-              <option>Inter</option><option>Arial</option><option>Georgia</option>
-              <option>Tahoma</option><option>Verdana</option><option>Times New Roman</option>
-            </select>
+        <div class="cards-row mt-3"> 
+          <div class="col">
+            <div class="card text-white restricted" style="background-color: #5d6d7e;" data-card-link="#metas"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text text-white">Metas</h5>
+                <p class="card-text editable-text text-white">Definición de objetivos a corto y largo plazo para la reducción de residuos.</p>
+              </div>
+              <div class="restricted-overlay">
+                <i class="fas fa-lock"></i>
+                <span>Inicia sesión para acceder</span>
+              </div>
+            </div>
           </div>
-          <div class="field"><label>Tamaño (px)</label><input type="number" id="txt-size" value="18"></div>
-          <div class="field"><label>Color</label><input type="color" id="txt-color" value="#243b53"></div>
-          <div class="field"><label>Alineación</label>
-            <select id="txt-align"><option>left</option><option>center</option><option>right</option><option>justify</option></select>
+          <div class="col">
+            <div class="card text-white" style="background-color: #4CAF50;" data-card-link="#indicadores"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text text-white">Indicadores</h5>
+                <p class="card-text editable-text text-white">Métricas clave para medir el éxito del plan de gestión.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card restricted" style="background-color: #f4d03f; color: #343a40;" data-card-link="#avances"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text" style="color: #343a40;">Avances</h5>
+                <p class="card-text editable-text" style="color: #343a40;">Registro del progreso y cumplimiento de las metas establecidas.</p>
+              </div>
+              <div class="restricted-overlay">
+                <i class="fas fa-lock"></i>
+                <span>Inicia sesión para acceder</span>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card text-white restricted" style="background-color: #3498db;" data-card-link="#reportes"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text text-white">Reportes</h5>
+                <p class="card-text editable-text text-white">Generación automática de informes de impacto y sostenibilidad.</p>
+              </div>
+              <div class="restricted-overlay">
+                <i class="fas fa-lock"></i>
+                <span>Inicia sesión para acceder</span>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card text-white" style="background-color: #e74c3c;" data-card-link="#formularios"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text text-white">Formularios</h5>
+                <p class="card-text editable-text text-white">Acceso a encuestas y herramientas de recolección de datos.</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <button class="action" id="txt-bold"><i class="fa-solid fa-bold"></i> Negrita</button>
-          <button class="action" id="txt-italic"><i class="fa-solid fa-italic"></i> Cursiva</button>
-          <button class="action" id="txt-underline"><i class="fa-solid fa-underline"></i> Subrayado</button>
-          <button class="action" id="txt-list"><i class="fa-solid fa-list-ul"></i> Lista</button>
+      </div>
+      
+      <div id="section-metas" class="section-content">
+        <div class="hero-section" style="background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);">
+          <h1 class="hero-title editable-text">Definición y Seguimiento de Metas</h1>
+          <p class="hero-subtitle editable-text">
+            Establezca metas SMART para la gestión de residuos. Monitoree la reducción y el reciclaje.
+          </p>
         </div>
-      </section>
-
-      <section class="section" id="sec-imagen">
-        <div class="field"><label>URL</label><input type="text" id="img-src" placeholder="https://..."></div>
-        <label for="image-upload" id="upload-image-label">Subir desde PC</label>
-        <input type="file" id="image-upload" accept="image/*">
-        <div class="grid-2">
-          <div class="field"><label>Fit</label>
-            <select id="img-fit"><option value="cover">cover</option><option value="contain">contain</option></select>
+        <div class="cards-row mt-3">
+          <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
+            <div class="card" style="background-color: #ecf0f1;"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text" style="color: #16a085;">Meta de Reducción</h5>
+                <p class="card-text editable-text">Establecer un objetivo del 15% de reducción de desechos municipales para el fin de año fiscal.</p>
+              </div>
+            </div>
           </div>
-          <div class="field"><label>Alt</label><input type="text" id="img-alt"></div>
-          <div class="field"><label>Ancho (px)</label><input type="number" id="img-w"></div>
-          <div class="field"><label>Alto (px)</label><input type="number" id="img-h"></div>
-        </div>
-      </section>
-
-      <section class="section" id="sec-video">
-        <div class="field"><label>URL (YouTube)</label><input type="text" id="vid-src" placeholder="Pega la URL del video"></div>
-        <input type="file" id="video-upload" style="display:none" accept="video/*">
-        <button class="action" id="upload-btn">Subir desde PC</button>
-        <div class="grid-2">
-          <div class="field"><label>Ancho (px)</label><input type="number" id="vid-w"></div>
-          <div class="field"><label>Alto (px)</label><input type="number" id="vid-h"></div>
-        </div>
-      </section>
-
-      <section class="section" id="sec-boton">
-        <div class="grid-2">
-          <div class="field"><label>Texto</label><input type="text" id="btn-text"></div>
-          <div class="field"><label>Enlace</label><input type="text" id="btn-href"></div>
-          <div class="field"><label>Fondo</label><input type="color" id="btn-bg" value="#0288d1"></div>
-          <div class="field"><label>Texto</label><input type="color" id="btn-fg" value="#ffffff"></div>
-          <div class="field"><label>Radio (px)</label><input type="number" id="btn-radius" value="12"></div>
-          <div class="field"><label>Padding (px)</label><input type="number" id="btn-pad" value="10"></div>
-        </div>
-      </section>
-
-      <section class="section" id="sec-tabla">
-        <div class="grid-2">
-          <button class="action" id="tbl-add-row">+ Fila</button>
-          <button class="action" id="tbl-del-row">- Fila</button>
-          <button class="action" id="tbl-add-col">+ Columna</button>
-          <button class="action" id="tbl-del-col">- Columna</button>
-        </div>
-        <div class="grid-2">
-          <div class="field"><label>Borde color</label><input type="color" id="tbl-bc" value="#94a3b8"></div>
-          <div class="field"><label>Borde (px)</label><input type="number" id="tbl-bw" value="1"></div>
-          <div class="field"><label>Color celdas</label><input type="color" id="tbl-cell" value="#ffffff"></div>
-          <div class="field"><label>Padding celda</label><input type="number" id="tbl-pad" value="8"></div>
-        </div>
-      </section>
-
-      <section class="section" id="sec-lienzo">
-        <div class="grid-2">
-          <div class="field"><label>Grid (px)</label><input type="number" id="canvas-grid" value="20"></div>
-          <div class="field"><label>Snap a grid</label>
-            <select id="canvas-snap"><option value="on">on</option><option value="off">off</select>
+          <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
+            <div class="card" style="background-color: #2c3e50; color: white;"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text text-white">Meta de Reciclaje</h5>
+                <p class="card-text editable-text text-white">Aumentar la tasa de reciclaje de plásticos y papel al 40% en los próximos 6 meses.</p>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
-    </div>
-  </aside>
+      </div>
 
-  <section class="canvas-wrap">
-    <div class="canvas-toolbar" id="canvas-toolbar">
-      <span style="font-weight:800;color:#334155" class="label">Lienzo</span>
-      <div style="margin-left:auto;display:flex;gap:8px" class="buttons">
-        <button class="tab" id="bring-front"><i class="fa-solid fa-arrow-up"></i> Frente</button>
-        <button class="tab" id="send-back"><i class="fa-solid fa-arrow-down"></i> Fondo</button>
-        <button class="tab" id="duplicate"><i class="fa-regular fa-copy"></i> Duplicar</button>
-        <button class="tab" id="remove"><i class="fa-regular fa-trash-can"></i> Eliminar</button>
+      <div id="section-indicadores" class="section-content">
+        <div class="hero-section" style="background: linear-gradient(135deg, #34495e 0%, #5d6d7e 100%);">
+          <h1 class="hero-title editable-text">Indicadores de Desempeño (KPIs)</h1>
+          <p class="hero-subtitle editable-text">
+            Visualice los datos en tiempo real sobre la generación, recolección y destino final de los residuos sólidos.
+          </p>
+        </div>
+        <div class="cards-row mt-3">
+          <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
+            <div class="card" style="background-color: #f8c471;"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text" style="color: #34495e;">Tasa de Generación Per Cápita</h5>
+                <p class="card-text editable-text">Cantidad promedio de residuos sólidos generados por persona al día (kg/hab/día).</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
+            <div class="card" style="background-color: #d6eaf8;"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text" style="color: #34495e;">Composición de Residuos</h5>
+                <p class="card-text editable-text">Porcentaje de residuos orgánicos, reciclables y rechazo en el total recolectado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="canvas" id="canvas">
-      </div>
-    <div class="floatbar" id="floatbar">
-      <button id="fb-dup" title="Duplicar"><i class="fa-regular fa-copy"></i><span>Duplicar</span></button>
-      <button id="fb-front" title="Traer al frente"><i class="fa-solid fa-arrow-up"></i><span>Frente</span></button>
-      <button id="fb-back" title="Enviar al fondo"><i class="fa-solid fa-arrow-down"></i><span>Fondo</span></button>
-      <button id="fb-del" title="Eliminar"><i class="fa-regular fa-trash-can"></i><span>Eliminar</span></button>
-    </div>
-  </section>
-</main>
 
-<div class="modal" id="auth">
-  <div class="sheet">
-    <button class="close-x" id="auth-close"><i class="fa-solid fa-xmark"></i></button>
-    <h2>Iniciar sesión</h2>
-    <div class="sheet-body">
-      <div class="field">
-        <label for="login-user">Usuario</label>
-        <input id="login-user" placeholder="admin / tecnico / viewer">
+      <div id="section-avances" class="section-content">
+        <div class="hero-section" style="background: linear-gradient(135deg, #f39c12 0%, #f7dc6f 100%); color: #343a40;">
+          <h1 class="hero-title editable-text" style="color: #343a40;">Monitor de Avances y Cumplimiento</h1>
+          <p class="hero-subtitle editable-text" style="color: #343a40;">
+            Seguimiento detallado de cada meta y acción implementada. Identifique cuellos de botella y éxitos.
+          </p>
+        </div>
+        <div class="cards-row mt-3">
+          <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
+            <div class="card" style="background-color: #a9cce3;"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text" style="color: #f39c12;">Progreso de la Meta (Gráficos)</h5>
+                <p class="card-text editable-text">Visualización de barras y líneas para comparar el objetivo vs. el avance actual.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
+            <div class="card" style="background-color: #52be80; color: white;"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text text-white">Tareas Pendientes y Logradas</h5>
+                <p class="card-text editable-text text-white">Listado interactivo de acciones necesarias para alcanzar las metas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="field">
-        <label for="login-pass">Contraseña</label>
-        <input id="login-pass" type="password" placeholder="1234">
+
+      <div id="section-reportes" class="section-content">
+        <div class="hero-section" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);">
+          <h1 class="hero-title editable-text">Generación de Documentos y Reportes</h1>
+          <p class="hero-subtitle editable-text">
+            Genere reportes anuales, trimestrales y de impacto ambiental en formato PDF o Excel.
+          </p>
+        </div>
+        <div class="cards-row mt-3">
+          <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
+            <div class="card" style="background-color: #d5dbdb;"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text" style="color: #2c3e50;">Reporte Anual de Sostenibilidad</h5>
+                <p class="card-text editable-text">Resumen ejecutivo y datos consolidados de la gestión de residuos del año.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
+            <div class="card" style="background-color: #bb8fce; color: white;"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text text-white">Reporte de Cumplimiento Normativo</h5>
+                <p class="card-text editable-text text-white">Documento que valida el apego a las leyes y regulaciones ambientales locales.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <button class="submit" id="btn-login">Entrar</button>
-      <button class="close-modal">Salir</button>
+
+      <div id="section-formularios" class="section-content">
+        <div class="hero-section" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+          <h1 class="hero-title editable-text">Encuestas y Recolección de Datos en Campo</h1>
+          <p class="hero-subtitle editable-text">
+            Acceda a los formularios externos utilizados para la medición y el análisis del comportamiento ciudadano.
+          </p>
+        </div>
+        <div class="cards-row mt-3">
+          <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
+            <div class="card text-white" style="background-color: #2980b9;" data-card-link="https://tally.so/r/nGA7LO"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text text-white">ENCUESTA COMPORTAMIENTO PROAMBIENTAL</h5>
+                <p class="card-text editable-text text-white">
+                    Formulario para medir la actitud ciudadana hacia el reciclaje y la autosustentabilidad.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
+            <div class="card text-white" style="background-color: #27ae60;" data-card-link="https://tally.so/r/3N1M0O"> 
+              <div class="card-body">
+                <h5 class="card-title editable-text text-white">MEDICIÓN DE DESECHOS SÓLIDOS (Daule)</h5>
+                <p class="card-text editable-text text-white">
+                    Encuesta técnica para la medición y caracterización de los desechos sólidos en la comunidad.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+
+  <div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title"><i class="fas fa-lock me-2"></i> Acceso al Sistema</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="inputEmail" class="form-label">Correo Electrónico</label>
+              <input type="email" class="form-control" id="inputEmail" value="a@ug.com" required>
+            </div>
+            <div class="mb-3">
+              <label for="inputPassword" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" id="inputPassword" value="1234" required>
+            </div>
+            <div class="d-grid">
+              <button type="button" class="btn btn-success mt-3" onclick="handleLogin()">Ingresar</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-(() => {
-    const NEXT_PUBLIC_SUPABASE_URL = "https://lhnluarfjyzheezfrexr.supabase.co";
-    const NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxobmx1YXJmanl6aGVlemZyZXhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ5NzYyOTAsImV4cCI6MjA3MDU1MjI5MH0.igYpeqlYnWW5i9NvOHSvlow3J-yDdEGgK6LRxYwvGY0";
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <script>
+    let isEditMode = false;
+    let isLoggedIn = false; // NUEVA VARIABLE DE ESTADO
+    let savedRange = null;
+    let activeEditable = null;
+    const MOVE_STEP = 1;
+    const CONTENT_PADDING = 100;
+    const RESTRICTED_SECTIONS = ['metas', 'avances', 'reportes']; // Secciones protegidas
+    
+    const MODERN_CARD_COLORS = [
+        { bg: '#5D6D7E', text: 'white' },
+        { bg: '#4CAF50', text: 'white' },
+        { bg: '#3498DB', text: 'white' },
+        { bg: '#F4D03F', text: '#343a40' },
+        { bg: '#A93226', text: 'white' },
+        { bg: '#9B59B6', text: 'white' },
+        { bg: '#F5B041', text: '#343a40' },
+        { bg: '#2ECC71', text: 'white' },
+    ];
 
-    async function saveToSupabase(page, html) {
-    try {
-        const res = await fetch(`${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/paginas`, {
-            method: "POST",
-            headers: {
-                "apikey": NEXT_PUBLIC_SUPABASE_ANON_KEY,
-                "Authorization": `Bearer ${NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-                "Content-Type": "application/json",
-                "Prefer": "resolution=merge-duplicates"
-            },
-            body: JSON.stringify({ nombre: page, contenido_html: html })
+    // --- Lógica de Navegación (SPA) ---
+    function showSection(sectionId) {
+        // 1. VALIDACIÓN DE RESTRICCIÓN
+        if (RESTRICTED_SECTIONS.includes(sectionId) && !isLoggedIn) {
+            // Mostrar mensaje sutil sin alert
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed top-0 start-50 translate-middle-x mt-3 p-3 bg-warning text-dark rounded shadow';
+            toast.style.zIndex = '1060';
+            toast.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span>Inicia sesión para acceder a esta sección</span>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            
+            // Eliminar el mensaje después de 3 segundos
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+            
+            if (sectionId !== 'inicio') {
+                 showSection('inicio'); // Redirige a inicio si el intento fue a otra página
+            }
+            return;
+        }
+
+        // 2. Muestra/Oculta secciones
+        document.querySelectorAll('.section-content').forEach(section => {
+            section.style.display = 'none';
+        });
+        const sectionToShow = document.getElementById(`section-${sectionId}`);
+        if (sectionToShow) {
+            sectionToShow.style.display = 'block';
+        }
+
+        // 3. Limpiar la selección y actualizar estados
+        if (activeEditable) {
+            activeEditable.classList.remove('active-editable');
+            const targetMovable = activeEditable.closest('.movable, .movable-card-wrapper');
+            if (targetMovable) setMovableTextEditMode(targetMovable, false);
+            else activeEditable.removeAttribute('contenteditable');
+            activeEditable = null;
+        }
+        updatePositionInputs();
+        // Espera un momento para asegurar que el contenido se cargue antes de medir la altura
+        setTimeout(updateContentHeight, 50);
+        
+        // 4. Reinicializa Draggable/Resizable para la nueva sección
+        initializeMovableElements();
+    }
+    
+    function navigateToCardLink(link) {
+        if (!link) return;
+
+        if (link.startsWith('http')) {
+            window.open(link, '_blank');
+        } else if (link.startsWith('#')) {
+            const sectionId = link.substring(1);
+            showSection(sectionId); // Usa la función con la validación
+        }
+    }
+
+
+    // --- Funciones de Mantenimiento de Altura ---
+    function updateContentHeight() {
+        const activeSection = document.querySelector('.section-content[style*="block"]');
+        if (!activeSection) return;
+
+        const movableElements = activeSection.querySelectorAll('.movable, .movable-card-wrapper');
+        let maxBottom = 0;
+
+        if (movableElements.length === 0) {
+            const cardsRow = activeSection.querySelector('.cards-row');
+            if (cardsRow) cardsRow.style.minHeight = '';
+            document.getElementById('mainContent').style.minHeight = '';
+            return; 
+        }
+
+        movableElements.forEach(el => {
+            const top = parseFloat(el.style.top.replace('px', '')) || 0;
+            const height = el.offsetHeight || 0; 
+            maxBottom = Math.max(maxBottom, top + height);
         });
 
-        if (!res.ok) {
-            // Si la respuesta no es exitosa, lanza un error
-            throw new Error(`Error de Supabase: ${res.status} ${res.statusText}`);
+        const container = activeSection.querySelector('.cards-row') || document.getElementById('mainContent');
+        const newMinHeight = maxBottom + CONTENT_PADDING;
+
+        if (container) {
+             container.style.minHeight = `${newMinHeight}px`;
         }
-
-        console.log("✅ Guardado en Supabase");
-    } catch (err) {
-        console.error("❌ Error guardando en Supabase", err);
     }
-}
 
-    async function loadFromSupabase(page) {
-        try {
-            const res = await fetch(`${NEXT_PUBLIC_SUPABASE_URL}/rest/v1/paginas?nombre=eq.${page}&select=contenido_html`, {
-                headers: {
-                    "apikey": NEXT_PUBLIC_SUPABASE_ANON_KEY,
-                    "Authorization": `Bearer ${NEXT_PUBLIC_SUPABASE_ANON_KEY}`
-                }
-            });
-            const data = await res.json();
-            if (data.length > 0) {
-                return data[0].contenido_html;
+    // --- Funciones de Formato, Posición y Elementos Movibles ---
+    // (Funciones saveSelection, restoreSelection, formatText, addLink, changeStyle, 
+    // updatePositionInputs, changePosition, changeSize, setMovableTextEditMode, 
+    // makeElementDraggableAndResizable, addTextBox, addRandomColoredCard, deleteSelectedElement
+    // Se mantienen igual a la versión anterior para no ser redundante, solo el entorno de ejecución cambia.)
+    // ************************************************************************************************
+    
+    function saveSelection() {
+      const sel = window.getSelection();
+      if (!sel || sel.rangeCount === 0) return;
+      if (activeEditable && activeEditable.getAttribute('contenteditable') === 'true' && activeEditable.contains(sel.focusNode)) {
+        savedRange = sel.getRangeAt(0).cloneRange();
+      }
+    }
+    function restoreSelection() {
+      if (!savedRange) return;
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(savedRange);
+    }
+    document.addEventListener('mouseup', saveSelection);
+    document.addEventListener('keyup', saveSelection);
+
+    function formatText(command) {
+        if (activeEditable && isEditMode) {
+            if (activeEditable.closest('.movable') || activeEditable.closest('.movable-card-wrapper')) {
+                setMovableTextEditMode(activeEditable.closest('.movable') || activeEditable.closest('.movable-card-wrapper'), true);
             }
-        } catch (err) {
-            console.error("❌ Error cargando de Supabase", err);
+            activeEditable.focus();
+            restoreSelection(); 
+            document.execCommand(command, false, null);
+            saveSelection();
         }
-        return null;
     }
-
-
-  const qs = sel => document.querySelector(sel);
-  const qsa = sel => Array.from(document.querySelectorAll(sel));
-  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-  const mainWrap = qs('#main-wrap');
-  const canvas = qs('#canvas');
-  const sidebar = qs('#sidebar');
-  const toggleEdit = qs('#toggle-edit');
-  const openAuth = qs('#open-auth');
-  const logoutBtn = qs('#logout-btn');
-  const whoami = qs('#whoami');
-  const navLinks = qsa('.nav .nav-link');
-  const auth = qs('#auth');
-  const closeAuthBtn = qs('.close-modal');
-  const txtContentArea = qs('#txt-content');
-  const floatbar = qs('#floatbar');
-  const canvasToolbar = qs('#canvas-toolbar');
-  
-  let editMode = false;
-  let role = 'viewer';
-  let selected = null;
-  let grid = 20;
-  let snap = true;
-  let currentEditable = null;
-  let currentPage = 'home';
-  const pageContent = {};
-
-  /* ======= NAVIGATION ======= */
-  navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-          e.preventDefault();
-          const pageName = link.dataset.page;
-          navigateToPage(pageName);
-      });
-  });
-
-  function navigateToPage(pageName) {
-    if (currentPage === pageName) return;
-
-    savePageContent();
-    loadPageContent(pageName);
     
-    navLinks.forEach(l => l.classList.remove('active'));
-    const newActiveLink = qs(`[data-page="${pageName}"]`);
-    if (newActiveLink) {
-      newActiveLink.classList.add('active');
-    }
-  }
-
-  function loadPageContent(pageName) {
-      currentPage = pageName;
-      let content = pageContent[pageName];
-      if (!content) {
-          content = getDefaultContent(pageName);
-      }
-      canvas.innerHTML = content;
-      postLoad();
-      adjustCanvasSize();
-      updateCardAccessibility();
-  }
-
-  function savePageContent() {
-      pageContent[currentPage] = canvas.innerHTML;
-      localStorage.setItem('savedPageContent', JSON.stringify(pageContent));
-  }
-
-  function getDefaultContent(page) {
-      const pageData = {
-          home: {
-              title: "Sistema de Gestión de Residuos Sólidos",
-              subtitle: "La plataforma para monitorear indicadores, gestionar metas y generar reportes para una gestión ambiental eficiente.",
-              cards: [
-                  { title: "Gestión de Metas", desc: "Establece y sigue tus objetivos de sostenibilidad de manera intuitiva.", icon: "fa-bullseye", color: "#38a169", class: "metas", page: "metas", disabled: true },
-                  { title: "Dashboard de Indicadores", desc: "Visualiza en tiempo real el rendimiento del sistema de gestión.", icon: "fa-chart-line", color: "#4299e1", class: "indicadores", page: "indicadores", disabled: false },
-                  { title: "Seguimiento de Avances", desc: "Revisa el progreso de tus proyectos de reciclaje y reducción de residuos.", icon: "fa-chart-area", color: "#ecc94b", class: "avances", page: "avances", disabled: true },
-                  { title: "Generación de Reportes", desc: "Crea y exporta informes detallados para auditorías o análisis.", icon: "fa-file-lines", color: "#e53e3e", class: "reportes", page: "reportes", disabled: true },
-                  { title: "Formularios de Datos", desc: "Ingresa y gestiona datos a través de formularios personalizados.", icon: "fa-file-alt", color: "#673ab7", class: "formularios", page: "formularios", disabled: false },
-              ]
-          },
-          indicadores: {
-              title: "Dashboard de Indicadores Clave",
-              subtitle: "Aquí podrás ver todos los indicadores de gestión de residuos en tiempo real. Utiliza las herramientas de edición para añadir gráficos y métricas.",
-              cards: [
-                  { title: "Métricas de Reciclaje", desc: "Cantidad de material reciclado por mes, tasa de recuperación, etc.", icon: "fa-recycle", color: "#38a169", class: "metas" },
-                  { title: "Indicadores Financieros", desc: "Costos de gestión, ingresos por ventas de material, etc.", icon: "fa-dollar-sign", color: "#4299e1", class: "indicadores" },
-                  { title: "Rendimiento Operacional", desc: "Eficiencia de rutas de recolección, tiempo de procesamiento, etc.", icon: "fa-road", color: "#ecc94b", class: "avances" },
-                  { title: "Impacto Ambiental", desc: "Reducción de emisiones de CO2, ahorro de agua, etc.", icon: "fa-tree", color: "#e53e3e", class: "reportes" },
-              ]
-          },
-          metas: {
-              title: "Gestión de Metas de Sostenibilidad",
-              subtitle: "Define, monitorea y ajusta tus metas ambientales. Un paso a la vez, hacia un futuro más sostenible.",
-              cards: [
-                  { title: "Metas de Reducción", desc: "Objetivos para reducir el volumen de residuos generados.", icon: "fa-minimize", color: "#38a169", class: "metas" },
-                  { title: "Metas de Reciclaje", desc: "Aumentar la tasa de reciclaje en un porcentaje específico.", icon: "fa-trash-arrow-up", color: "#4299e1", class: "indicadores" },
-                  { title: "Metas de Capacitación", desc: "Número de empleados o comunidades capacitadas en gestión de residuos.", icon: "fa-chalkboard-user", color: "#ecc94b", class: "avances" },
-                  { title: "Metas de Certificación", desc: "Lograr certificaciones de gestión ambiental.", icon: "fa-award", color: "#e53e3e", class: "reportes" },
-              ]
-          },
-          avances: {
-              title: "Progreso y Avances del Proyecto",
-              subtitle: "Visualiza el avance de tus iniciativas y proyectos. Celebra tus logros y ajusta lo que sea necesario para alcanzar el éxito.",
-              cards: [
-                  { title: "Progreso en Proyectos", desc: "Seguimiento del estado de proyectos específicos, como la implementación de un nuevo centro de acopio.", icon: "fa-tasks", color: "#38a169", class: "metas" },
-                  { title: "Hitos Alcanzados", desc: "Registro de logros importantes, como la firma de un nuevo acuerdo con un nuevo socio de reciclaje.", icon: "fa-star", color: "#4299e1", class: "indicadores" },
-                  { title: "Análisis de Desempeño", desc: "Evaluación del rendimiento a lo largo del tiempo para identificar tendencias y áreas de mejora.", icon: "fa-arrow-trend-up", color: "#ecc94b", class: "avances" },
-                  { title: "Información de Equipo", desc: "Colabora y coordina con tu equipo para asegurar que todos estén en la misma página.", icon: "fa-users", color: "#e53e3e", class: "reportes" },
-              ]
-          },
-          reportes: {
-              title: "Generación y Descarga de Reportes",
-              subtitle: "Crea informes personalizados para tus stakeholders o para auditorías internas. Todos los datos, a tu alcance.",
-              cards: [
-                  { title: "Reportes Mensuales", desc: "Genera informes automáticos con datos del último mes.", icon: "fa-calendar-alt", color: "#38a169", class: "metas" },
-                  { title: "Reportes Financieros", desc: "Accede a reportes detallados sobre ingresos y gastos.", icon: "fa-chart-pie", color: "#4299e1", class: "indicadores" },
-                  { title: "Reportes de Cumplimiento", desc: "Prepara informes para cumplir con regulaciones y normativas.", icon: "fa-balance-scale", color: "#ecc94b", class: "avances" },
-                  { title: "Reportes Personalizados", desc: "Crea tus propios informes desde cero con los datos que necesites.", icon: "fa-cog", color: "#e53e3e", class: "reportes" },
-              ]
-          },
-          formularios: {
-            title: "Gestión y Creación de Formularios",
-            subtitle: "Diseña, despliega y administra formularios para la recolección de datos en campo. Agiliza la entrada de información.",
-            cards: [
-              { title: "Formularios de Inspección", desc: "Crea formularios para inspecciones de calidad o seguridad en las rutas.", icon: "fa-clipboard-check", color: "#673ab7", class: "formularios" },
-              { title: "Reporte de Incidentes", desc: "Permite a los técnicos registrar incidentes o anomalías al instante.", icon: "fa-exclamation-triangle", color: "#d32f2f", class: "reportes" },
-              { title: "Encuestas de Satisfacción", desc: "Recopila feedback de comunidades o clientes de forma sencilla.", icon: "fa-smile", color: "#fbc02d", class: "avances" },
-              { title: "Registro de Recolección", desc: "Un formulario rápido para registrar el tipo y peso de los residuos recolectados.", icon: "fa-truck-loading", color: "#2e7d32", class: "metas" },
-            ]
-          }
-      };
-      
-      const data = pageData[page];
-      let cardHTML = '';
-      if (data && data.cards) {
-          data.cards.forEach(card => {
-              const isDisabled = card.disabled;
-              const cardClass = `card ${card.class} ${isDisabled ? 'disabled' : ''}`;
-              const dataAttr = isDisabled ? `data-disabled-message="Acceso denegado. Esta función no está disponible en este momento."` : '';
-
-              cardHTML += `
-              <div class="${cardClass}" data-page="${card.page || ''}" ${dataAttr}>
-                  <div class="card-icon" style="background:${card.color};"><i class="fa-solid ${card.icon}"></i></div>
-                  <div class="card-content">
-                      <div class="card-title editable-text">${card.title}</div>
-                      <div class="card-desc editable-text">${card.desc}</div>
-                  </div>
-              </div>`;
-          });
-      }
-
-      const heroHTML = data ? `
-          <div class="hero">
-              <h1 class="editable-text">${data.title}</h1>
-              <p class="editable-text">${data.subtitle}</p>
-          </div>` : '';
-
-      return `
-        ${heroHTML}
-        <div class="cards">
-            ${cardHTML}
-        </div>
-      `;
-  }
-
-  function updateCardAccessibility() {
-    const cards = qsa('.cards .card');
-    cards.forEach(card => {
-        const isRestricted = card.dataset.page === 'metas' || card.dataset.page === 'avances' || card.dataset.page === 'reportes';
-        if (isRestricted) {
-            if (role === 'admin' || role === 'tecnico') {
-                card.classList.remove('disabled');
-                card.removeAttribute('data-disabled-message');
-            } else {
-                card.classList.add('disabled');
-                card.dataset.disabledMessage = "Acceso denegado. Esta función no está disponible en este momento.";
+    function addLink() {
+        if (activeEditable && isEditMode) {
+            if (activeEditable.closest('.movable') || activeEditable.closest('.movable-card-wrapper')) {
+                setMovableTextEditMode(activeEditable.closest('.movable') || activeEditable.closest('.movable-card-wrapper'), true);
             }
+            activeEditable.focus();
+            restoreSelection();
+            
+            const url = prompt("Introduce la URL:", "http://");
+            if (url && url !== "http://") document.execCommand("createLink", false, url);
+            saveSelection();
         }
-    });
-  }
-
-  /* ======= LOGIN ======= */
-  closeAuthBtn.onclick = () => auth.style.display = 'none';
-  qs('#auth-close').onclick = () => auth.style.display='none';
-  openAuth.onclick = () => auth.style.display='flex';
-
-  const loginInputs = qsa('#auth input, #auth select');
-  loginInputs.forEach(input => {
-    input.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        qs('#btn-login').click();
-      }
-    });
-  });
-  
-  const navRestricted = qsa('.nav .nav-link.disabled');
-
-  qs('#btn-login').onclick = () => {
-    const u = qs('#login-user').value.trim();
-    const p = qs('#login-pass').value.trim();
-
-    if (p === '1234') {
-      let tempRole = 'viewer';
-      if (u === 'admin') tempRole = 'admin';
-      else if (u === 'tecnico') tempRole = 'tecnico';
-      
-      role = tempRole;
-      whoami.style.display = 'inline';
-      whoami.textContent = `Hola, ${u}`;
-      openAuth.style.display = 'none';
-      logoutBtn.style.display = 'inline-block';
-      auth.style.display = 'none';
-
-      if (role === 'admin' || role === 'tecnico') {
-        toggleEdit.style.display = 'inline-block';
-        navRestricted.forEach(a => a.classList.remove('disabled'));
-      } else {
-        toggleEdit.style.style = 'none';
-        navRestricted.forEach(a => a.classList.add('disabled'));
-      }
-      updateCardAccessibility();
-    } else {
-      alert('Contraseña incorrecta. Use "1234".');
-    }
-  };
-
-  function resetCanvasSelection(){
-    qsa('.selected').forEach(s=>s.classList.remove('selected'));
-    selected = null;
-    hideFloatbar();
-    qs('#sec-general').classList.add('active');
-    qsa('#prop-tabs button').forEach(b => b.classList.remove('active'));
-    qs('[data-tab="general"]').classList.add('active');
-  }
-
-  logoutBtn.onclick = () => {
-    role = 'viewer';
-    whoami.style.display='none';
-    openAuth.style.display='inline-block';
-    logoutBtn.style.display='none';
-    toggleEdit.style.display='none';
-    editMode = false;
-    toggleEdit.classList.remove('active');
-    sidebar.classList.remove('active');
-    mainWrap.classList.remove('edit-active');
-    navRestricted.forEach(a=>a.classList.add('disabled'));
-    resetCanvasSelection();
-    updateEditModeStyles();
-    updateCardAccessibility();
-  };
-  
-  function updateEditModeStyles() {
-    sidebar.classList.toggle('active', editMode);
-    mainWrap.classList.toggle('edit-active', editMode);
-    canvas.classList.toggle('editing', editMode);
-    canvasToolbar.classList.toggle('active', editMode);
-    
-    // Make all existing home elements interactive
-    qsa('.editable-text, .hero, .card').forEach(el => {
-        el.onmousedown = (e) => {
-            if (editMode) {
-                e.stopPropagation();
-                selectItem(el);
-            }
-        };
-        el.ondblclick = (e) => {
-            if (editMode) {
-                e.preventDefault();
-                e.stopPropagation();
-                const editableTarget = e.target.closest('.editable-text') || e.target;
-                if (editableTarget) {
-                    editableTarget.setAttribute('contenteditable', 'true');
-                    editableTarget.focus();
-                    currentEditable = editableTarget;
-                    updatePropInputs(el);
-                }
-            }
-        };
-    });
-
-    // Handle new canvas items
-    qsa('.canvas-item').forEach(item => {
-      if (editMode) {
-        makeInteractive(item);
-      } else {
-        item.classList.remove('selected');
-        item.classList.remove('selectable');
-        qsa('.handle', item).forEach(h => h.remove());
-        item.onmousedown = null;
-        item.ondblclick = null;
-      }
-    });
-
-    // Handle contenteditable for all elements
-    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-      if (!editMode) {
-          el.removeAttribute('contenteditable');
-      }
-    });
-
-    if (!editMode) {
-      selected = null;
-      hideFloatbar();
-    }
-  }
-
-  /* ======= EDIT MODE ======= */
-  
-toggleEdit.onclick = () => {
-    if(role!=='admin' && role!=='tecnico') return;
-    editMode = !editMode;
-    toggleEdit.classList.toggle('active', editMode);
-    updateEditModeStyles();
-
-    // 🚀 Cuando se desactiva, guarda en Supabase
-    if (!editMode) {
-      savePageContent(); // localStorage
-      saveToSupabase(currentPage, canvas.innerHTML); // nube (Supabase)
-    }
-  };
-
-
-
-  /* ======= HISTORY (UNDO/REDO) ======= */
-  const history = [];
-  const redo = [];
-  let saveTimeout;
-  const saveSnapshot = (delay=300) => {
-    if(saveTimeout) clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(()=>{
-      pageContent[currentPage] = canvas.innerHTML;
-      localStorage.setItem('savedPageContent', JSON.stringify(pageContent));
-      history.push(pageContent[currentPage]);
-      if(history.length > 80) history.shift();
-      redo.length = 0;
-      saveTimeout = null;
-    }, delay);
-  };
-  qs('#undo').onclick = () => {
-    if(!history.length) return;
-    redo.push(canvas.innerHTML);
-    canvas.innerHTML = history.pop();
-    pageContent[currentPage] = canvas.innerHTML;
-    localStorage.setItem('savedPageContent', JSON.stringify(pageContent));
-    postLoad();
-  };
-  qs('#redo').onclick = () => {
-    if(!redo.length) return;
-    history.push(canvas.innerHTML);
-    canvas.innerHTML = redo.pop();
-    pageContent[currentPage] = canvas.innerHTML;
-    localStorage.setItem('savedPageContent', JSON.stringify(pageContent));
-    postLoad();
-  };
-  const postLoad = () => {
-    qsa('.canvas-item').forEach(makeInteractive);
-    updateEditModeStyles();
-    selected = null;
-    hideFloatbar();
-    adjustCanvasSize();
-  };
-  window.addEventListener('beforeunload', savePageContent);
-
-  /* ======= INSERT ======= */
-  qsa('[data-insert]').forEach(btn=>{
-    btn.onclick=()=>{
-      if(!editMode) return;
-      const type = btn.dataset.insert;
-      const item = document.createElement('div');
-      item.className = 'canvas-item selectable';
-      item.style.left = '40px'; item.style.top = '40px';
-      item.style.width = '240px'; item.style.height = '60px';
-      item.dataset.type = type;
-
-      if(type==='h2'){ item.innerHTML = '<h2 class="canvas-h2 editable-text">Nuevo título</h2>'; }
-      if(type==='p'){ item.innerHTML = '<p class="canvas-p editable-text">Nuevo texto</p>'; item.style.height='80px'; }
-      if(type==='img'){ item.innerHTML = `<img src="https://i.imgur.com/kS9QJkP.png" alt="Imagen" class="canvas-img" draggable="false">`; item.style.height='160px'; }
-      if(type==='button'){ item.innerHTML = '<a href="#" class="canvas-button editable-text" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">Botón</a>'; item.style.height='48px'; }
-      if(type==='iframe'){ item.innerHTML = `<div class="video-wrapper" style="width:100%;height:100%;position:relative;">
-        <iframe src="" width="100%" height="100%" style="border:0;border-radius:10px;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>`; item.style.width='360px'; item.style.height='200px'; }
-      if(type==='table'){ item.style.width='360px'; item.style.height='180px';
-        item.innerHTML = `<table class="canvas-table">
-          <tbody>
-            <tr><td contenteditable="true">A1</td><td contenteditable="true">B1</td></tr>
-            <tr><td contenteditable="true">A2</td><td contenteditable="true">B2</td></tr>
-          </tbody></table>`;
-      }
-
-      saveSnapshot();
-      canvas.appendChild(item);
-      makeInteractive(item);
-      selectItem(item);
-      adjustCanvasSize();
-    }
-  });
-
-  /* ======= INTERACTIVITY (move/resize/rotate) ======= */
-  function makeInteractive(el){
-    el.classList.add('selectable');
-    
-    qsa('.handle', el).forEach(h => h.remove());
-
-    if(el.classList.contains('canvas-item')){
-      ['nw','n','ne','e','se','s','sw','w','rotate'].forEach(pos=>{
-        const h = document.createElement('div');
-        h.className = 'handle '+pos;
-        el.appendChild(h);
-      });
-    }
-
-    el.onmousedown = e => {
-      if(!editMode) return;
-      const target = e.target;
-      selectItem(el);
-      
-      document.querySelectorAll('[contenteditable="true"]').forEach(editable => {
-        if (editable !== target) {
-          editable.removeAttribute('contenteditable');
-        }
-      });
-
-      if(el.classList.contains('canvas-item') && target.classList.contains('rotate')){
-        e.preventDefault();
-        const rect = el.getBoundingClientRect();
-        const cx = rect.left + rect.width/2;
-        const cy = rect.top + rect.height/2;
-        const startAngle = Math.atan2(e.clientY - cy, e.clientX - cx);
-        const startRot = getRotation(el);
-
-        const move = ev => {
-          const a = Math.atan2(ev.clientY - cy, ev.clientX - cx);
-          const deg = (a - startAngle) * 180/Math.PI + startRot;
-          el.style.transform = `rotate(${deg}deg)`;
-          updatePropInputs(el);
-          showFloatbar(el);
-        };
-        const up = ()=>{ saveSnapshot(); window.removeEventListener('mousemove',move); window.removeEventListener('mouseup',up); };
-        window.addEventListener('mousemove',move);
-        window.addEventListener('mouseup',up);
-        return;
-      }
-
-      if(el.classList.contains('canvas-item') && target.classList.contains('handle')){
-        e.preventDefault();
-        const pos = target.classList[1];
-        const startX = e.clientX, startY = e.clientY;
-        const start = getRect(el);
-        const move = ev=>{
-          const dx = ev.clientX - startX;
-          const dy = ev.clientY - startY;
-          let {x,y,w,h} = {...start};
-
-          if(pos.includes('e')) w = start.w + dx;
-          if(pos.includes('s')) h = start.h + dy;
-          if(pos.includes('w')) { w = start.w - dx; x = start.x + dx; }
-          if(pos.includes('n')) { h = start.h - dy; y = start.y + dy; }
-
-          w = Math.max(40,w); h = Math.max(40,h);
-          if(snap){ x = Math.round(x/grid)*grid; y = Math.round(y/grid)*grid; w = Math.round(w/grid)*grid; h = Math.round(h/grid)*grid; }
-          el.style.left = x+'px'; el.style.top = y+'px'; el.style.width = w+'px'; el.style.height = h+'px';
-          updatePropInputs(el); showFloatbar(el);
-          adjustCanvasSize();
-        };
-        const up=()=>{ saveSnapshot(); window.removeEventListener('mousemove',move); window.removeEventListener('mouseup',up); };
-        window.addEventListener('mousemove',move); window.addEventListener('mouseup',up);
-        return;
-      }
-
-      if(el.classList.contains('canvas-item') && !target.closest('[contenteditable="true"]')){
-        e.preventDefault();
-        const startX = e.clientX, startY = e.clientY;
-        const start = getRect(el);
-        const move = ev=>{
-          let x = start.x + (ev.clientX - startX);
-          let y = start.y + (ev.clientY - startY);
-          if(snap){ x = Math.round(x/grid)*grid; y = Math.round(y/grid)*grid; }
-          el.style.left = x+'px'; el.style.top = y+'px';
-          showFloatbar(el);
-          updatePropInputs(el);
-          adjustCanvasSize();
-        };
-        const up = ()=>{ saveSnapshot(); window.removeEventListener('mousemove',move); window.removeEventListener('mouseup',up);};
-        window.addEventListener('mousemove',move);
-        window.addEventListener('mouseup',up);
-      }
-    };
-
-    el.ondblclick = (e)=>{
-      const target = e.target;
-      if(target.tagName === 'A' || target.tagName === 'DIV' || target.tagName === 'P' || target.tagName === 'H1' || target.tagName === 'H2' || target.tagName === 'TD' || target.tagName === 'LI' || target.classList.contains('editable-text')){
-          target.setAttribute('contenteditable','true');
-          target.focus();
-          currentEditable = target;
-          updatePropInputs(selected);
-          e.stopPropagation();
-      }
-    };
-
-    el.addEventListener('focusout', (e)=>{
-      const target = e.target;
-      if(['H1','P','H2','TD','LI','A','DIV'].includes(target.tagName) || target.classList.contains('editable-text')){
-        target.removeAttribute('contenteditable');
-        currentEditable = null;
-        saveSnapshot();
-      }
-    });
-
-  }
-
-  function getRect(el){
-    if (el.classList.contains('canvas-item')) {
-      const style = window.getComputedStyle(el);
-      const x = parseInt(style.left) || el.offsetLeft;
-      const y = parseInt(style.top) || el.offsetTop;
-      const w = parseInt(style.width) || el.offsetWidth;
-      const h = parseInt(style.height) || el.offsetHeight;
-      return { x, y, w, h };
-    } else {
-      const rect = el.getBoundingClientRect();
-      const canvasRect = canvas.getBoundingClientRect();
-      const x = rect.left - canvasRect.left;
-      const y = rect.top - canvasRect.top;
-      return { x, y, w: rect.width, h: rect.height };
-    }
-  }
-
-  function getRotation(el){
-    const m = (el.style.transform||'').match(/rotate\(([-\d.]+)deg\)/);
-    return m ? parseFloat(m[1]) : 0;
-  }
-
-  /* ======= SELECCIÓN Y FLOATBAR ======= */
-  function selectItem(el){
-    if(!editMode) return;
-    qsa('.selected').forEach(s=>s.classList.remove('selected'));
-    el.classList.add('selected'); selected = el;
-    showFloatbar(el);
-    updatePropInputs(el);
-    highlightTabByType(el);
-  }
-  function showFloatbar(el){
-    const r = el.getBoundingClientRect();
-    const canvasRect = canvas.getBoundingClientRect();
-    const scrollX = canvas.scrollLeft;
-    const scrollY = canvas.scrollTop;
-    
-    // Calculate position relative to the canvas
-    const newLeft = (r.left - canvasRect.left + scrollX) + (r.width / 2);
-    const newTop = r.top - canvasRect.top + scrollY - floatbar.offsetHeight - 8;
-    
-    floatbar.style.left = newLeft + 'px';
-    floatbar.style.top = newTop + 'px';
-    floatbar.style.display = 'flex';
-
-    const isCanvasItem = el.classList.contains('canvas-item');
-    const isHero = el.classList.contains('hero');
-
-    qs('#fb-front').style.display = isCanvasItem ? 'flex' : 'none';
-    qs('#fb-back').style.display = isCanvasItem ? 'flex' : 'none';
-    qs('#fb-del').style.display = isHero ? 'none' : 'flex';
-  }
-  function hideFloatbar(){ floatbar.style.display='none'; }
-
-  qs('#fb-dup').onclick = ()=>{ 
-    if(!selected) return; 
-    saveSnapshot(); 
-    const clone = selected.cloneNode(true);
-    
-    // Remove selected class from the cloned element
-    clone.classList.remove('selected');
-    
-    if (selected.classList.contains('canvas-item')) {
-      const rect = getRect(selected);
-      clone.style.left = (rect.x + 20) + 'px';
-      clone.style.top = (rect.y + 20) + 'px';
-      canvas.appendChild(clone); 
-      makeInteractive(clone);
-    } else {
-        const parent = selected.parentElement;
-        parent.appendChild(clone);
     }
     
-    selectItem(clone); 
-    adjustCanvasSize(); 
-  };
-
-  qs('#fb-front').onclick = ()=>{ 
-    if(!selected) return; 
-    saveSnapshot(); 
-    let currentZ = parseInt(window.getComputedStyle(selected).zIndex) || 1;
-    selected.style.zIndex = Math.max(currentZ, 2) + 1;
-  };
-
-  qs('#fb-back').onclick = ()=>{ 
-    if(!selected) return; 
-    saveSnapshot(); 
-    let currentZ = parseInt(window.getComputedStyle(selected).zIndex) || 1;
-    selected.style.zIndex = Math.max(1, currentZ - 1);
-  };
-
-  qs('#fb-del').onclick = ()=>{ 
-    if(!selected) return; 
-    saveSnapshot(); 
-    selected.remove();
-    selected=null; 
-    hideFloatbar(); 
-    adjustCanvasSize(); 
-  };
-
-  qs('#duplicate').onclick = ()=> qs('#fb-dup').click();
-  qs('#bring-front').onclick = ()=> qs('#fb-front').click();
-  qs('#send-back').onclick = ()=> qs('#fb-back').click();
-  qs('#remove').onclick = ()=> qs('#fb-del').click();
-
-  canvas.addEventListener('mousedown', (e)=>{ if(!editMode) return; if(e.target===canvas){ resetCanvasSelection(); }});
-  
-  document.addEventListener('mousedown', (e) => {
-    if (editMode) {
-      const target = e.target;
-      const isClickInsideCanvas = canvas.contains(target);
-      const isClickInsideSidebar = sidebar.contains(target);
-      const isClickInsideFloatbar = floatbar.contains(target);
-      const isSelectableTarget = target.closest('.selectable, .editable-text, .hero, .card');
-
-      if (!isSelectableTarget && !isClickInsideSidebar && !isClickInsideFloatbar) {
-        resetCanvasSelection();
-      }
-    }
-  });
-  
-  // New event listener for home page elements
-  canvas.addEventListener('click', (e) => {
-    if (!editMode) {
-      const card = e.target.closest('.card');
-      if (card) {
-          if (card.classList.contains('disabled')) {
-              e.preventDefault();
-              const message = card.dataset.disabledMessage || "Acceso denegado.";
-              alert(message);
-              return;
-          }
-          if (card.dataset.page) {
-              e.preventDefault();
-              navigateToPage(card.dataset.page);
-              return;
-          }
-      }
-    }
-
-    let target = e.target;
-    let selectableElement = target.closest('.selectable, .editable-text, .hero, .card');
-
-    if (selectableElement) {
-        selectItem(selectableElement);
-    } else {
-        resetCanvasSelection();
-    }
-  });
-  
-
-  /* ======= PROPIEDADES DINÁMICAS (EN TIEMPO REAL) ======= */
-  const tabBtns = qsa('#prop-tabs .tab');
-  const sections = {
-    general: qs('#sec-general'), texto: qs('#sec-texto'), imagen: qs('#sec-imagen'),
-    video: qs('#sec-video'), boton: qs('#sec-boton'), tabla: qs('#sec-tabla'), lienzo: qs('#sec-lienzo')
-  };
-  tabBtns.forEach(b=>{ b.onclick=()=>{ tabBtns.forEach(x=>x.classList.remove('active')); b.classList.add('active'); Object.values(sections).forEach(s=>s.classList.remove('active')); sections[b.dataset.tab].classList.add('active'); }});
-
-  qsa('#sec-general input, #sec-general select').forEach(input => input.addEventListener('input', updateGeneralProps));
-  qsa('#sec-texto input, #sec-texto select').forEach(input => input.addEventListener('input', updateTextProps));
-  qsa('#sec-imagen input, #sec-imagen select').forEach(input => input.addEventListener('input', updateImageProps));
-  qsa('#sec-video input, #sec-video select').forEach(input => input.addEventListener('input', updateVideoProps));
-  qsa('#sec-boton input, #sec-boton select').forEach(input => input.addEventListener('input', updateButtonProps));
-  qsa('#sec-tabla input, #sec-tabla select').forEach(input => input.addEventListener('input', updateTableProps));
-  qsa('#sec-lienzo input, #sec-lienzo select').forEach(input => input.addEventListener('input', updateCanvasProps));
-
-  txtContentArea.addEventListener('input', () => {
-    if (currentEditable) {
-      currentEditable.textContent = txtContentArea.value;
-      saveSnapshot();
-    }
-    txtContentArea.style.height = 'auto';
-    txtContentArea.style.height = txtContentArea.scrollHeight + 'px';
-  });
-
-  const videoUploadInput = qs('#video-upload');
-  qs('#upload-btn').onclick = () => { videoUploadInput.click(); };
-  videoUploadInput.onchange = (e) => { const file = e.target.files[0]; if (file) { const url = URL.createObjectURL(file); qs('#vid-src').value = url; if (selected) { updateVideoProps(); } }};
-
-  const imageUploadInput = qs('#image-upload');
-  imageUploadInput.onchange = (e) => {
-    const file = e.target.files[0];
-    if (file && selected && selected.dataset.type === 'img') {
-      const img = selected.querySelector('img');
-      if (img) {
-        const url = URL.createObjectURL(file);
-        img.src = url;
-        const tempImg = new Image();
-        tempImg.onload = function() {
-          selected.style.width = this.naturalWidth + 'px';
-          selected.style.height = this.naturalHeight + 'px';
-          updatePropInputs(selected);
-          saveSnapshot();
-          URL.revokeObjectURL(tempImg.src);
-        };
-        tempImg.src = url;
-        qs('#img-src').value = url;
-      }
-    }
-  };
-
-  function updateGeneralProps(){
-    if(!selected) return;
-    saveSnapshot();
-    const x = parseInt(qs('#gen-x').value)||0;
-    const y = parseInt(qs('#gen-y').value)||0;
-    const w = Math.max(40, parseInt(qs('#gen-w').value)||100);
-    const h = Math.max(40, parseInt(qs('#gen-h').value)||100);
-    if (selected.classList.contains('canvas-item')) {
-      selected.style.left = (snap?Math.round(x/grid)*grid:x)+'px';
-      selected.style.top  = (snap?Math.round(y/grid)*grid:y)+'px';
-      selected.style.width = (snap?Math.round(w/grid)*grid:w)+'px';
-      selected.style.height = (snap?Math.round(h/grid)*grid:h)+'px';
-    } else {
-        selected.style.width = w + 'px';
-        selected.style.height = h + 'px';
-    }
-    
-    selected.style.backgroundColor = qs('#gen-bg').value;
-    selected.style.borderColor = qs('#gen-bc').value;
-    selected.style.borderWidth = (parseInt(qs('#gen-bw').value)||0)+'px';
-    selected.style.borderStyle = 'solid';
-    selected.style.borderRadius = (parseInt(qs('#gen-br').value)||0)+'px';
-    selected.style.padding = (parseInt(qs('#gen-pad').value)||0)+'px';
-    const sh = qs('#gen-shadow').value;
-    selected.style.boxShadow = sh==='sm'?'0 6px 10px rgba(0,0,0,.08)': sh==='md'?'0 10px 20px rgba(0,0,0,.12)': sh==='lg'?'0 18px 30px rgba(0,0,0,.18)':'none';
-    const rot = parseInt(qs('#gen-rot').value)||0;
-    selected.style.transform = `rotate(${rot}deg)`;
-    selected.style.zIndex = parseInt(qs('#gen-z').value)||1;
-    showFloatbar(selected);
-    adjustCanvasSize();
-  }
-
-  function updateTextProps(){
-    if(!currentEditable) return;
-    saveSnapshot();
-    currentEditable.style.fontFamily = qs('#txt-font').value;
-    currentEditable.style.fontSize = (parseInt(qs('#txt-size').value)||18)+'px';
-    currentEditable.style.color = qs('#txt-color').value;
-    currentEditable.style.textAlign = qs('#txt-align').value;
-    adjustCanvasSize();
-  }
-
-  function updateImageProps(){
-    if(!selected) return;
-    const img = selected.querySelector('img'); if(!img) return;
-    saveSnapshot();
-    const src=qs('#img-src').value.trim(); if(src) img.src=src;
-    img.alt = qs('#img-alt').value;
-    img.style.objectFit = qs('#img-fit').value;
-    const w = parseInt(qs('#img-w').value); const h=parseInt(qs('#img-h').value);
-    if(w) selected.style.width = (snap?Math.round(w/grid)*grid:w)+'px';
-    if(h) selected.style.height = (snap?Math.round(h/grid)*grid:h)+'px';
-    adjustCanvasSize();
-  }
-
-  function updateVideoProps(){
-    if(!selected) return;
-    const iframe = selected.querySelector('iframe'); if(!iframe) return;
-    saveSnapshot();
-    let src = qs('#vid-src').value.trim();
-    iframe.src = src || '';
-    const w = parseInt(qs('#vid-w').value); const h = parseInt(qs('#vid-h').value);
-    if(w) selected.style.width = (snap ? Math.round(w / grid) * grid : w) + 'px';
-    if(h) selected.style.height = (snap ? Math.round(h / grid) * grid : h) + 'px';
-    adjustCanvasSize();
-  }
-
-  function updateButtonProps(){
-    if(!selected) return;
-    const a = selected.querySelector('a'); if(!a) return;
-    saveSnapshot();
-    a.textContent = qs('#btn-text').value||'Botón';
-    a.href = qs('#btn-href').value||'#';
-    a.style.background = qs('#btn-bg').value;
-    a.style.color = qs('#btn-fg').value;
-    a.style.borderRadius = (parseInt(qs('#btn-radius').value)||12)+'px';
-    a.style.padding = (parseInt(qs('#btn-pad').value)||10)+'px';
-    adjustCanvasSize();
-  }
-
-  function updateTableProps(){
-    const t=getTable(); if(!t) return; saveSnapshot();
-    const bc = qs('#tbl-bc').value; const bw = parseInt(qs('#tbl-bw').value)||1;
-    const cell = qs('#tbl-cell').value; const pad = (parseInt(qs('#tbl-pad').value)||8)+'px';
-    t.querySelectorAll('td,th').forEach(td=>{ td.style.border = `${bw}px solid ${bc}`; td.style.background=cell; td.style.padding=pad;});
-    adjustCanvasSize();
-  }
-
-  function updateCanvasProps(){
-    grid = Math.max(4, parseInt(qs('#canvas-grid').value)||20);
-    snap = (qs('#canvas-snap').value==='on');
-    canvas.style.backgroundSize = grid+'px '+grid+'px';
-  }
-
-
-  function updatePropInputs(el){
-    if(!el) return;
-    const isCanvasItem = el.classList.contains('canvas-item');
-
-    if (isCanvasItem) {
-      const rect = getRect(el);
-      qs('#gen-x').value = rect.x; qs('#gen-y').value = rect.y;
-      qs('#gen-w').value = rect.w; qs('#gen-h').value = rect.h;
-      qs('#gen-rot').value = getRotation(el);
-      qs('#gen-z').value = parseInt(el.style.zIndex||'1');
-      qs('#gen-bg').value = toHex(window.getComputedStyle(el).backgroundColor);
-      qs('#gen-bc').value = toHex(window.getComputedStyle(el).borderColor);
-      qs('#gen-bw').value = parseInt(window.getComputedStyle(el).borderWidth) || 0;
-      qs('#gen-br').value = parseInt(window.getComputedStyle(el).borderRadius) || 0;
-      qs('#gen-pad').value = parseInt(window.getComputedStyle(el).padding) || 0;
-      const sh = qs('#gen-shadow').value;
-      selected.style.boxShadow = sh==='sm'?'0 6px 10px rgba(0,0,0,.08)': sh==='md'?'0 10px 20px rgba(0,0,0,.12)': sh==='lg'?'0 18px 30px rgba(0,0,0,.18)':'none';
-      qs('#gen-rot').disabled = false;
-      qs('#gen-z').disabled = false;
-      qs('#gen-bg').disabled = false;
-      qs('#gen-bc').disabled = false;
-      qs('#gen-bw').disabled = false;
-      qs('#gen-br').disabled = false;
-      qs('#gen-pad').disabled = false;
-      qs('#gen-shadow').disabled = false;
-    } else {
-      const r = el.getBoundingClientRect();
-      const canvasRect = canvas.getBoundingClientRect();
-      qs('#gen-x').value = Math.round(r.left - canvasRect.left + canvas.scrollLeft);
-      qs('#gen-y').value = Math.round(r.top - canvasRect.top + canvas.scrollTop);
-      qs('#gen-w').value = Math.round(r.width);
-      qs('#gen-h').value = Math.round(r.height);
-      qs('#gen-rot').value = 0;
-      qs('#gen-z').value = 1;
-      
-      qsa('#sec-general input, #sec-general select').forEach(input => {
-          if (input.id !== 'gen-w' && input.id !== 'gen-h') {
-              input.disabled = true;
-          } else {
-              input.disabled = false;
-          }
-      });
-    }
-    
-    const t = currentEditable || el.querySelector('h1,h2,p,li,td,a,div') || el;
-    if(t && (t.tagName === 'P' || t.tagName === 'H1' || t.tagName === 'H2' || t.tagName === 'A' || t.classList.contains('card-title') || t.classList.contains('card-desc'))){
-      if(t.classList.contains('canvas-button') || t.classList.contains('hero-button')){
-          qs('#btn-text').value = t.textContent;
-      }
-      
-      txtContentArea.value = t.textContent || '';
-      txtContentArea.style.height = 'auto';
-      txtContentArea.style.height = txtContentArea.scrollHeight + 'px';
-      
-      qs('#txt-font').value = (window.getComputedStyle(t).fontFamily||'Inter').replace(/["']/g,'') || 'Inter';
-      qs('#txt-size').value = parseInt(window.getComputedStyle(t).fontSize)||18;
-      qs('#txt-color').value = toHex(window.getComputedStyle(t).color);
-      qs('#txt-align').value = window.getComputedStyle(t).textAlign || 'left';
-      
-      qsa('#sec-texto input, #sec-texto select').forEach(input => {input.disabled = false;});
-      qsa('#sec-texto button').forEach(btn => {btn.disabled = false;});
-
-    } else {
-        txtContentArea.value = '';
-        txtContentArea.style.height = '80px';
-        qs('#txt-font').value = 'Inter';
-        qs('#txt-size').value = 18;
-        qs('#txt-color').value = '#243b53';
-        qs('#txt-align').value = 'left';
+    function changeStyle(property, value) {
+        if (!activeEditable || !isEditMode) return;
         
-        qsa('#sec-texto input, #sec-texto select').forEach(input => {input.disabled = true;});
-        qsa('#sec-texto button').forEach(btn => {btn.disabled = true;});
+        const targetElement = activeEditable.closest('.movable') || activeEditable.closest('.movable-card-wrapper');
+
+        if (targetElement) {
+             setMovableTextEditMode(targetElement, true);
+        } else if (!activeEditable.hasAttribute('contenteditable')) {
+            activeEditable.setAttribute('contenteditable', 'true');
+        }
+        
+        activeEditable.focus();
+        restoreSelection();
+
+        const sel = window.getSelection();
+        let rangeEmpty = !sel.rangeCount || sel.isCollapsed || sel.toString().trim() === '';
+
+        if (property === 'hiliteColor') {
+            if (!rangeEmpty) {
+                document.execCommand('hiliteColor', false, value);
+            } else if (activeEditable.closest('.card')) {
+                activeEditable.closest('.card').style.backgroundColor = value;
+            } else if (activeEditable.classList.contains('movable')) {
+                activeEditable.style.backgroundColor = value;
+            }
+        } else if (property === 'color') {
+            document.execCommand('foreColor', false, value);
+        } else if (property === 'fontSize') {
+            const size = parseInt(value, 10);
+            if (isNaN(size) || size < 8 || size > 128) return;
+
+            document.execCommand('fontSize', false, '7');
+            const fonts = activeEditable.getElementsByTagName('font');
+            for (let i = 0; i < fonts.length; i++) {
+                if (fonts[i].size == '7') {
+                    if (activeEditable.contains(fonts[i])) {
+                        fonts[i].removeAttribute('size');
+                        fonts[i].style.fontSize = `${size}px`;
+                    }
+                }
+            }
+        } else if (property === 'fontFamily') {
+            document.execCommand('fontName', false, value);
+        }
+
+        saveSelection();
+        activeEditable.focus();
+    }
+    
+    function updatePositionInputs() {
+        const target = activeEditable ? activeEditable.closest('.movable, .movable-card-wrapper') : null;
+
+        if (target) {
+            const left = parseFloat(target.style.left.replace('px', '')) || 0;
+            const top = parseFloat(target.style.top.replace('px', '')) || 0;
+            const width = parseFloat(target.style.width.replace('px', '')) || target.offsetWidth;
+            const height = parseFloat(target.style.height.replace('px', '')) || target.offsetHeight;
+
+            document.getElementById('posLeftInput').value = Math.round(left);
+            document.getElementById('posTopInput').value = Math.round(top);
+            document.getElementById('widthInput').value = Math.round(width);
+            document.getElementById('heightInput').value = Math.round(height);
+        } else {
+            document.getElementById('posLeftInput').value = '';
+            document.getElementById('posTopInput').value = '';
+            document.getElementById('widthInput').value = '';
+            document.getElementById('heightInput').value = '';
+        }
     }
 
-    const im = el.querySelector('img');
-    if(im){
-      qs('#img-src').value = im.src||'';
-      qs('#img-alt').value = im.alt||'';
-      qs('#img-fit').value = im.style.objectFit||'cover';
-      qs('#img-w').value = parseInt(el.style.width)||im.width;
-      qs('#img-h').value = parseInt(el.style.height)||im.height;
+    function changePosition(property, value) {
+        const target = activeEditable ? activeEditable.closest('.movable, .movable-card-wrapper') : null;
+
+        if (target) {
+            const val = parseInt(value, 10);
+            if (!isNaN(val) && val >= 0) {
+                target.style[property] = `${val}px`;
+                updatePositionInputs();
+                updateContentHeight();
+            }
+        }
     }
 
-    const vf = el.querySelector('iframe');
-    if(vf){
-      qs('#vid-src').value = vf.src||'';
-      qs('#vid-w').value = parseInt(el.style.width)||vf.width||360;
-      qs('#vid-h').value = parseInt(el.style.height)||vf.height||200;
+    function changeSize(property, value) {
+        const target = activeEditable ? activeEditable.closest('.movable, .movable-card-wrapper') : null;
+
+        if (target) {
+            const val = parseInt(value, 10);
+            if (!isNaN(val) && val >= 0) {
+                target.style[property] = `${val}px`;
+                updatePositionInputs();
+                updateContentHeight();
+            }
+        }
     }
 
-    const ab = el.querySelector('a');
-    if(ab){
-      qs('#btn-text').value = ab.textContent||'Botón';
-      qs('#btn-href').value = ab.getAttribute('href')||'#';
-      qs('#btn-bg').value = toHex(window.getComputedStyle(ab).backgroundColor);
-      qs('#btn-fg').value = toHex(window.getComputedStyle(ab).color);
-      qs('#btn-radius').value = parseInt(window.getComputedStyle(ab).borderRadius)||12;
-      qs('#btn-pad').value = parseInt(window.getComputedStyle(ab).padding)||10;
+    function setMovableTextEditMode(el, enable) {
+        if (!el || !$(el).data('ui-draggable')) return;
+
+        if (enable) {
+            if (activeEditable) activeEditable.setAttribute('contenteditable', 'true');
+            $(el).draggable('disable');
+            $(el).resizable('disable');
+            el.classList.add('active-editable');
+
+        } else {
+            if (activeEditable) activeEditable.removeAttribute('contenteditable');
+            $(el).draggable('enable');
+            $(el).resizable('enable');
+            el.classList.remove('active-editable'); 
+        }
     }
-  }
+    
+    function makeElementDraggableAndResizable(el) {
+        const container = document.querySelector('.section-content[style*="block"]');
+        if (!container) return;
 
-  // Textos
-  qs('#txt-bold').onmousedown = (e)=> { e.preventDefault(); execOnText('bold'); };
-  qs('#txt-italic').onmousedown = (e)=> { e.preventDefault(); execOnText('italic'); };
-  qs('#txt-underline').onmousedown = (e)=> { e.preventDefault(); execOnText('underline'); };
-
-  qs('#txt-list').onclick = () => {
-    if (!currentEditable) return;
-    saveSnapshot();
-    const ul = document.createElement('ul');
-    ul.style.margin = '0';
-    ul.style.paddingLeft = '18px';
-    ul.style.listStyle = 'disc';
-    ul.innerHTML = `<li>${currentEditable.innerHTML}</li>`;
-    currentEditable.replaceWith(ul);
-    ul.querySelectorAll('li').forEach(li => { li.setAttribute('contenteditable', 'true'); });
-    currentEditable = ul.querySelector('li');
-    updatePropInputs(selected);
-    adjustCanvasSize();
-  };
-
-  function execOnText(command){
-    if(currentEditable) {
-      document.execCommand(command, false, null);
-      currentEditable.focus();
-      saveSnapshot();
+        $(el).draggable({
+            containment: `#${container.id}`,
+            scroll: false,
+            start: function(event, ui) { 
+                if (el.classList.contains('movable-card-wrapper') && activeEditable) {
+                    activeEditable.removeAttribute('contenteditable');
+                }
+            },
+            drag: function(event, ui) { updateContentHeight(); },
+            stop: function(event, ui) { updatePositionInputs(); updateContentHeight(); }
+        });
+        
+        $(el).resizable({
+            handles: 'all',
+            minWidth: 100,
+            minHeight: 50,
+            disabled: el.closest('#section-inicio') || el.classList.contains('col'), 
+            start: function(event, ui) {
+                 if (el.classList.contains('movable-card-wrapper') && activeEditable) {
+                    activeEditable.removeAttribute('contenteditable');
+                }
+            },
+            resize: function(event, ui) { updatePositionInputs(); updateContentHeight(); },
+             stop: function(event, ui) { updateContentHeight(); }
+        });
     }
-  }
 
-  // Tabla
-  function getTable(){ return selected ? selected.querySelector('table') : null; }
-  qs('#tbl-add-row').onclick = ()=>{ const t=getTable(); if(!t) return; saveSnapshot(); const cols=t.rows[0]?.cells.length||2; const tr=t.insertRow(-1); for(let i=0;i<cols;i++){const td=tr.insertCell(-1); td.textContent=''; td.style.border='1px solid #cbd5e1'; td.style.padding='8px'; td.setAttribute('contenteditable','true');} adjustCanvasSize(); };
-  qs('#tbl-del-row').onclick = ()=>{ const t=getTable(); if(!t) return; if(t.rows.length>0){ saveSnapshot(); t.deleteRow(-1);} adjustCanvasSize(); };
-  qs('#tbl-add-col').onclick = ()=>{ const t=getTable(); if(!t) return; saveSnapshot(); Array.from(t.rows).forEach(r=>r.insertCell(-1).outerHTML=`<td></td>`); adjustCanvasSize(); };
-  qs('#tbl-del-col').onclick = ()=>{ const t=getTable(); if(!t) return; const len=t.rows[0]?.cells.length||0; if(len>0){ saveSnapshot(); Array.from(t.rows).forEach(r=>r.deleteCell(len-1)); } adjustCanvasSize(); };
+    function initializeMovableElements() {
+        const activeSection = document.querySelector('.section-content[style*="block"]');
+        if (!activeSection) return;
 
-  function highlightTabByType(el){
-    const type = el.dataset.type || detectType(el);
-    const map = {h1: 'texto', h2:'texto', p:'texto', a:'boton', ul: 'texto', img:'imagen', iframe:'video', button:'boton', table:'tabla', div:'general'};
-    const tab = map[type] || 'general';
-    tabBtns.forEach(x=>x.classList.remove('active'));
-    Object.values(sections).forEach(s=>s.classList.remove('active'));
-    qs(`[data-tab="${tab}"]`).classList.add('active');
-    sections[tab].classList.add('active');
-  }
-  function detectType(el){
-    if(el.closest('.canvas-item[data-type="img"]')) return 'img';
-    if(el.closest('.canvas-item[data-type="iframe"]')) return 'iframe';
-    if(el.closest('.canvas-item[data-type="table"]')) return 'table';
-    if(el.closest('.canvas-item[data-type="button"]')) return 'button';
-    if(el.tagName === 'H1') return 'h1';
-    if(el.tagName === 'P') return 'p';
-    if(el.tagName === 'A' && el.classList.contains('hero-button')) return 'a';
-    if(el.classList.contains('card-title')) return 'h2';
-    if(el.classList.contains('card-desc')) return 'p';
-    if(el.tagName === 'TD') return 'td';
-    return 'div';
-  }
+        activeSection.querySelectorAll('.movable, .movable-card-wrapper').forEach(el => {
+            if (isEditMode) makeElementDraggableAndResizable(el);
+            else { 
+                if ($(el).data('ui-draggable')) { $(el).draggable('destroy'); }
+                if ($(el).data('ui-resizable')) { $(el).resizable('destroy'); }
+            }
+        });
+    }
 
-  function toHex(rgbStr){
-    if(!rgbStr) return '#000000';
-    const m = rgbStr.match(/(\d+),\s*(\d+),\s*(\d+)/);
-    if(!m) return '#000000';
-    const r = (+m[1]).toString(16).padStart(2,'0');
-    const g = (+m[2]).toString(16).padStart(2,'0');
-    const b = (+m[3]).toString(16).padStart(2,'0');
-    return `#${r}${g}${b}`;
-  }
+    function getActiveContentContainer() {
+        const activeSection = document.querySelector('.section-content[style*="block"]');
+        return activeSection || document.getElementById('section-inicio');
+    }
+    
+    function addTextBox() {
+        const container = getActiveContentContainer();
+        const newBox = document.createElement("div");
+        newBox.className = "editable-text movable text-box"; 
+        newBox.setAttribute("contenteditable", "false"); 
+        newBox.innerHTML = "<p>Doble clic para editar este texto...</p>"; 
 
-  function adjustCanvasSize() {
-    let maxBottom = 0;
-    const allElements = qsa('.selectable, .editable-text, .canvas-item, .hero, .card, .cards');
-    allElements.forEach(item => {
-        const rect = item.getBoundingClientRect();
-        const bottom = rect.top + rect.height;
-        if (bottom > maxBottom) {
-            maxBottom = bottom;
+        newBox.style.position = 'absolute';
+        newBox.style.width = '200px'; 
+        newBox.style.minHeight = '100px';
+        
+        const heroSection = container.querySelector('.hero-section');
+        const staticContentBottom = heroSection ? heroSection.getBoundingClientRect().bottom - container.getBoundingClientRect().top + 50 : 200;
+        
+        newBox.style.left = '100px';
+        newBox.style.top = `${staticContentBottom}px`; 
+        newBox.style.backgroundColor = 'white'; 
+
+        container.appendChild(newBox);
+        
+        if (isEditMode) {
+            makeElementDraggableAndResizable(newBox);
+            
+            if (activeEditable) {
+                activeEditable.classList.remove('active-editable');
+                const prevMovable = activeEditable.closest('.movable, .movable-card-wrapper');
+                if (prevMovable) setMovableTextEditMode(prevMovable, false);
+                else activeEditable.removeAttribute('contenteditable');
+            }
+            activeEditable = newBox;
+            updatePositionInputs();
+            newBox.classList.add('active-editable');
+
+            setMovableTextEditMode(newBox, true);
+            newBox.focus();
+            updateContentHeight();
+        }
+    }
+
+    function addRandomColoredCard() {
+        const activeSection = getActiveContentContainer();
+        const cardsRow = activeSection.querySelector('.cards-row');
+        if (!cardsRow) {
+             alert("No se encontró el contenedor de tarjetas en esta sección. No se puede añadir.");
+             return;
+        }
+
+        const colorIndex = Math.floor(Math.random() * MODERN_CARD_COLORS.length);
+        const color = MODERN_CARD_COLORS[colorIndex];
+        const isLight = color.text === '#343a40';
+
+        const isHomeSection = activeSection.id === 'section-inicio';
+        const colClass = isHomeSection ? 'col' : 'col-half movable-card-wrapper';
+        
+        const newCol = document.createElement('div');
+        newCol.className = colClass;
+        
+        const newCard = document.createElement('div');
+        newCard.className = isLight ? 'card h-100' : 'card text-white h-100';
+        newCard.style.backgroundColor = color.bg;
+        newCard.dataset.cardLink = '';
+
+        if (!isHomeSection) {
+            const movableElements = cardsRow.querySelectorAll('.movable-card-wrapper');
+            let maxTop = 0;
+            if (movableElements.length > 0) {
+                 movableElements.forEach(el => {
+                    const top = parseFloat(el.style.top.replace('px', '')) || 0;
+                    const height = el.offsetHeight || 0;
+                    maxTop = Math.max(maxTop, top + height);
+                });
+            } else {
+                maxTop = 0;
+            }
+            newCol.style.position = 'absolute';
+            newCol.style.top = `${maxTop + 20}px`; 
+            newCol.style.left = '0px';
+            newCol.style.width = '48%';
+            newCol.style.minHeight = '150px';
+        }
+        
+        const cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
+        
+        const cardTitle = document.createElement('h5');
+        cardTitle.className = 'card-title editable-text';
+        cardTitle.textContent = "Nueva Tarjeta";
+        cardTitle.style.color = color.text;
+
+        const cardText = document.createElement('p');
+        cardText.className = 'card-text editable-text';
+        cardText.textContent = "Edite el título y la descripción.";
+        cardText.style.color = color.text;
+
+        cardBody.appendChild(cardTitle);
+        cardBody.appendChild(cardText);
+        newCard.appendChild(cardBody);
+        newCol.appendChild(newCard);
+        cardsRow.appendChild(newCol);
+        
+        if (isEditMode) {
+             if (!isHomeSection) {
+                 makeElementDraggableAndResizable(newCol);
+             }
+
+             if (activeEditable) {
+                activeEditable.classList.remove('active-editable');
+                const prevMovable = activeEditable.closest('.movable, .movable-card-wrapper');
+                if (prevMovable) setMovableTextEditMode(prevMovable, false);
+            }
+             activeEditable = cardTitle; 
+             newCard.classList.add('active-editable');
+             cardTitle.classList.add('active-editable');
+             cardText.classList.add('active-editable');
+             updateContentHeight();
+             updatePositionInputs();
+        }
+    }
+
+    function deleteSelectedElement() {
+      if (activeEditable) {
+        if (confirm("¿Desea eliminar este elemento?")) {
+          const targetMovable = activeEditable.closest('.movable, .movable-card-wrapper');
+          
+          if (targetMovable) {
+            if ($(targetMovable).data('ui-draggable')) { $(targetMovable).draggable('destroy'); }
+            if ($(targetMovable).data('ui-resizable')) { $(targetMovable).resizable('destroy'); }
+            targetMovable.remove();
+          } 
+          else if (activeEditable.closest('.card') && activeEditable.closest('#section-inicio')) {
+              const cardCol = activeEditable.closest('.col');
+              if (cardCol) {
+                  cardCol.remove();
+              }
+          }
+          else if (activeEditable.closest('.hero-section')) {
+               activeEditable.innerHTML = "";
+          }
+          activeEditable = null;
+          updatePositionInputs();
+          updateContentHeight();
+        }
+      } else {
+        alert("Seleccione primero un elemento para eliminar.");
+      }
+    }
+
+
+    // --- Lógica de Clic y Selección ---
+    let lastClickTime = 0;
+    let clickCount = 0;
+
+    document.addEventListener('click', function(e) {
+      if (!isEditMode) {
+          const card = e.target.closest('.card');
+          if (card) {
+               const link = card.dataset.cardLink;
+               if (link) {
+                   e.preventDefault();
+                   e.stopPropagation();
+                   navigateToCardLink(link);
+               }
+          }
+          return;
+      }
+      
+      const el = e.target.closest('.editable-text');
+      const card = e.target.closest('.card'); 
+      const cardWrapper = e.target.closest('.movable-card-wrapper');
+      
+      if (e.target.closest('#editSidebar')) return;
+
+      const now = new Date().getTime();
+      const timeDiff = now - lastClickTime;
+
+      if (activeEditable) {
+            const activeMovable = activeEditable.closest('.movable, .movable-card-wrapper');
+            if (activeMovable && activeMovable !== e.target.closest('.movable, .movable-card-wrapper')) {
+                 setMovableTextEditMode(activeMovable, false);
+            }
+      }
+      
+      if (card && !el) {
+          e.stopPropagation();
+          e.preventDefault();
+          
+          const currentLink = card.dataset.cardLink || '';
+          const newLink = prompt("Introduce la URL o la ID de sección (#metas) para esta tarjeta:", currentLink);
+          
+          if (newLink !== null) { 
+              card.dataset.cardLink = newLink.trim();
+              if (newLink.trim() === '') {
+                   card.classList.remove('active-editable');
+              } else {
+                   card.classList.add('active-editable'); 
+                   alert(`Enlace guardado: ${newLink}`);
+              }
+          }
+          
+          if (activeEditable) {
+            activeEditable.classList.remove('active-editable');
+            activeEditable = null;
+          }
+          updatePositionInputs();
+          return;
+      }
+      
+      if (el && activeEditable === el) {
+          if (timeDiff < 300) { clickCount++; } else { clickCount = 1; }
+      } else { clickCount = 1; }
+      lastClickTime = now;
+
+      if (el && clickCount >= 3) {
+          e.preventDefault();
+          e.stopPropagation();
+          const targetMovable = el.closest('.movable, .movable-card-wrapper');
+          if (targetMovable) { 
+              setMovableTextEditMode(targetMovable, true); 
+          } else { 
+              el.setAttribute('contenteditable', 'true'); 
+          }
+          el.focus();
+          clickCount = 0;
+          return;
+      }
+
+      if (el) {
+        e.stopPropagation();
+
+        if (activeEditable && activeEditable !== el) {
+            activeEditable.classList.remove('active-editable');
+        }
+        
+        document.querySelectorAll('.card.active-editable').forEach(c => {
+             const cardLink = c.dataset.cardLink;
+             if (!cardLink || cardLink.trim() === '') c.classList.remove('active-editable');
+        });
+
+        activeEditable = el;
+        activeEditable.classList.add('active-editable');
+
+        if (cardWrapper && cardWrapper.getAttribute('contenteditable') !== 'true') {
+            setMovableTextEditMode(cardWrapper, false);
+        }
+
+        updatePositionInputs();
+      } else if (!e.target.closest('.movable, .movable-card-wrapper')) {
+        if (activeEditable) {
+            activeEditable.classList.remove('active-editable');
+            const targetMovable = activeEditable.closest('.movable, .movable-card-wrapper');
+            if (targetMovable) setMovableTextEditMode(targetMovable, false); 
+            activeEditable = null;
+            updatePositionInputs();
+        }
+        document.querySelectorAll('.card.active-editable').forEach(c => {
+             const cardLink = c.dataset.cardLink;
+             if (!cardLink || cardLink.trim() === '') c.classList.remove('active-editable');
+        });
+      }
+    });
+
+    document.addEventListener('dblclick', function(e) {
+        if (!isEditMode) return;
+        const el = e.target.closest('.editable-text');
+        if (el) {
+            e.preventDefault();
+            const targetMovable = el.closest('.movable, .movable-card-wrapper');
+            if (targetMovable) { setMovableTextEditMode(targetMovable, true); } 
+            else { el.setAttribute('contenteditable', 'true'); }
+            el.focus();
+        }
+    });
+
+    document.addEventListener('focusout', function(e) {
+        if (!isEditMode) return;
+        const el = e.target;
+
+        if (el && el.classList.contains('editable-text') && el.getAttribute('contenteditable') === 'true') {
+            setTimeout(() => {
+                const newFocus = document.activeElement;
+                const sidebar = document.getElementById('editSidebar');
+                const isSelectingFont = newFocus && newFocus.id === 'fontFamilySelect'; 
+                const targetMovable = el.closest('.movable, .movable-card-wrapper');
+
+                if (!sidebar.contains(newFocus) || isSelectingFont) {
+                    if (targetMovable) { setMovableTextEditMode(targetMovable, false); } 
+                    else { el.removeAttribute('contenteditable'); }
+                } else {
+                    el.focus(); 
+                    restoreSelection();
+                }
+            }, 100);
+        }
+    });
+
+
+    // --- Lógica de Modo Edición y Login ---
+    function unwrapCard(card) {
+        const link = card.closest('.card-link');
+        if (link && link.tagName === 'A') {
+            const wrapper = link.closest('.col') || link.closest('.col-half') || link.closest('.movable-card-wrapper');
+            if (wrapper) {
+                 wrapper.insertBefore(card, link);
+                 link.remove();
+            }
+        }
+    }
+
+    function wrapCardWithLink(card, url) {
+        const wrapper = card.closest('.col') || card.closest('.col-half') || card.closest('.movable-card-wrapper');
+        if (!wrapper) return;
+        
+        const existingLink = wrapper.querySelector('.card-link');
+        if (existingLink) {
+             existingLink.setAttribute('href', url);
+        } else {
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('target', url.startsWith('#') ? '_self' : '_blank'); 
+            link.className = 'card-link'; 
+            
+            wrapper.insertBefore(link, card);
+            link.appendChild(card);
+        }
+    }
+
+
+    function toggleEditMode() {
+      if (!isLoggedIn) {
+          alert("Debes iniciar sesión con una cuenta de Administrador para acceder al Modo Edición.");
+          return;
+      }
+      isEditMode = !isEditMode;
+      const allEditables = document.querySelectorAll('.editable-text');
+      const cards = document.querySelectorAll('.card');
+      const editButton = document.getElementById('editToggleBtn');
+      const sidebar = document.getElementById('editSidebar');
+      const mainContentWrapper = document.getElementById('mainContentWrapper');
+
+      if (isEditMode) {
+        // --- ACTIVAR EDICIÓN ---
+        editButton.classList.replace('btn-outline-primary', 'btn-primary');
+        editButton.innerHTML = '<i class="fas fa-save me-1"></i> Guardar Cambios';
+        
+        allEditables.forEach(el => el.classList.add('active-editable'));
+
+        cards.forEach(card => {
+             unwrapCard(card);
+             if (card.dataset.cardLink && card.dataset.cardLink.trim() !== '') {
+                 card.classList.add('active-editable');
+             }
+        });
+        
+        sidebar.classList.remove('d-none-temp');
+        mainContentWrapper.style.marginLeft = '280px';
+        
+        initializeMovableElements();
+        updateContentHeight();
+
+      } else {
+        // --- DESACTIVAR EDICIÓN ---
+        editButton.classList.replace('btn-primary', 'btn-outline-primary');
+        editButton.innerHTML = '<i class="fas fa-edit me-1"></i> Modo Edición';
+        
+        allEditables.forEach(el => {
+            el.removeAttribute('contenteditable');
+            el.classList.remove('active-editable');
+        });
+        
+        initializeMovableElements(); 
+
+        cards.forEach(card => {
+            card.classList.remove('active-editable');
+            const link = card.dataset.cardLink;
+            if (link && link.trim() !== '') {
+                wrapCardWithLink(card, link);
+            }
+        });
+
+        if (activeEditable) activeEditable.classList.remove('active-editable');
+        activeEditable = null;
+        savedRange = null; 
+        updatePositionInputs();
+        
+        sidebar.classList.add('d-none-temp');
+        mainContentWrapper.style.marginLeft = '0';
+        document.getElementById('mainContent').style.minHeight = '';
+      }
+    }
+
+    function handleLogin() {
+      const emailInput = document.getElementById('inputEmail').value;
+      const passwordInput = document.getElementById('inputPassword').value;
+      if (emailInput === 'a@ug.com' && passwordInput === '1234') {
+        isLoggedIn = true; // Establece el estado de inicio de sesión
+        bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
+        document.getElementById('loginBtnContainer').classList.add('d-none');
+        document.getElementById('userNav').classList.remove('d-none');
+        document.getElementById('userNameDisplay').textContent = 'Administrador Daule';
+        
+        // Remover el bloqueo visual en la navegación
+        document.querySelectorAll('.restricted-nav').forEach(el => {
+            el.classList.remove('restricted-nav');
+            el.querySelector('.fa-lock').classList.add('d-none');
+        });
+        
+        // Remover la clase restricted de las tarjetas
+        document.querySelectorAll('.card.restricted').forEach(card => {
+            card.classList.remove('restricted');
+        });
+
+      } else {
+          alert("Credenciales incorrectas. Inténtalo de nuevo.");
+      }
+    }
+    function handleLogout() {
+      if (isEditMode) toggleEditMode();
+      isLoggedIn = false; // Restablece el estado de inicio de sesión
+      document.getElementById('userNav').classList.add('d-none');
+      document.getElementById('loginBtnContainer').classList.remove('d-none');
+
+      // Restaurar el bloqueo visual en la navegación
+      document.querySelectorAll('.navbar-nav .nav-item a').forEach(el => {
+          const sectionId = el.getAttribute('onclick').match(/'(.*?)'/)[1];
+          if (RESTRICTED_SECTIONS.includes(sectionId)) {
+               el.classList.add('restricted-nav');
+               el.querySelector('.fa-lock').classList.remove('d-none');
+          }
+      });
+      
+      // Restaurar la clase restricted a las tarjetas
+      document.querySelectorAll('.card').forEach(card => {
+          const link = card.dataset.cardLink;
+          if (link && RESTRICTED_SECTIONS.includes(link.substring(1))) {
+              card.classList.add('restricted');
+          }
+      });
+      
+      showSection('inicio');
+    }
+
+    // Inicializar el modo de movimiento por flechas
+    document.addEventListener('keydown', function(e) {
+        const target = activeEditable ? activeEditable.closest('.movable, .movable-card-wrapper') : null;
+        if (!isEditMode || !target) return;
+        
+        if (activeEditable.getAttribute('contenteditable') === 'true' && document.activeElement === activeEditable) return; 
+
+        let currentLeft = parseFloat(target.style.left.replace('px', '')) || 0;
+        let currentTop = parseFloat(target.style.top.replace('px', '')) || 0;
+        let moved = false;
+
+        switch (e.key) {
+            case 'ArrowUp': currentTop -= MOVE_STEP; moved = true; break;
+            case 'ArrowDown': currentTop += MOVE_STEP; moved = true; break;
+            case 'ArrowLeft': currentLeft -= MOVE_STEP; moved = true; break;
+            case 'ArrowRight': currentLeft += MOVE_STEP; moved = true; break;
+        }
+
+        if (moved) {
+            e.preventDefault();
+            
+            currentLeft = Math.max(0, currentLeft);
+            currentTop = Math.max(0, currentTop);
+            
+            target.style.left = `${currentLeft}px`;
+            target.style.top = `${currentTop}px`;
+            
+            updatePositionInputs();
+            updateContentHeight();
         }
     });
     
-    // Convert maxBottom to a value relative to the canvas's top
-    const canvasTop = canvas.getBoundingClientRect().top;
-    const canvasMinHeight = maxBottom - canvasTop + 40; // Add some padding at the bottom
-    
-    // Ensure the canvas is at least the viewport height
-    const viewportHeight = window.innerHeight - qs('.topbar').offsetHeight - 36;
-    canvas.style.minHeight = Math.max(viewportHeight, canvasMinHeight) + 'px';
-  }
+    // Inicialización al cargar la página 
+    document.addEventListener('DOMContentLoaded', () => {
+        showSection('inicio'); 
+    });
 
-  // Load saved content from localStorage or default content
-  const savedContent = localStorage.getItem('savedPageContent');
-  if (savedContent) {
-      Object.assign(pageContent, JSON.parse(savedContent));
-  } else {
-      // Initialize with default content
-      pageContent.home = getDefaultContent('home');
-      pageContent.indicadores = getDefaultContent('indicadores');
-      pageContent.metas = getDefaultContent('metas');
-      pageContent.avances = getDefaultContent('avances');
-      pageContent.reportes = getDefaultContent('reportes');
-      pageContent.formularios = getDefaultContent('formularios');
-  }
-
-  // Carga la página de inicio por defecto
-  loadPageContent('home');
-})();
-</script>
-
-<!-- Supabase integration -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = "https://lhnluarfjyzheezfrexr.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxobmx1YXJmanl6aGVlemZyZXhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ5NzYyOTAsImV4cCI6MjA3MDU1MjI5MH0.igYpeqlYnWW5i9NvOHSvlow3J-yDdEGgK6LRxYwvGY0";
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  const btnEdicion = document.getElementById("btnEdicion");
-  const contenido = document.getElementById("contenido");
-
-  let editando = false;
-  let role = "admin"; // Cambia según tu implementación de roles, o intégralo con Supabase Auth
-
-  async function cargarContenido() {
-    const { data, error } = await supabase
-      .from("paginas")
-      .select("contenido_html")
-      .eq("nombre", "mi_pagina")
-      .single();
-    if (error) {
-      console.warn("No se pudo cargar contenido:", error);
-      return;
-    }
-    if (data && data.contenido_html) {
-      contenido.innerHTML = data.contenido_html;
-    }
-  }
-
-  async function guardarContenido() {
-    const nuevoContenido = contenido.innerHTML;
-    const { error } = await supabase
-      .from("paginas")
-      .upsert([
-        {
-          nombre: "mi_pagina",
-          contenido_html: nuevoContenido,
-          actualizado: new Date().toISOString()
-        }
-      ], { onConflict: ["nombre"] });
-    if (error) {
-      console.error("Error al guardar:", error);
-      alert("Error al guardar");
-    } else {
-      console.log("Contenido guardado en Supabase");
-    }
-  }
-
-  btnEdicion.addEventListener("click", async () => {
-    if (role !== "admin" && role !== "tecnico") {
-      alert("No tienes permisos para editar.");
-      return;
-    }
-    editando = !editando;
-    if (editando) {
-      contenido.setAttribute("contenteditable", "true");
-      contenido.focus();
-      btnEdicion.textContent = "Salir de edición y guardar";
-    } else {
-      contenido.setAttribute("contenteditable", "false");
-      btnEdicion.textContent = "Modo Edición";
-      await guardarContenido();
-    }
-  });
-
-  // Cargar contenido al iniciar
-  cargarContenido();
-</script>
-
+  </script>
 </body>
 </html>
-
-
