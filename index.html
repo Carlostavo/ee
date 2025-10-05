@@ -490,7 +490,8 @@
       position: relative;
     }
     
-    .cards-row > .col {
+    /* CORRECCIÓN: Estilo específico para las tarjetas de inicio */
+    #section-inicio .cards-row > .col {
       flex: 0 0 auto;
       width: 20%; 
       padding: calc(var(--bs-gutter-x) * .5);
@@ -610,7 +611,7 @@
     
     /* Responsive Design mejorado */
     @media (max-width: 1200px) {
-      .cards-row > .col {
+      #section-inicio .cards-row > .col {
         width: 33.333%;
       }
     }
@@ -630,7 +631,7 @@
     }
     
     @media (max-width: 768px) {
-      .cards-row > .col {
+      #section-inicio .cards-row > .col {
         width: 50%;
       }
       
@@ -646,7 +647,7 @@
     }
     
     @media (max-width: 576px) {
-      .cards-row > .col {
+      #section-inicio .cards-row > .col {
         width: 100%;
       }
       
@@ -690,7 +691,7 @@
     
     /* Mejoras para tablets */
     @media (min-width: 768px) and (max-width: 1024px) {
-      .cards-row > .col {
+      #section-inicio .cards-row > .col {
         width: 33.333%;
       }
       
@@ -751,36 +752,39 @@
       border-radius: 2px;
     }
 
-    /* Estilos específicos para secciones internas */
+    /* Estilos mejorados para secciones específicas */
     .section-content:not(#section-inicio) .cards-row {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: clamp(1rem, 3vw, 1.5rem);
-      position: relative;
-      min-height: auto;
+      gap: 1.5rem;
     }
     
-    .section-content:not(#section-inicio) .movable-card-wrapper {
-      position: relative !important;
-      width: 100% !important;
-      margin-bottom: 1rem;
+    .chart-container {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 1.5rem;
+    }
+    
+    .progress-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 1.5rem;
+    }
+    
+    .progress-card .progress {
+      height: 12px;
+      margin: 10px 0;
     }
     
     .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1.5rem 0;
-      font-size: clamp(0.85rem, 2.5vw, 1rem);
-      box-shadow: var(--box-shadow);
+      background: white;
       border-radius: var(--border-radius);
       overflow: hidden;
-    }
-    
-    .data-table th,
-    .data-table td {
-      padding: clamp(0.75rem, 2vw, 1rem);
-      text-align: left;
-      border-bottom: 1px solid #e9ecef;
+      box-shadow: var(--box-shadow);
     }
     
     .data-table th {
@@ -789,176 +793,100 @@
       font-weight: 600;
     }
     
-    .data-table tr:nth-child(even) {
-      background-color: #f8f9fa;
-    }
-    
-    .data-table tr:hover {
-      background-color: #e9ecef;
-    }
-    
-    .progress-container {
-      margin: 1.5rem 0;
-    }
-    
-    .progress-bar-container {
-      height: clamp(12px, 3vw, 16px);
-      background-color: #e9ecef;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 0.5rem;
-    }
-    
-    .progress-bar {
-      height: 100%;
-      border-radius: 10px;
-      transition: width 0.5s ease;
-    }
-    
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: clamp(0.85rem, 2.5vw, 1rem);
-      margin-bottom: 0.25rem;
-    }
-    
-    .chart-container {
-      width: 100%;
-      height: 300px;
-      margin: 1.5rem 0;
-      position: relative;
-    }
-    
-    .form-container {
-      background-color: white;
+    .form-card {
+      background: white;
       border-radius: var(--border-radius);
-      padding: clamp(1.5rem, 4vw, 2.5rem);
+      padding: 2rem;
       box-shadow: var(--box-shadow);
-      margin: 1.5rem 0;
     }
     
-    .form-group {
+    .form-card .form-label {
+      font-weight: 600;
+      color: var(--secondary-color);
+    }
+    
+    .metric-card {
+      text-align: center;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      background: white;
+      box-shadow: var(--box-shadow);
+    }
+    
+    .metric-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 10px 0;
+    }
+    
+    .metric-label {
+      font-size: 1rem;
+      color: var(--secondary-color);
+    }
+    
+    .metric-change {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    .metric-change.positive {
+      color: var(--success-color);
+    }
+    
+    .metric-change.negative {
+      color: var(--danger-color);
+    }
+    
+    .report-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
       margin-bottom: 1.5rem;
     }
     
-    .form-label {
+    .report-card .report-title {
+      font-size: 1.2rem;
       font-weight: 600;
       margin-bottom: 0.5rem;
+    }
+    
+    .report-card .report-date {
       color: var(--secondary-color);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
     }
     
-    .form-control {
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
-      border: 1px solid #ced4da;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
-      transition: var(--transition);
+    .report-card .report-description {
+      margin-bottom: 1.5rem;
     }
     
-    .form-control:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 0.2rem rgba(30, 126, 52, 0.25);
-    }
-    
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: clamp(1rem, 3vw, 1.5rem);
-      margin: 1.5rem 0;
-    }
-    
-    .stat-card {
+    .goal-card {
       background: white;
       border-radius: var(--border-radius);
-      padding: clamp(1rem, 3vw, 1.5rem);
+      padding: 1.5rem;
       box-shadow: var(--box-shadow);
-      text-align: center;
-      transition: var(--transition);
+      margin-bottom: 1.5rem;
     }
     
-    .stat-card:hover {
-      transform: translateY(-5px);
-    }
-    
-    .stat-value {
-      font-size: clamp(1.8rem, 5vw, 2.5rem);
-      font-weight: 700;
-      color: var(--primary-color);
+    .goal-card .goal-title {
+      font-size: 1.2rem;
+      font-weight: 600;
       margin-bottom: 0.5rem;
     }
     
-    .stat-label {
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
+    .goal-card .goal-deadline {
       color: var(--secondary-color);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
     }
     
-    .filter-container {
-      background-color: white;
-      border-radius: var(--border-radius);
-      padding: clamp(1rem, 3vw, 1.5rem);
-      box-shadow: var(--box-shadow);
-      margin: 1.5rem 0;
+    .goal-card .goal-progress {
+      margin-bottom: 1rem;
     }
     
-    .filter-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      align-items: end;
-    }
-    
-    .filter-group {
-      flex: 1;
-      min-width: 150px;
-    }
-    
-    .action-buttons {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
-    
-    .action-buttons .btn {
-      flex: 1;
-      min-width: 120px;
-    }
-    
-    /* Responsive para secciones internas */
-    @media (max-width: 768px) {
-      .section-content:not(#section-inicio) .cards-row {
-        grid-template-columns: 1fr;
-      }
-      
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .filter-row {
-        flex-direction: column;
-      }
-      
-      .filter-group {
-        width: 100%;
-      }
-      
-      .action-buttons .btn {
-        flex: 1 0 100%;
-      }
-    }
-    
-    @media (max-width: 576px) {
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .chart-container {
-        height: 250px;
-      }
-      
-      .form-container {
-        padding: 1.25rem;
-      }
+    .goal-card .goal-description {
+      margin-bottom: 1.5rem;
     }
   </style>
 </head>
@@ -1184,414 +1112,7 @@
         </div>
       </div>
       
-      <!-- Sección de Indicadores -->
-      <div id="section-indicadores" class="section-content">
-        <div class="hero-section" style="background: linear-gradient(135deg, #34495e 0%, #5d6d7e 100%);">
-          <h1 class="hero-title editable-text">Indicadores de Desempeño (KPIs)</h1>
-          <p class="hero-subtitle editable-text">
-            Visualice los datos en tiempo real sobre la generación, recolección y destino final de los residuos sólidos.
-          </p>
-        </div>
-        
-        <div class="filter-container">
-          <h5 class="mb-3"><i class="fas fa-filter me-2"></i>Filtros</h5>
-          <div class="filter-row">
-            <div class="filter-group">
-              <label class="form-label">Periodo</label>
-              <select class="form-select">
-                <option>Últimos 7 días</option>
-                <option>Último mes</option>
-                <option>Último trimestre</option>
-                <option>Último año</option>
-              </select>
-            </div>
-            <div class="filter-group">
-              <label class="form-label">Zona</label>
-              <select class="form-select">
-                <option>Todas las zonas</option>
-                <option>Zona Norte</option>
-                <option>Zona Sur</option>
-                <option>Zona Centro</option>
-              </select>
-            </div>
-            <div class="filter-group">
-              <label class="form-label">Tipo de residuo</label>
-              <select class="form-select">
-                <option>Todos los tipos</option>
-                <option>Orgánicos</option>
-                <option>Plásticos</option>
-                <option>Papel y cartón</option>
-                <option>Vidrio</option>
-              </select>
-            </div>
-            <div class="filter-group">
-              <button class="btn btn-primary-custom w-100">Aplicar filtros</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-value">1.2 kg</div>
-            <div class="stat-label">Generación per cápita</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">45%</div>
-            <div class="stat-label">Tasa de reciclaje</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">78%</div>
-            <div class="stat-label">Cobertura de recolección</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">12%</div>
-            <div class="stat-label">Reducción de residuos</div>
-          </div>
-        </div>
-        
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-chart-bar me-2"></i>Composición de Residuos</h5>
-            <div class="chart-container">
-              <!-- Aquí iría un gráfico de composición de residuos -->
-              <div style="display: flex; align-items: center; justify-content: center; height: 100%; background-color: #f8f9fa; border-radius: var(--border-radius);">
-                <p class="text-muted">Gráfico de composición de residuos</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-table me-2"></i>Indicadores Detallados</h5>
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Indicador</th>
-                    <th>Valor Actual</th>
-                    <th>Meta</th>
-                    <th>Tendencia</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Generación per cápita (kg/hab/día)</td>
-                    <td>1.2</td>
-                    <td>0.9</td>
-                    <td><i class="fas fa-arrow-down text-success"></i></td>
-                  </tr>
-                  <tr>
-                    <td>Tasa de reciclaje (%)</td>
-                    <td>45</td>
-                    <td>60</td>
-                    <td><i class="fas fa-arrow-up text-success"></i></td>
-                  </tr>
-                  <tr>
-                    <td>Cobertura de recolección (%)</td>
-                    <td>78</td>
-                    <td>95</td>
-                    <td><i class="fas fa-arrow-up text-success"></i></td>
-                  </tr>
-                  <tr>
-                    <td>Residuos aprovechados (%)</td>
-                    <td>32</td>
-                    <td>50</td>
-                    <td><i class="fas fa-arrow-up text-success"></i></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sección de Reportes -->
-      <div id="section-reportes" class="section-content">
-        <div class="hero-section" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);">
-          <h1 class="hero-title editable-text">Generación de Documentos y Reportes</h1>
-          <p class="hero-subtitle editable-text">
-            Genere reportes anuales, trimestrales y de impacto ambiental en formato PDF o Excel.
-          </p>
-        </div>
-        
-        <div class="cards-row mt-3">
-          <div class="col-md-6">
-            <div class="card h-100">
-              <div class="card-body">
-                <i class="fas fa-file-pdf card-icon" style="color: #e74c3c;"></i>
-                <h5 class="card-title">Reporte Anual de Sostenibilidad</h5>
-                <p class="card-text">Resumen ejecutivo y datos consolidados de la gestión de residuos del año.</p>
-                <div class="action-buttons">
-                  <button class="btn btn-primary-custom"><i class="fas fa-eye me-2"></i>Vista previa</button>
-                  <button class="btn btn-outline-primary"><i class="fas fa-download me-2"></i>Descargar PDF</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="card h-100">
-              <div class="card-body">
-                <i class="fas fa-file-excel card-icon" style="color: #27ae60;"></i>
-                <h5 class="card-title">Reporte de Cumplimiento Normativo</h5>
-                <p class="card-text">Documento que valida el apego a las leyes y regulaciones ambientales locales.</p>
-                <div class="action-buttons">
-                  <button class="btn btn-primary-custom"><i class="fas fa-eye me-2"></i>Vista previa</button>
-                  <button class="btn btn-outline-primary"><i class="fas fa-download me-2"></i>Descargar Excel</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-cogs me-2"></i>Generar Reporte Personalizado</h5>
-            <div class="form-container">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Tipo de reporte</label>
-                    <select class="form-select">
-                      <option>Reporte de indicadores</option>
-                      <option>Reporte de cumplimiento</option>
-                      <option>Reporte financiero</option>
-                      <option>Reporte de impacto ambiental</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Periodo</label>
-                    <select class="form-select">
-                      <option>Último mes</option>
-                      <option>Último trimestre</option>
-                      <option>Último semestre</option>
-                      <option>Último año</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Formato</label>
-                    <select class="form-select">
-                      <option>PDF</option>
-                      <option>Excel</option>
-                      <option>Word</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Incluir gráficos</label>
-                    <select class="form-select">
-                      <option>Sí</option>
-                      <option>No</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="action-buttons">
-                <button class="btn btn-primary-custom"><i class="fas fa-file-export me-2"></i>Generar reporte</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-history me-2"></i>Reportes Recientes</h5>
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Nombre del reporte</th>
-                    <th>Fecha</th>
-                    <th>Tipo</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Reporte Mensual - Enero 2023</td>
-                    <td>01/02/2023</td>
-                    <td>PDF</td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-download"></i></button>
-                      <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-share"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Indicadores Trimestrales Q4 2022</td>
-                    <td>15/01/2023</td>
-                    <td>Excel</td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-download"></i></button>
-                      <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-share"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Reporte Anual de Sostenibilidad 2022</td>
-                    <td>05/01/2023</td>
-                    <td>PDF</td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-download"></i></button>
-                      <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-share"></i></button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sección de Formularios -->
-      <div id="section-formularios" class="section-content">
-        <div class="hero-section" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
-          <h1 class="hero-title editable-text">Encuestas y Recolección de Datos en Campo</h1>
-          <p class="hero-subtitle editable-text">
-            Acceda a los formularios externos utilizados para la medición y el análisis del comportamiento ciudadano.
-          </p>
-        </div>
-        
-        <div class="cards-row mt-3">
-          <div class="col-md-6">
-            <div class="card h-100">
-              <div class="card-body">
-                <i class="fas fa-clipboard-check card-icon" style="color: #2980b9;"></i>
-                <h5 class="card-title">ENCUESTA COMPORTAMIENTO PROAMBIENTAL</h5>
-                <p class="card-text">
-                  Formulario para medir la actitud ciudadana hacia el reciclaje y la autosustentabilidad.
-                </p>
-                <div class="action-buttons">
-                  <button class="btn btn-primary-custom" onclick="window.open('https://tally.so/r/nGA7LO', '_blank')">
-                    <i class="fas fa-external-link-alt me-2"></i>Abrir formulario
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="card h-100">
-              <div class="card-body">
-                <i class="fas fa-weight card-icon" style="color: #27ae60;"></i>
-                <h5 class="card-title">MEDICIÓN DE DESECHOS SÓLIDOS (Daule)</h5>
-                <p class="card-text">
-                  Encuesta técnica para la medición y caracterización de los desechos sólidos en la comunidad.
-                </p>
-                <div class="action-buttons">
-                  <button class="btn btn-primary-custom" onclick="window.open('https://tally.so/r/3N1M0O', '_blank')">
-                    <i class="fas fa-external-link-alt me-2"></i>Abrir formulario
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-plus-circle me-2"></i>Crear Nuevo Formulario</h5>
-            <div class="form-container">
-              <div class="form-group">
-                <label class="form-label">Nombre del formulario</label>
-                <input type="text" class="form-control" placeholder="Ingrese el nombre del formulario">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Descripción</label>
-                <textarea class="form-control" rows="3" placeholder="Describa el propósito del formulario"></textarea>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Tipo de formulario</label>
-                    <select class="form-select">
-                      <option>Encuesta de comportamiento</option>
-                      <option>Medición de residuos</option>
-                      <option>Evaluación de servicios</option>
-                      <option>Otro</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Destinatarios</label>
-                    <select class="form-select">
-                      <option>Ciudadanos en general</option>
-                      <option>Empresas</option>
-                      <option>Instituciones educativas</option>
-                      <option>Personal interno</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="action-buttons">
-                <button class="btn btn-primary-custom"><i class="fas fa-save me-2"></i>Guardar formulario</button>
-                <button class="btn btn-outline-primary"><i class="fas fa-eye me-2"></i>Vista previa</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-list-alt me-2"></i>Formularios Disponibles</h5>
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Tipo</th>
-                    <th>Respuestas</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Encuesta Comportamiento Proambiental</td>
-                    <td>Encuesta</td>
-                    <td>245</td>
-                    <td><span class="badge bg-success">Activo</span></td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
-                      <button class="btn btn-sm btn-outline-info"><i class="fas fa-chart-bar"></i></button>
-                      <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Medición de Desechos Sólidos</td>
-                    <td>Medición</td>
-                    <td>89</td>
-                    <td><span class="badge bg-success">Activo</span></td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
-                      <button class="btn btn-sm btn-outline-info"><i class="fas fa-chart-bar"></i></button>
-                      <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Evaluación de Servicios de Recolección</td>
-                    <td>Evaluación</td>
-                    <td>156</td>
-                    <td><span class="badge bg-warning">Inactivo</span></td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
-                      <button class="btn btn-sm btn-outline-info"><i class="fas fa-chart-bar"></i></button>
-                      <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sección de Metas -->
+      <!-- Sección de Metas mejorada -->
       <div id="section-metas" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);">
           <h1 class="hero-title editable-text">Definición y Seguimiento de Metas</h1>
@@ -1600,142 +1121,190 @@
           </p>
         </div>
         
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-bullseye me-2"></i>Metas Principales</h5>
-            <div class="progress-container">
-              <div class="progress-label">
-                <span>Reducción del 15% en generación de residuos</span>
-                <span>65%</span>
+        <div class="row mt-4">
+          <div class="col-md-8">
+            <div class="goal-card">
+              <div class="goal-title editable-text">Meta de Reducción de Residuos</div>
+              <div class="goal-deadline editable-text">Fecha límite: 31 de diciembre 2023</div>
+              <div class="goal-progress">
+                <div class="d-flex justify-content-between mb-1">
+                  <span class="editable-text">Progreso actual</span>
+                  <span class="editable-text">65%</span>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
               </div>
-              <div class="progress-bar-container">
-                <div class="progress-bar" style="width: 65%; background-color: #16a085;"></div>
+              <div class="goal-description editable-text">
+                Reducir en un 15% la cantidad de residuos sólidos municipales generados para finales del año fiscal actual.
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
+                <button class="btn btn-sm btn-outline-success">Actualizar progreso</button>
               </div>
             </div>
             
-            <div class="progress-container">
-              <div class="progress-label">
-                <span>Aumentar tasa de reciclaje al 40%</span>
-                <span>45%</span>
+            <div class="goal-card">
+              <div class="goal-title editable-text">Meta de Reciclaje</div>
+              <div class="goal-deadline editable-text">Fecha límite: 30 de junio 2023</div>
+              <div class="goal-progress">
+                <div class="d-flex justify-content-between mb-1">
+                  <span class="editable-text">Progreso actual</span>
+                  <span class="editable-text">42%</span>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 42%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
               </div>
-              <div class="progress-bar-container">
-                <div class="progress-bar" style="width: 45%; background-color: #3498db;"></div>
+              <div class="goal-description editable-text">
+                Aumentar la tasa de reciclaje de plásticos y papel al 40% en los próximos 6 meses.
               </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
+                <button class="btn btn-sm btn-outline-success">Actualizar progreso</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="metric-card mb-4">
+              <i class="fas fa-bullseye fa-2x text-primary"></i>
+              <div class="metric-value editable-text">12</div>
+              <div class="metric-label editable-text">Metas Activas</div>
             </div>
             
-            <div class="progress-container">
-              <div class="progress-label">
-                <span>Implementar programa de compostaje en 50% de hogares</span>
-                <span>30%</span>
-              </div>
-              <div class="progress-bar-container">
-                <div class="progress-bar" style="width: 30%; background-color: #f39c12;"></div>
-              </div>
+            <div class="metric-card mb-4">
+              <i class="fas fa-check-circle fa-2x text-success"></i>
+              <div class="metric-value editable-text">8</div>
+              <div class="metric-label editable-text">Metas Completadas</div>
             </div>
-          </div>
-        </div>
-        
-        <div class="cards-row mt-4">
-          <div class="col-md-6">
-            <div class="card h-100">
-              <div class="card-body">
-                <i class="fas fa-flag card-icon" style="color: #16a085;"></i>
-                <h5 class="card-title">Meta de Reducción</h5>
-                <p class="card-text">Establecer un objetivo del 15% de reducción de desechos municipales para el fin de año fiscal.</p>
-                <div class="progress-container">
-                  <div class="progress-label">
-                    <span>Progreso</span>
-                    <span>65%</span>
-                  </div>
-                  <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: 65%; background-color: #16a085;"></div>
-                  </div>
-                </div>
-                <div class="action-buttons mt-3">
-                  <button class="btn btn-primary-custom"><i class="fas fa-edit me-2"></i>Editar meta</button>
-                  <button class="btn btn-outline-primary"><i class="fas fa-chart-line me-2"></i>Ver detalles</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="card h-100">
-              <div class="card-body">
-                <i class="fas fa-recycle card-icon" style="color: #3498db;"></i>
-                <h5 class="card-title">Meta de Reciclaje</h5>
-                <p class="card-text">Aumentar la tasa de reciclaje de plásticos y papel al 40% en los próximos 6 meses.</p>
-                <div class="progress-container">
-                  <div class="progress-label">
-                    <span>Progreso</span>
-                    <span>45%</span>
-                  </div>
-                  <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: 45%; background-color: #3498db;"></div>
-                  </div>
-                </div>
-                <div class="action-buttons mt-3">
-                  <button class="btn btn-primary-custom"><i class="fas fa-edit me-2"></i>Editar meta</button>
-                  <button class="btn btn-outline-primary"><i class="fas fa-chart-line me-2"></i>Ver detalles</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-plus-circle me-2"></i>Crear Nueva Meta</h5>
-            <div class="form-container">
-              <div class="form-group">
-                <label class="form-label">Nombre de la meta</label>
-                <input type="text" class="form-control" placeholder="Ingrese el nombre de la meta">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Descripción</label>
-                <textarea class="form-control" rows="3" placeholder="Describa la meta en detalle"></textarea>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Fecha de inicio</label>
-                    <input type="date" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Fecha límite</label>
-                    <input type="date" class="form-control">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Valor objetivo</label>
-                    <input type="number" class="form-control" placeholder="Ej: 40">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Unidad de medida</label>
-                    <select class="form-select">
-                      <option>Porcentaje (%)</option>
-                      <option>Toneladas (t)</option>
-                      <option>Kilogramos (kg)</option>
-                      <option>Unidades</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="action-buttons">
-                <button class="btn btn-primary-custom"><i class="fas fa-save me-2"></i>Guardar meta</button>
-              </div>
+            
+            <div class="metric-card mb-4">
+              <i class="fas fa-clock fa-2x text-warning"></i>
+              <div class="metric-value editable-text">4</div>
+              <div class="metric-label editable-text">Metas en Progreso</div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Sección de Avances -->
+      <!-- Sección de Indicadores mejorada -->
+      <div id="section-indicadores" class="section-content">
+        <div class="hero-section" style="background: linear-gradient(135deg, #34495e 0%, #5d6d7e 100%);">
+          <h1 class="hero-title editable-text">Indicadores de Desempeño (KPIs)</h1>
+          <p class="hero-subtitle editable-text">
+            Visualice los datos en tiempo real sobre la generación, recolección y destino final de los residuos sólidos.
+          </p>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-3 mb-4">
+            <div class="metric-card">
+              <i class="fas fa-weight fa-2x text-primary"></i>
+              <div class="metric-value editable-text">1.2 kg</div>
+              <div class="metric-label editable-text">Generación Per Cápita</div>
+              <div class="metric-change positive editable-text">+5.3%</div>
+            </div>
+          </div>
+          
+          <div class="col-md-3 mb-4">
+            <div class="metric-card">
+              <i class="fas fa-recycle fa-2x text-success"></i>
+              <div class="metric-value editable-text">32%</div>
+              <div class="metric-label editable-text">Tasa de Reciclaje</div>
+              <div class="metric-change positive editable-text">+8.7%</div>
+            </div>
+          </div>
+          
+          <div class="col-md-3 mb-4">
+            <div class="metric-card">
+              <i class="fas fa-truck fa-2x text-info"></i>
+              <div class="metric-value editable-text">87%</div>
+              <div class="metric-label editable-text">Cobertura de Recolección</div>
+              <div class="metric-change positive editable-text">+2.1%</div>
+            </div>
+          </div>
+          
+          <div class="col-md-3 mb-4">
+            <div class="metric-card">
+              <i class="fas fa-landmark fa-2x text-warning"></i>
+              <div class="metric-value editable-text">45%</div>
+              <div class="metric-label editable-text">Residuos en Relleno</div>
+              <div class="metric-change negative editable-text">-3.2%</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-2">
+          <div class="col-md-8">
+            <div class="chart-container">
+              <h5 class="editable-text">Composición de Residuos Sólidos</h5>
+              <div class="d-flex justify-content-center align-items-center" style="height: 300px; background-color: #f8f9fa; border-radius: 8px;">
+                <p class="text-muted editable-text">Gráfico de composición de residuos aparecerá aquí</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="chart-container">
+              <h5 class="editable-text">Tendencia Mensual</h5>
+              <div class="d-flex justify-content-center align-items-center" style="height: 300px; background-color: #f8f9fa; border-radius: 8px;">
+                <p class="text-muted editable-text">Gráfico de tendencia aparecerá aquí</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="data-table">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th class="editable-text">Indicador</th>
+                    <th class="editable-text">Valor Actual</th>
+                    <th class="editable-text">Meta</th>
+                    <th class="editable-text">Variación</th>
+                    <th class="editable-text">Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="editable-text">Generación per cápita (kg/hab/día)</td>
+                    <td class="editable-text">1.2</td>
+                    <td class="editable-text">1.0</td>
+                    <td class="editable-text">+0.2</td>
+                    <td><span class="badge bg-warning editable-text">Por mejorar</span></td>
+                  </tr>
+                  <tr>
+                    <td class="editable-text">Tasa de reciclaje (%)</td>
+                    <td class="editable-text">32</td>
+                    <td class="editable-text">40</td>
+                    <td class="editable-text">+8</td>
+                    <td><span class="badge bg-success editable-text">En progreso</span></td>
+                  </tr>
+                  <tr>
+                    <td class="editable-text">Cobertura de recolección (%)</td>
+                    <td class="editable-text">87</td>
+                    <td class="editable-text">95</td>
+                    <td class="editable-text">+8</td>
+                    <td><span class="badge bg-info editable-text">En progreso</span></td>
+                  </tr>
+                  <tr>
+                    <td class="editable-text">Residuos en relleno sanitario (%)</td>
+                    <td class="editable-text">45</td>
+                    <td class="editable-text">35</td>
+                    <td class="editable-text">-10</td>
+                    <td><span class="badge bg-danger editable-text">Crítico</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Avances mejorada -->
       <div id="section-avances" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #f39c12 0%, #f7dc6f 100%); color: #343a40;">
           <h1 class="hero-title editable-text" style="color: #343a40;">Monitor de Avances y Cumplimiento</h1>
@@ -1744,84 +1313,119 @@
           </p>
         </div>
         
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-value">8</div>
-            <div class="stat-label">Metas activas</div>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="progress-card">
+              <h5 class="editable-text">Reducción de Residuos</h5>
+              <div class="d-flex justify-content-between mb-1">
+                <span class="editable-text">Progreso: 65%</span>
+                <span class="editable-text">Meta: 15% reducción</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="mt-3">
+                <h6 class="editable-text">Actividades recientes:</h6>
+                <ul>
+                  <li class="editable-text">Campaña de concientización completada (15% de participación)</li>
+                  <li class="editable-text">Implementación de puntos de reciclaje en 5 barrios</li>
+                  <li class="editable-text">Reducción del 8% en residuos orgánicos</li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-value">3</div>
-            <div class="stat-label">Metas completadas</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">52%</div>
-            <div class="stat-label">Progreso promedio</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-value">15</div>
-            <div class="stat-label">Acciones pendientes</div>
-          </div>
-        </div>
-        
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-chart-line me-2"></i>Progreso de Metas</h5>
-            <div class="chart-container">
-              <!-- Aquí iría un gráfico de progreso de metas -->
-              <div style="display: flex; align-items: center; justify-content: center; height: 100%; background-color: #f8f9fa; border-radius: var(--border-radius);">
-                <p class="text-muted">Gráfico de progreso de metas</p>
+          
+          <div class="col-md-6">
+            <div class="progress-card">
+              <h5 class="editable-text">Incremento del Reciclaje</h5>
+              <div class="d-flex justify-content-between mb-1">
+                <span class="editable-text">Progreso: 42%</span>
+                <span class="editable-text">Meta: 40% de reciclaje</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-info" role="progressbar" style="width: 42%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="mt-3">
+                <h6 class="editable-text">Actividades recientes:</h6>
+                <ul>
+                  <li class="editable-text">Instalación de 20 contenedores de separación</li>
+                  <li class="editable-text">Capacitación a 150 familias en reciclaje</li>
+                  <li class="editable-text">Alianza con 3 empresas recicladoras</li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
         
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-tasks me-2"></i>Acciones y Tareas</h5>
-            <div class="table-responsive">
-              <table class="data-table">
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="chart-container">
+              <h5 class="editable-text">Progreso de Metas por Mes</h5>
+              <div class="d-flex justify-content-center align-items-center" style="height: 300px; background-color: #f8f9fa; border-radius: 8px;">
+                <p class="text-muted editable-text">Gráfico de progreso de metas aparecerá aquí</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="data-table">
+              <table class="table table-striped table-hover">
                 <thead>
                   <tr>
-                    <th>Tarea</th>
-                    <th>Meta relacionada</th>
-                    <th>Responsable</th>
-                    <th>Fecha límite</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                    <th class="editable-text">Meta</th>
+                    <th class="editable-text">Fecha Inicio</th>
+                    <th class="editable-text">Fecha Límite</th>
+                    <th class="editable-text">Progreso</th>
+                    <th class="editable-text">Estado</th>
+                    <th class="editable-text">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Implementar campaña de concientización</td>
-                    <td>Reducción del 15%</td>
-                    <td>María González</td>
-                    <td>15/04/2023</td>
-                    <td><span class="badge bg-warning">En progreso</span></td>
+                    <td class="editable-text">Reducción del 15% de residuos</td>
+                    <td class="editable-text">01/01/2023</td>
+                    <td class="editable-text">31/12/2023</td>
                     <td>
-                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
-                      <button class="btn btn-sm btn-outline-success"><i class="fas fa-check"></i></button>
+                      <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </td>
+                    <td><span class="badge bg-warning editable-text">En progreso</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary">Detalles</button>
+                      <button class="btn btn-sm btn-outline-success">Actualizar</button>
                     </td>
                   </tr>
                   <tr>
-                    <td>Instalar contenedores de reciclaje</td>
-                    <td>Aumentar reciclaje al 40%</td>
-                    <td>Carlos Rodríguez</td>
-                    <td>30/03/2023</td>
-                    <td><span class="badge bg-success">Completada</span></td>
+                    <td class="editable-text">40% de tasa de reciclaje</td>
+                    <td class="editable-text">01/03/2023</td>
+                    <td class="editable-text">30/06/2023</td>
                     <td>
-                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
-                      <button class="btn btn-sm btn-outline-info"><i class="fas fa-eye"></i></button>
+                      <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 42%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </td>
+                    <td><span class="badge bg-info editable-text">En progreso</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary">Detalles</button>
+                      <button class="btn btn-sm btn-outline-success">Actualizar</button>
                     </td>
                   </tr>
                   <tr>
-                    <td>Capacitar personal de recolección</td>
-                    <td>Mejorar eficiencia</td>
-                    <td>Ana Martínez</td>
-                    <td>20/05/2023</td>
-                    <td><span class="badge bg-secondary">Pendiente</span></td>
+                    <td class="editable-text">95% de cobertura de recolección</td>
+                    <td class="editable-text">01/02/2023</td>
+                    <td class="editable-text">31/08/2023</td>
                     <td>
-                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
-                      <button class="btn btn-sm btn-outline-success"><i class="fas fa-check"></i></button>
+                      <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </td>
+                    <td><span class="badge bg-warning editable-text">En progreso</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary">Detalles</button>
+                      <button class="btn btn-sm btn-outline-success">Actualizar</button>
                     </td>
                   </tr>
                 </tbody>
@@ -1829,43 +1433,132 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Sección de Reportes mejorada -->
+      <div id="section-reportes" class="section-content">
+        <div class="hero-section" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);">
+          <h1 class="hero-title editable-text">Generación de Documentos y Reportes</h1>
+          <p class="hero-subtitle editable-text">
+            Genere reportes anuales, trimestrales y de impacto ambiental en formato PDF o Excel.
+          </p>
+        </div>
         
-        <div class="card mt-4">
-          <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-plus-circle me-2"></i>Registrar Nuevo Avance</h5>
-            <div class="form-container">
-              <div class="form-group">
-                <label class="form-label">Meta</label>
-                <select class="form-select">
-                  <option>Reducción del 15% en generación de residuos</option>
-                  <option>Aumentar tasa de reciclaje al 40%</option>
-                  <option>Implementar programa de compostaje</option>
-                </select>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="report-card">
+              <div class="report-title editable-text">Reporte Anual de Sostenibilidad 2022</div>
+              <div class="report-date editable-text">Generado: 15 de enero, 2023</div>
+              <div class="report-description editable-text">
+                Resumen ejecutivo y datos consolidados de la gestión de residuos del año 2022, incluyendo indicadores clave y logros.
               </div>
-              <div class="form-group">
-                <label class="form-label">Descripción del avance</label>
-                <textarea class="form-control" rows="3" placeholder="Describa el avance realizado"></textarea>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">
+                  <i class="fas fa-eye me-1"></i> Vista previa
+                </button>
+                <button class="btn btn-sm btn-outline-success">
+                  <i class="fas fa-download me-1"></i> Descargar PDF
+                </button>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Fecha del avance</label>
-                    <input type="date" class="form-control">
-                  </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="report-card">
+              <div class="report-title editable-text">Reporte Trimestral Q1 2023</div>
+              <div class="report-date editable-text">Generado: 10 de abril, 2023</div>
+              <div class="report-description editable-text">
+                Análisis detallado del primer trimestre del año, con comparativas mensuales y proyecciones para el resto del año.
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">
+                  <i class="fas fa-eye me-1"></i> Vista previa
+                </button>
+                <button class="btn btn-sm btn-outline-success">
+                  <i class="fas fa-download me-1"></i> Descargar PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="report-card">
+              <div class="report-title editable-text">Reporte de Cumplimiento Normativo</div>
+              <div class="report-date editable-text">Generado: 5 de marzo, 2023</div>
+              <div class="report-description editable-text">
+                Documento que valida el apego a las leyes y regulaciones ambientales locales y nacionales.
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">
+                  <i class="fas fa-eye me-1"></i> Vista previa
+                </button>
+                <button class="btn btn-sm btn-outline-success">
+                  <i class="fas fa-download me-1"></i> Descargar PDF
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="report-card">
+              <div class="report-title editable-text">Análisis de Impacto Ambiental</div>
+              <div class="report-date editable-text">Generado: 20 de febrero, 2023</div>
+              <div class="report-description editable-text">
+                Evaluación del impacto de las operaciones de gestión de residuos en el medio ambiente local.
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">
+                  <i class="fas fa-eye me-1"></i> Vista previa
+                </button>
+                <button class="btn btn-sm btn-outline-success">
+                  <i class="fas fa-download me-1"></i> Descargar PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Formularios simplificada -->
+      <div id="section-formularios" class="section-content">
+        <div class="hero-section" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+          <h1 class="hero-title editable-text">Encuestas y Recolección de Datos en Campo</h1>
+          <p class="hero-subtitle editable-text">
+            Acceda a los formularios externos utilizados para la medición y el análisis del comportamiento ciudadano.
+          </p>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-6 mb-4">
+            <div class="card text-white" style="background: linear-gradient(135deg, #2980b9, #2471a3);" data-card-link="https://tally.so/r/nGA7LO"> 
+              <div class="card-body">
+                <i class="fas fa-clipboard-check card-icon"></i>
+                <h5 class="card-title editable-text text-white">ENCUESTA COMPORTAMIENTO PROAMBIENTAL</h5>
+                <p class="card-text editable-text text-white">
+                    Formulario para medir la actitud ciudadana hacia el reciclaje y la autosustentabilidad.
+                </p>
+                <div class="mt-3">
+                  <span class="badge bg-light text-dark me-2 editable-text">25 preguntas</span>
+                  <span class="badge bg-light text-dark editable-text">10 min aprox.</span>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-label">Progreso alcanzado (%)</label>
-                    <input type="number" class="form-control" min="0" max="100" placeholder="Ej: 25">
-                  </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6 mb-4">
+            <div class="card text-white" style="background: linear-gradient(135deg, #27ae60, #229954);" data-card-link="https://tally.so/r/3N1M0O"> 
+              <div class="card-body">
+                <i class="fas fa-weight card-icon"></i>
+                <h5 class="card-title editable-text text-white">MEDICIÓN DE DESECHOS SÓLIDOS (Daule)</h5>
+                <p class="card-text editable-text text-white">
+                    Encuesta técnica para la medición y caracterización de los desechos sólidos en la comunidad.
+                </p>
+                <div class="mt-3">
+                  <span class="badge bg-light text-dark me-2 editable-text">18 preguntas</span>
+                  <span class="badge bg-light text-dark editable-text">15 min aprox.</span>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Evidencia (opcional)</label>
-                <input type="file" class="form-control">
-              </div>
-              <div class="action-buttons">
-                <button class="btn btn-primary-custom"><i class="fas fa-save me-2"></i>Guardar avance</button>
               </div>
             </div>
           </div>
