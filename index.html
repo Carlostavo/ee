@@ -47,7 +47,6 @@
       padding-top: env(safe-area-inset-top);
       padding-bottom: constant(safe-area-inset-bottom);
       padding-bottom: env(safe-area-inset-bottom);
-      overflow-x: hidden;
     }
     
     /* Navbar mejorada con soporte para notch y áreas seguras */
@@ -69,10 +68,6 @@
       color: white !important;
       display: flex;
       align-items: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 70vw;
     }
     
     .navbar-brand-custom i {
@@ -88,7 +83,6 @@
       margin: 0 2px;
       transition: var(--transition);
       font-size: clamp(0.9rem, 2.5vw, 1rem);
-      white-space: nowrap;
     }
     
     .navbar-nav .nav-link:hover, 
@@ -649,24 +643,6 @@
       .navbar-brand-custom {
         font-size: 1.3rem;
       }
-      
-      /* Mejoras específicas para móviles */
-      .hero-title {
-        font-size: clamp(1.5rem, 5vw, 2.2rem);
-      }
-      
-      .hero-subtitle {
-        font-size: clamp(0.9rem, 3vw, 1.1rem);
-      }
-      
-      .card-body {
-        padding: 1rem;
-      }
-      
-      .btn-custom {
-        min-height: 48px;
-        padding: 0.75rem 1rem;
-      }
     }
     
     @media (max-width: 576px) {
@@ -687,15 +663,6 @@
       .container {
         padding-left: 10px;
         padding-right: 10px;
-      }
-      
-      .navbar-brand-custom {
-        max-width: 60vw;
-      }
-      
-      .hero-section {
-        padding: 20px 15px;
-        margin-bottom: 20px;
       }
     }
     
@@ -718,10 +685,6 @@
       
       .hero-subtitle {
         font-size: 0.9rem;
-      }
-      
-      .card-body {
-        padding: 0.75rem;
       }
     }
     
@@ -787,27 +750,215 @@
       background: var(--primary-color);
       border-radius: 2px;
     }
+
+    /* Estilos específicos para secciones internas */
+    .section-content:not(#section-inicio) .cards-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: clamp(1rem, 3vw, 1.5rem);
+      position: relative;
+      min-height: auto;
+    }
     
-    /* Mejoras para formularios en móviles */
+    .section-content:not(#section-inicio) .movable-card-wrapper {
+      position: relative !important;
+      width: 100% !important;
+      margin-bottom: 1rem;
+    }
+    
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      box-shadow: var(--box-shadow);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+    
+    .data-table th,
+    .data-table td {
+      padding: clamp(0.75rem, 2vw, 1rem);
+      text-align: left;
+      border-bottom: 1px solid #e9ecef;
+    }
+    
+    .data-table th {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: 600;
+    }
+    
+    .data-table tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    
+    .data-table tr:hover {
+      background-color: #e9ecef;
+    }
+    
+    .progress-container {
+      margin: 1.5rem 0;
+    }
+    
+    .progress-bar-container {
+      height: clamp(12px, 3vw, 16px);
+      background-color: #e9ecef;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+    
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      margin-bottom: 0.25rem;
+    }
+    
+    .chart-container {
+      width: 100%;
+      height: 300px;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+    
+    .form-container {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      box-shadow: var(--box-shadow);
+      margin: 1.5rem 0;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--secondary-color);
+    }
+    
     .form-control {
-      font-size: 16px; /* Evita zoom automático en iOS */
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ced4da;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      transition: var(--transition);
     }
     
-    /* Mejoras para elementos interactivos en móviles */
-    .touch-target {
-      min-height: 44px;
-      min-width: 44px;
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.2rem rgba(30, 126, 52, 0.25);
     }
     
-    /* Mejoras para scroll en móviles */
-    .mobile-scroll-container {
-      -webkit-overflow-scrolling: touch;
-      overflow-y: auto;
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: clamp(1rem, 3vw, 1.5rem);
+      margin: 1.5rem 0;
     }
     
-    /* Mejoras para elementos de arrastre en móviles */
-    .touch-draggable {
-      touch-action: pan-x pan-y;
+    .stat-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: clamp(1rem, 3vw, 1.5rem);
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      transition: var(--transition);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stat-value {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      color: var(--secondary-color);
+    }
+    
+    .filter-container {
+      background-color: white;
+      border-radius: var(--border-radius);
+      padding: clamp(1rem, 3vw, 1.5rem);
+      box-shadow: var(--box-shadow);
+      margin: 1.5rem 0;
+    }
+    
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: end;
+    }
+    
+    .filter-group {
+      flex: 1;
+      min-width: 150px;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .action-buttons .btn {
+      flex: 1;
+      min-width: 120px;
+    }
+    
+    /* Responsive para secciones internas */
+    @media (max-width: 768px) {
+      .section-content:not(#section-inicio) .cards-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .filter-row {
+        flex-direction: column;
+      }
+      
+      .filter-group {
+        width: 100%;
+      }
+      
+      .action-buttons .btn {
+        flex: 1 0 100%;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .chart-container {
+        height: 250px;
+      }
+      
+      .form-container {
+        padding: 1.25rem;
+      }
     }
   </style>
 </head>
@@ -818,14 +969,14 @@
     <div class="sidebar-section">
         <h6 class="sidebar-heading text-secondary"><i class="fas fa-layer-group"></i> Elementos</h6>
         
-        <button class="btn btn-sm btn-outline-success w-100 mb-2 touch-target" onclick="addRandomColoredCard()">
+        <button class="btn btn-sm btn-outline-success w-100 mb-2" onclick="addRandomColoredCard()">
           <i class="fas fa-credit-card me-1"></i> Añadir Tarjeta
         </button>
 
-        <button class="btn btn-sm btn-outline-primary w-100 mb-2 touch-target" onclick="addTextBox()">
+        <button class="btn btn-sm btn-outline-primary w-100 mb-2" onclick="addTextBox()">
           <i class="fas fa-square-plus me-1"></i> Agregar Cuadro de Texto
         </button>
-        <button class="btn btn-sm btn-outline-danger w-100 mb-4 touch-target" onclick="deleteSelectedElement()">
+        <button class="btn btn-sm btn-outline-danger w-100 mb-4" onclick="deleteSelectedElement()">
           <i class="fas fa-trash me-1"></i> Eliminar Seleccionado
         </button>
     </div>
@@ -854,24 +1005,24 @@
     <div class="sidebar-section">
         <h6 class="sidebar-heading text-secondary"><i class="fas fa-font"></i> Formato</h6>
         <div class="btn-group w-100 mb-2" role="group">
-          <button class="btn btn-sm btn-outline-dark touch-target" onclick="formatText('bold')" title="Negrita"><i class="fas fa-bold"></i></button>
-          <button class="btn btn-sm btn-outline-dark touch-target" onclick="formatText('italic')" title="Cursiva"><i class="fas fa-italic"></i></button>
-          <button class="btn btn-sm btn-outline-dark touch-target" onclick="formatText('underline')" title="Subrayado"><i class="fas fa-underline"></i></button>
-          <button class="btn btn-sm btn-outline-primary touch-target" onclick="addLink()" title="Añadir enlace"><i class="fas fa-link"></i></button>
+          <button class="btn btn-sm btn-outline-dark" onclick="formatText('bold')" title="Negrita"><i class="fas fa-bold"></i></button>
+          <button class="btn btn-sm btn-outline-dark" onclick="formatText('italic')" title="Cursiva"><i class="fas fa-italic"></i></button>
+          <button class="btn btn-sm btn-outline-dark" onclick="formatText('underline')" title="Subrayado"><i class="fas fa-underline"></i></button>
+          <button class="btn btn-sm btn-outline-primary" onclick="addLink()" title="Añadir enlace"><i class="fas fa-link"></i></button>
         </div>
 
         <h6 class="sidebar-heading text-secondary mt-3"><i class="fas fa-align-left"></i> Alineación</h6>
         <div class="btn-group w-100 mb-2" role="group">
-          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('justifyLeft')"><i class="fas fa-align-left"></i></button>
-          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('justifyCenter')"><i class="fas fa-align-center"></i></button>
-          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('justifyRight')"><i class="fas fa-align-right"></i></button>
-          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('justifyFull')"><i class="fas fa-align-justify"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyLeft')"><i class="fas fa-align-left"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyCenter')"><i class="fas fa-align-center"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyRight')"><i class="fas fa-align-right"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyFull')"><i class="fas fa-align-justify"></i></button>
         </div>
 
         <h6 class="sidebar-heading text-secondary mt-3"><i class="fas fa-list-ul"></i> Listas</h6>
         <div class="btn-group w-100 mb-4" role="group">
-          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('insertUnorderedList')" title="Viñetas"><i class="fas fa-list-ul"></i></button>
-          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('insertOrderedList')" title="Numeración"><i class="fas fa-list-ol"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('insertUnorderedList')" title="Viñetas"><i class="fas fa-list-ul"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('insertOrderedList')" title="Numeración"><i class="fas fa-list-ol"></i></button>
         </div>
     </div>
     
@@ -907,8 +1058,8 @@
     <div class="sidebar-section">
         <h6 class="sidebar-heading text-secondary"><i class="fas fa-history"></i> Historial</h6>
         <div class="btn-group w-100 mb-3" role="group">
-          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('undo')" title="Deshacer"><i class="fas fa-undo"></i></button>
-          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('redo')" title="Rehacer"><i class="fas fa-redo"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('undo')" title="Deshacer"><i class="fas fa-undo"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('redo')" title="Rehacer"><i class="fas fa-redo"></i></button>
         </div>
     </div>
 
@@ -919,41 +1070,41 @@
       <a class="navbar-brand navbar-brand-custom" href="#" onclick="showSection('inicio')">
         <i class="fas fa-recycle"></i> Gestión de Residuos Sólidos
       </a>
-      <button class="navbar-toggler touch-target" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link touch-target" href="#" onclick="showSection('inicio')">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link restricted-nav touch-target" href="#" onclick="showSection('metas')">Metas <i class="fas fa-lock ms-1"></i></a></li>
-          <li class="nav-item"><a class="nav-link touch-target" href="#" onclick="showSection('indicadores')">Indicadores</a></li>
-          <li class="nav-item"><a class="nav-link restricted-nav touch-target" href="#" onclick="showSection('avances')">Avances <i class="fas fa-lock ms-1"></i></a></li>
-          <li class="nav-item"><a class="nav-link restricted-nav touch-target" href="#" onclick="showSection('reportes')">Reportes <i class="fas fa-lock ms-1"></i></a></li>
-          <li class="nav-item"><a class="nav-link touch-target" href="#" onclick="showSection('formularios')">Formularios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('inicio')">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link restricted-nav" href="#" onclick="showSection('metas')">Metas <i class="fas fa-lock ms-1"></i></a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('indicadores')">Indicadores</a></li>
+          <li class="nav-item"><a class="nav-link restricted-nav" href="#" onclick="showSection('avances')">Avances <i class="fas fa-lock ms-1"></i></a></li>
+          <li class="nav-item"><a class="nav-link restricted-nav" href="#" onclick="showSection('reportes')">Reportes <i class="fas fa-lock ms-1"></i></a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('formularios')">Formularios</a></li>
         </ul>
         <ul class="navbar-nav" id="loginBtnContainer">
           <li class="nav-item">
-            <button class="btn btn-outline-light btn-custom touch-target" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <button class="btn btn-outline-light btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
               <i class="fas fa-sign-in-alt me-2"></i> Iniciar Sesión
             </button>
           </li>
         </ul>
         <ul class="navbar-nav d-none" id="userNav">
           <li class="nav-item">
-            <button id="editToggleBtn" class="btn btn-outline-light btn-custom me-2 touch-target" onclick="toggleEditMode()">
+            <button id="editToggleBtn" class="btn btn-outline-light btn-custom me-2" onclick="toggleEditMode()">
               <i class="fas fa-edit me-1"></i> Modo Edición
             </button>
           </li>
-          <li class="nav-item"><a class="nav-link touch-target" href="#"><i class="fas fa-bell"></i></a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-bell"></i></a></li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle touch-target" href="#" role="button" data-bs-toggle="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
               <i class="fas fa-user-circle me-1"></i> <span id="userNameDisplay">Usuario</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item touch-target" href="#"><i class="fas fa-cog me-2"></i> Gestión de Usuarios</a></li>
-              <li><a class="dropdown-item touch-target" href="#"><i class="fas fa-address-card me-2"></i> Mi Perfil</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Gestión de Usuarios</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-address-card me-2"></i> Mi Perfil</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger touch-target" href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión</a></li>
+              <li><a class="dropdown-item text-danger" href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión</a></li>
             </ul>
           </li>
         </ul>
@@ -1033,36 +1184,7 @@
         </div>
       </div>
       
-      <!-- Resto de las secciones con diseño mejorado -->
-      <div id="section-metas" class="section-content">
-        <div class="hero-section" style="background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);">
-          <h1 class="hero-title editable-text">Definición y Seguimiento de Metas</h1>
-          <p class="hero-subtitle editable-text">
-            Establezca metas SMART para la gestión de residuos. Monitoree la reducción y el reciclaje.
-          </p>
-        </div>
-        <div class="cards-row mt-3">
-          <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
-            <div class="card" style="background: linear-gradient(135deg, #ecf0f1, #d5dbdb);"> 
-              <div class="card-body">
-                <i class="fas fa-bullseye card-icon" style="color: #16a085;"></i>
-                <h5 class="card-title editable-text" style="color: #16a085;">Meta de Reducción</h5>
-                <p class="card-text editable-text">Establecer un objetivo del 15% de reducción de desechos municipales para el fin de año fiscal.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
-            <div class="card text-white" style="background: linear-gradient(135deg, #2c3e50, #34495e);"> 
-              <div class="card-body">
-                <i class="fas fa-recycle card-icon"></i>
-                <h5 class="card-title editable-text text-white">Meta de Reciclaje</h5>
-                <p class="card-text editable-text text-white">Aumentar la tasa de reciclaje de plásticos y papel al 40% en los próximos 6 meses.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <!-- Sección de Indicadores -->
       <div id="section-indicadores" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #34495e 0%, #5d6d7e 100%);">
           <h1 class="hero-title editable-text">Indicadores de Desempeño (KPIs)</h1>
@@ -1070,57 +1192,121 @@
             Visualice los datos en tiempo real sobre la generación, recolección y destino final de los residuos sólidos.
           </p>
         </div>
-        <div class="cards-row mt-3">
-          <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
-            <div class="card" style="background: linear-gradient(135deg, #f8c471, #f39c12);"> 
-              <div class="card-body">
-                <i class="fas fa-chart-bar card-icon" style="color: #34495e;"></i>
-                <h5 class="card-title editable-text" style="color: #34495e;">Tasa de Generación Per Cápita</h5>
-                <p class="card-text editable-text">Cantidad promedio de residuos sólidos generados por persona al día (kg/hab/día).</p>
+        
+        <div class="filter-container">
+          <h5 class="mb-3"><i class="fas fa-filter me-2"></i>Filtros</h5>
+          <div class="filter-row">
+            <div class="filter-group">
+              <label class="form-label">Periodo</label>
+              <select class="form-select">
+                <option>Últimos 7 días</option>
+                <option>Último mes</option>
+                <option>Último trimestre</option>
+                <option>Último año</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label class="form-label">Zona</label>
+              <select class="form-select">
+                <option>Todas las zonas</option>
+                <option>Zona Norte</option>
+                <option>Zona Sur</option>
+                <option>Zona Centro</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label class="form-label">Tipo de residuo</label>
+              <select class="form-select">
+                <option>Todos los tipos</option>
+                <option>Orgánicos</option>
+                <option>Plásticos</option>
+                <option>Papel y cartón</option>
+                <option>Vidrio</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <button class="btn btn-primary-custom w-100">Aplicar filtros</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">1.2 kg</div>
+            <div class="stat-label">Generación per cápita</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">45%</div>
+            <div class="stat-label">Tasa de reciclaje</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">78%</div>
+            <div class="stat-label">Cobertura de recolección</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">12%</div>
+            <div class="stat-label">Reducción de residuos</div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-chart-bar me-2"></i>Composición de Residuos</h5>
+            <div class="chart-container">
+              <!-- Aquí iría un gráfico de composición de residuos -->
+              <div style="display: flex; align-items: center; justify-content: center; height: 100%; background-color: #f8f9fa; border-radius: var(--border-radius);">
+                <p class="text-muted">Gráfico de composición de residuos</p>
               </div>
             </div>
           </div>
-          <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
-            <div class="card" style="background: linear-gradient(135deg, #d6eaf8, #aed6f1);"> 
-              <div class="card-body">
-                <i class="fas fa-pie-chart card-icon" style="color: #34495e;"></i>
-                <h5 class="card-title editable-text" style="color: #34495e;">Composición de Residuos</h5>
-                <p class="card-text editable-text">Porcentaje de residuos orgánicos, reciclables y rechazo en el total recolectado.</p>
-              </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-table me-2"></i>Indicadores Detallados</h5>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Indicador</th>
+                    <th>Valor Actual</th>
+                    <th>Meta</th>
+                    <th>Tendencia</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Generación per cápita (kg/hab/día)</td>
+                    <td>1.2</td>
+                    <td>0.9</td>
+                    <td><i class="fas fa-arrow-down text-success"></i></td>
+                  </tr>
+                  <tr>
+                    <td>Tasa de reciclaje (%)</td>
+                    <td>45</td>
+                    <td>60</td>
+                    <td><i class="fas fa-arrow-up text-success"></i></td>
+                  </tr>
+                  <tr>
+                    <td>Cobertura de recolección (%)</td>
+                    <td>78</td>
+                    <td>95</td>
+                    <td><i class="fas fa-arrow-up text-success"></i></td>
+                  </tr>
+                  <tr>
+                    <td>Residuos aprovechados (%)</td>
+                    <td>32</td>
+                    <td>50</td>
+                    <td><i class="fas fa-arrow-up text-success"></i></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
 
-      <div id="section-avances" class="section-content">
-        <div class="hero-section" style="background: linear-gradient(135deg, #f39c12 0%, #f7dc6f 100%); color: #343a40;">
-          <h1 class="hero-title editable-text" style="color: #343a40;">Monitor de Avances y Cumplimiento</h1>
-          <p class="hero-subtitle editable-text" style="color: #343a40;">
-            Seguimiento detallado de cada meta y acción implementada. Identifique cuellos de botella y éxitos.
-          </p>
-        </div>
-        <div class="cards-row mt-3">
-          <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
-            <div class="card" style="background: linear-gradient(135deg, #a9cce3, #7fb3d5);"> 
-              <div class="card-body">
-                <i class="fas fa-chart-line card-icon" style="color: #f39c12;"></i>
-                <h5 class="card-title editable-text" style="color: #f39c12;">Progreso de la Meta (Gráficos)</h5>
-                <p class="card-text editable-text">Visualización de barras y líneas para comparar el objetivo vs. el avance actual.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
-            <div class="card text-white" style="background: linear-gradient(135deg, #52be80, #27ae60);"> 
-              <div class="card-body">
-                <i class="fas fa-check-circle card-icon"></i>
-                <h5 class="card-title editable-text text-white">Tareas Pendientes y Logradas</h5>
-                <p class="card-text editable-text text-white">Listado interactivo de acciones necesarias para alcanzar las metas.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <!-- Sección de Reportes -->
       <div id="section-reportes" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);">
           <h1 class="hero-title editable-text">Generación de Documentos y Reportes</h1>
@@ -1128,28 +1314,141 @@
             Genere reportes anuales, trimestrales y de impacto ambiental en formato PDF o Excel.
           </p>
         </div>
+        
         <div class="cards-row mt-3">
-          <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
-            <div class="card" style="background: linear-gradient(135deg, #d5dbdb, #bdc3c7);"> 
+          <div class="col-md-6">
+            <div class="card h-100">
               <div class="card-body">
-                <i class="fas fa-file-pdf card-icon" style="color: #2c3e50;"></i>
-                <h5 class="card-title editable-text" style="color: #2c3e50;">Reporte Anual de Sostenibilidad</h5>
-                <p class="card-text editable-text">Resumen ejecutivo y datos consolidados de la gestión de residuos del año.</p>
+                <i class="fas fa-file-pdf card-icon" style="color: #e74c3c;"></i>
+                <h5 class="card-title">Reporte Anual de Sostenibilidad</h5>
+                <p class="card-text">Resumen ejecutivo y datos consolidados de la gestión de residuos del año.</p>
+                <div class="action-buttons">
+                  <button class="btn btn-primary-custom"><i class="fas fa-eye me-2"></i>Vista previa</button>
+                  <button class="btn btn-outline-primary"><i class="fas fa-download me-2"></i>Descargar PDF</button>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
-            <div class="card text-white" style="background: linear-gradient(135deg, #bb8fce, #9b59b6);"> 
+          <div class="col-md-6">
+            <div class="card h-100">
               <div class="card-body">
-                <i class="fas fa-file-excel card-icon"></i>
-                <h5 class="card-title editable-text text-white">Reporte de Cumplimiento Normativo</h5>
-                <p class="card-text editable-text text-white">Documento que valida el apego a las leyes y regulaciones ambientales locales.</p>
+                <i class="fas fa-file-excel card-icon" style="color: #27ae60;"></i>
+                <h5 class="card-title">Reporte de Cumplimiento Normativo</h5>
+                <p class="card-text">Documento que valida el apego a las leyes y regulaciones ambientales locales.</p>
+                <div class="action-buttons">
+                  <button class="btn btn-primary-custom"><i class="fas fa-eye me-2"></i>Vista previa</button>
+                  <button class="btn btn-outline-primary"><i class="fas fa-download me-2"></i>Descargar Excel</button>
+                </div>
               </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-cogs me-2"></i>Generar Reporte Personalizado</h5>
+            <div class="form-container">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Tipo de reporte</label>
+                    <select class="form-select">
+                      <option>Reporte de indicadores</option>
+                      <option>Reporte de cumplimiento</option>
+                      <option>Reporte financiero</option>
+                      <option>Reporte de impacto ambiental</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Periodo</label>
+                    <select class="form-select">
+                      <option>Último mes</option>
+                      <option>Último trimestre</option>
+                      <option>Último semestre</option>
+                      <option>Último año</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Formato</label>
+                    <select class="form-select">
+                      <option>PDF</option>
+                      <option>Excel</option>
+                      <option>Word</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Incluir gráficos</label>
+                    <select class="form-select">
+                      <option>Sí</option>
+                      <option>No</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="action-buttons">
+                <button class="btn btn-primary-custom"><i class="fas fa-file-export me-2"></i>Generar reporte</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-history me-2"></i>Reportes Recientes</h5>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Nombre del reporte</th>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Reporte Mensual - Enero 2023</td>
+                    <td>01/02/2023</td>
+                    <td>PDF</td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-download"></i></button>
+                      <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-share"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Indicadores Trimestrales Q4 2022</td>
+                    <td>15/01/2023</td>
+                    <td>Excel</td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-download"></i></button>
+                      <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-share"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Reporte Anual de Sostenibilidad 2022</td>
+                    <td>05/01/2023</td>
+                    <td>PDF</td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-download"></i></button>
+                      <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-share"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Sección de Formularios -->
       <div id="section-formularios" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
           <h1 class="hero-title editable-text">Encuestas y Recolección de Datos en Campo</h1>
@@ -1157,26 +1456,416 @@
             Acceda a los formularios externos utilizados para la medición y el análisis del comportamiento ciudadano.
           </p>
         </div>
+        
         <div class="cards-row mt-3">
-          <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
-            <div class="card text-white" style="background: linear-gradient(135deg, #2980b9, #2471a3);" data-card-link="https://tally.so/r/nGA7LO"> 
+          <div class="col-md-6">
+            <div class="card h-100">
               <div class="card-body">
-                <i class="fas fa-clipboard-check card-icon"></i>
-                <h5 class="card-title editable-text text-white">ENCUESTA COMPORTAMIENTO PROAMBIENTAL</h5>
-                <p class="card-text editable-text text-white">
-                    Formulario para medir la actitud ciudadana hacia el reciclaje y la autosustentabilidad.
+                <i class="fas fa-clipboard-check card-icon" style="color: #2980b9;"></i>
+                <h5 class="card-title">ENCUESTA COMPORTAMIENTO PROAMBIENTAL</h5>
+                <p class="card-text">
+                  Formulario para medir la actitud ciudadana hacia el reciclaje y la autosustentabilidad.
                 </p>
+                <div class="action-buttons">
+                  <button class="btn btn-primary-custom" onclick="window.open('https://tally.so/r/nGA7LO', '_blank')">
+                    <i class="fas fa-external-link-alt me-2"></i>Abrir formulario
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
-            <div class="card text-white" style="background: linear-gradient(135deg, #27ae60, #229954);" data-card-link="https://tally.so/r/3N1M0O"> 
+          <div class="col-md-6">
+            <div class="card h-100">
               <div class="card-body">
-                <i class="fas fa-weight card-icon"></i>
-                <h5 class="card-title editable-text text-white">MEDICIÓN DE DESECHOS SÓLIDOS (Daule)</h5>
-                <p class="card-text editable-text text-white">
-                    Encuesta técnica para la medición y caracterización de los desechos sólidos en la comunidad.
+                <i class="fas fa-weight card-icon" style="color: #27ae60;"></i>
+                <h5 class="card-title">MEDICIÓN DE DESECHOS SÓLIDOS (Daule)</h5>
+                <p class="card-text">
+                  Encuesta técnica para la medición y caracterización de los desechos sólidos en la comunidad.
                 </p>
+                <div class="action-buttons">
+                  <button class="btn btn-primary-custom" onclick="window.open('https://tally.so/r/3N1M0O', '_blank')">
+                    <i class="fas fa-external-link-alt me-2"></i>Abrir formulario
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-plus-circle me-2"></i>Crear Nuevo Formulario</h5>
+            <div class="form-container">
+              <div class="form-group">
+                <label class="form-label">Nombre del formulario</label>
+                <input type="text" class="form-control" placeholder="Ingrese el nombre del formulario">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Descripción</label>
+                <textarea class="form-control" rows="3" placeholder="Describa el propósito del formulario"></textarea>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Tipo de formulario</label>
+                    <select class="form-select">
+                      <option>Encuesta de comportamiento</option>
+                      <option>Medición de residuos</option>
+                      <option>Evaluación de servicios</option>
+                      <option>Otro</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Destinatarios</label>
+                    <select class="form-select">
+                      <option>Ciudadanos en general</option>
+                      <option>Empresas</option>
+                      <option>Instituciones educativas</option>
+                      <option>Personal interno</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="action-buttons">
+                <button class="btn btn-primary-custom"><i class="fas fa-save me-2"></i>Guardar formulario</button>
+                <button class="btn btn-outline-primary"><i class="fas fa-eye me-2"></i>Vista previa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-list-alt me-2"></i>Formularios Disponibles</h5>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Respuestas</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Encuesta Comportamiento Proambiental</td>
+                    <td>Encuesta</td>
+                    <td>245</td>
+                    <td><span class="badge bg-success">Activo</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                      <button class="btn btn-sm btn-outline-info"><i class="fas fa-chart-bar"></i></button>
+                      <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Medición de Desechos Sólidos</td>
+                    <td>Medición</td>
+                    <td>89</td>
+                    <td><span class="badge bg-success">Activo</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                      <button class="btn btn-sm btn-outline-info"><i class="fas fa-chart-bar"></i></button>
+                      <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Evaluación de Servicios de Recolección</td>
+                    <td>Evaluación</td>
+                    <td>156</td>
+                    <td><span class="badge bg-warning">Inactivo</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                      <button class="btn btn-sm btn-outline-info"><i class="fas fa-chart-bar"></i></button>
+                      <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Metas -->
+      <div id="section-metas" class="section-content">
+        <div class="hero-section" style="background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);">
+          <h1 class="hero-title editable-text">Definición y Seguimiento de Metas</h1>
+          <p class="hero-subtitle editable-text">
+            Establezca metas SMART para la gestión de residuos. Monitoree la reducción y el reciclaje.
+          </p>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-bullseye me-2"></i>Metas Principales</h5>
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Reducción del 15% en generación de residuos</span>
+                <span>65%</span>
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 65%; background-color: #16a085;"></div>
+              </div>
+            </div>
+            
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Aumentar tasa de reciclaje al 40%</span>
+                <span>45%</span>
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 45%; background-color: #3498db;"></div>
+              </div>
+            </div>
+            
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Implementar programa de compostaje en 50% de hogares</span>
+                <span>30%</span>
+              </div>
+              <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 30%; background-color: #f39c12;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="cards-row mt-4">
+          <div class="col-md-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <i class="fas fa-flag card-icon" style="color: #16a085;"></i>
+                <h5 class="card-title">Meta de Reducción</h5>
+                <p class="card-text">Establecer un objetivo del 15% de reducción de desechos municipales para el fin de año fiscal.</p>
+                <div class="progress-container">
+                  <div class="progress-label">
+                    <span>Progreso</span>
+                    <span>65%</span>
+                  </div>
+                  <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 65%; background-color: #16a085;"></div>
+                  </div>
+                </div>
+                <div class="action-buttons mt-3">
+                  <button class="btn btn-primary-custom"><i class="fas fa-edit me-2"></i>Editar meta</button>
+                  <button class="btn btn-outline-primary"><i class="fas fa-chart-line me-2"></i>Ver detalles</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card h-100">
+              <div class="card-body">
+                <i class="fas fa-recycle card-icon" style="color: #3498db;"></i>
+                <h5 class="card-title">Meta de Reciclaje</h5>
+                <p class="card-text">Aumentar la tasa de reciclaje de plásticos y papel al 40% en los próximos 6 meses.</p>
+                <div class="progress-container">
+                  <div class="progress-label">
+                    <span>Progreso</span>
+                    <span>45%</span>
+                  </div>
+                  <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 45%; background-color: #3498db;"></div>
+                  </div>
+                </div>
+                <div class="action-buttons mt-3">
+                  <button class="btn btn-primary-custom"><i class="fas fa-edit me-2"></i>Editar meta</button>
+                  <button class="btn btn-outline-primary"><i class="fas fa-chart-line me-2"></i>Ver detalles</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-plus-circle me-2"></i>Crear Nueva Meta</h5>
+            <div class="form-container">
+              <div class="form-group">
+                <label class="form-label">Nombre de la meta</label>
+                <input type="text" class="form-control" placeholder="Ingrese el nombre de la meta">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Descripción</label>
+                <textarea class="form-control" rows="3" placeholder="Describa la meta en detalle"></textarea>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Fecha de inicio</label>
+                    <input type="date" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Fecha límite</label>
+                    <input type="date" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Valor objetivo</label>
+                    <input type="number" class="form-control" placeholder="Ej: 40">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Unidad de medida</label>
+                    <select class="form-select">
+                      <option>Porcentaje (%)</option>
+                      <option>Toneladas (t)</option>
+                      <option>Kilogramos (kg)</option>
+                      <option>Unidades</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="action-buttons">
+                <button class="btn btn-primary-custom"><i class="fas fa-save me-2"></i>Guardar meta</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Avances -->
+      <div id="section-avances" class="section-content">
+        <div class="hero-section" style="background: linear-gradient(135deg, #f39c12 0%, #f7dc6f 100%); color: #343a40;">
+          <h1 class="hero-title editable-text" style="color: #343a40;">Monitor de Avances y Cumplimiento</h1>
+          <p class="hero-subtitle editable-text" style="color: #343a40;">
+            Seguimiento detallado de cada meta y acción implementada. Identifique cuellos de botella y éxitos.
+          </p>
+        </div>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Metas activas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">3</div>
+            <div class="stat-label">Metas completadas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">52%</div>
+            <div class="stat-label">Progreso promedio</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">15</div>
+            <div class="stat-label">Acciones pendientes</div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-chart-line me-2"></i>Progreso de Metas</h5>
+            <div class="chart-container">
+              <!-- Aquí iría un gráfico de progreso de metas -->
+              <div style="display: flex; align-items: center; justify-content: center; height: 100%; background-color: #f8f9fa; border-radius: var(--border-radius);">
+                <p class="text-muted">Gráfico de progreso de metas</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-tasks me-2"></i>Acciones y Tareas</h5>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tarea</th>
+                    <th>Meta relacionada</th>
+                    <th>Responsable</th>
+                    <th>Fecha límite</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Implementar campaña de concientización</td>
+                    <td>Reducción del 15%</td>
+                    <td>María González</td>
+                    <td>15/04/2023</td>
+                    <td><span class="badge bg-warning">En progreso</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                      <button class="btn btn-sm btn-outline-success"><i class="fas fa-check"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Instalar contenedores de reciclaje</td>
+                    <td>Aumentar reciclaje al 40%</td>
+                    <td>Carlos Rodríguez</td>
+                    <td>30/03/2023</td>
+                    <td><span class="badge bg-success">Completada</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                      <button class="btn btn-sm btn-outline-info"><i class="fas fa-eye"></i></button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Capacitar personal de recolección</td>
+                    <td>Mejorar eficiencia</td>
+                    <td>Ana Martínez</td>
+                    <td>20/05/2023</td>
+                    <td><span class="badge bg-secondary">Pendiente</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></button>
+                      <button class="btn btn-sm btn-outline-success"><i class="fas fa-check"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title"><i class="fas fa-plus-circle me-2"></i>Registrar Nuevo Avance</h5>
+            <div class="form-container">
+              <div class="form-group">
+                <label class="form-label">Meta</label>
+                <select class="form-select">
+                  <option>Reducción del 15% en generación de residuos</option>
+                  <option>Aumentar tasa de reciclaje al 40%</option>
+                  <option>Implementar programa de compostaje</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Descripción del avance</label>
+                <textarea class="form-control" rows="3" placeholder="Describa el avance realizado"></textarea>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Fecha del avance</label>
+                    <input type="date" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">Progreso alcanzado (%)</label>
+                    <input type="number" class="form-control" min="0" max="100" placeholder="Ej: 25">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Evidencia (opcional)</label>
+                <input type="file" class="form-control">
+              </div>
+              <div class="action-buttons">
+                <button class="btn btn-primary-custom"><i class="fas fa-save me-2"></i>Guardar avance</button>
               </div>
             </div>
           </div>
@@ -1203,7 +1892,7 @@
               <input type="password" class="form-control" id="inputPassword" value="1234" required>
             </div>
             <div class="d-grid">
-              <button type="button" class="btn btn-success mt-3 btn-custom touch-target" onclick="handleLogin()">Ingresar</button>
+              <button type="button" class="btn btn-success mt-3 btn-custom" onclick="handleLogin()">Ingresar</button>
             </div>
           </form>
         </div>
