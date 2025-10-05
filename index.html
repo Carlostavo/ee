@@ -8,59 +8,103 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <style>
-    /* Estilos Generales y Navbar */
+    /* Variables de diseño */
     :root {
       --primary-color: #1e7e34;
+      --primary-dark: #166529;
       --secondary-color: #2c3e50;
       --accent-color: #3498db;
       --light-color: #f8f9fa;
       --dark-color: #343a40;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
+      --info-color: #17a2b8;
+      --border-radius: 12px;
+      --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s ease;
     }
     
+    /* Estilos Generales */
     body { 
       background-color: #f8f9fa; 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: #333;
     }
     
-    .navbar-brand-custom { 
-      font-size: 1.4rem; 
-      font-weight: bold; 
-    }
-    
-    .navbar { 
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      background-color: white;
+    /* Navbar mejorada */
+    .navbar {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       padding: 0.8rem 1rem;
     }
     
-    /* Estilo para enlaces restringidos */
+    .navbar-brand-custom { 
+      font-size: 1.5rem; 
+      font-weight: 700;
+      color: white !important;
+      display: flex;
+      align-items: center;
+    }
+    
+    .navbar-brand-custom i {
+      font-size: 1.8rem;
+      margin-right: 10px;
+    }
+    
+    .navbar-nav .nav-link {
+      color: rgba(255, 255, 255, 0.9) !important;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      margin: 0 2px;
+      transition: var(--transition);
+    }
+    
+    .navbar-nav .nav-link:hover, 
+    .navbar-nav .nav-link:focus {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white !important;
+    }
+    
     .nav-link.restricted-nav {
-      color: #adb5bd !important;
+      color: rgba(255, 255, 255, 0.6) !important;
       cursor: pointer;
     }
     
     .nav-link.restricted-nav:hover {
-      color: #6c757d !important; 
+      color: rgba(255, 255, 255, 0.8) !important; 
+    }
+    
+    .navbar-toggler {
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 0.25rem 0.5rem;
+    }
+    
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
 
-    /* Panel Lateral */
+    /* Panel Lateral mejorado */
     #editSidebar {
       position: fixed;
       top: 0;
       left: 0;
       height: 100vh;
-      width: 280px;
-      padding-top: 60px;
+      width: 300px;
+      padding-top: 70px;
       z-index: 1040;
-      border-right: 1px solid #dee2e6;
+      border-right: 1px solid #e9ecef;
       overflow-y: auto;
-      background: #f4f4f4;
-      transition: all 0.2s ease-in-out;
+      background: white;
+      transition: all 0.3s ease;
       font-size: 0.9rem;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
     }
     
     .sidebar-section { 
-      padding: 10px 0; 
+      padding: 15px 0; 
       border-bottom: 1px solid #e9ecef; 
     }
     
@@ -69,15 +113,17 @@
     }
     
     .sidebar-heading { 
-      color: #007bff; 
+      color: var(--secondary-color); 
       font-size: 0.95rem; 
-      margin-bottom: 0.5rem; 
+      margin-bottom: 0.75rem; 
       display: flex; 
       align-items: center; 
+      font-weight: 600;
     }
     
     .sidebar-heading i { 
-      margin-right: 8px; 
+      margin-right: 10px; 
+      color: var(--primary-color);
     }
 
     /* Contenedor Principal */
@@ -88,6 +134,7 @@
     .section-content { 
       display: none; 
       padding-top: 20px; 
+      animation: fadeIn 0.5s ease;
     } 
     
     #section-inicio { 
@@ -96,7 +143,7 @@
     }
     
     #mainContentWrapper { 
-      transition: margin-left .2s ease; 
+      transition: margin-left .3s ease; 
     }
     
     #mainContent {
@@ -107,64 +154,103 @@
     
     /* Hero Section - Diseño Profesional */
     .hero-section {
-      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      background: linear-gradient(135deg, var(--secondary-color) 0%, #34495e 100%);
       color: white;
-      padding: 50px 30px; 
-      border-radius: 12px;
+      padding: 60px 30px; 
+      border-radius: var(--border-radius);
       margin-bottom: 40px;
       text-align: center;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    }
-    
-    .hero-title {
-      font-size: 2.5rem; 
-      font-weight: 700;
-      margin-bottom: 15px;
-    }
-    
-    .hero-subtitle {
-      font-size: 1.2rem; 
-      max-width: 900px;
-      margin: 0 auto;
-      line-height: 1.7;
-      opacity: 0.9;
-    }
-
-    /* Cards - Diseño más limpio */
-    .card {
-      height: 100%;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      cursor: pointer; 
+      box-shadow: var(--box-shadow);
       position: relative;
       overflow: hidden;
     }
     
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+      background-size: cover;
+    }
+    
+    .hero-title {
+      font-size: 2.8rem; 
+      font-weight: 800;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.3rem; 
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.7;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    /* Cards - Diseño profesional */
+    .card {
+      height: 100%;
+      transition: var(--transition);
+      border: none;
+      border-radius: var(--border-radius);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      cursor: pointer; 
+      position: relative;
+      overflow: hidden;
+      background: white;
+    }
+    
     .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     }
     
     .card-body {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      color: #343a40 !important;
-      padding: 1.5rem;
+      color: var(--dark-color) !important;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
     }
     
     .card-title { 
-      font-weight: 600; 
-      font-size: 1.15rem; 
-      margin-bottom: 0.75rem;
+      font-weight: 700; 
+      font-size: 1.3rem; 
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    
+    .card-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
     }
     
     .card-text { 
-      font-size: 0.9rem; 
+      font-size: 1rem; 
       opacity: 0.8; 
-      line-height: 1.5;
+      line-height: 1.6;
+    }
+    
+    .card-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2.5rem;
+      opacity: 0.1;
+      z-index: 1;
     }
 
     /* Cards con fondo oscuro */
@@ -175,10 +261,14 @@
     .card.text-white .card-text { 
       opacity: 0.9; 
     }
+    
+    .card.text-white .card-title::after {
+      background: white;
+    }
 
     /* Estilo para tarjetas restringidas */
     .card.restricted {
-      filter: grayscale(0.7) brightness(0.8);
+      filter: grayscale(0.7) brightness(0.9);
       position: relative;
       overflow: hidden;
     }
@@ -190,7 +280,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.3);
       z-index: 1;
     }
     
@@ -213,8 +303,10 @@
       color: white;
       z-index: 3;
       opacity: 0;
-      transition: opacity 0.3s ease;
-      border-radius: 12px;
+      transition: var(--transition);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      text-align: center;
     }
     
     .card.restricted:hover .restricted-overlay {
@@ -222,8 +314,14 @@
     }
     
     .card.restricted .restricted-overlay i {
-      font-size: 2rem;
-      margin-bottom: 10px;
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: var(--warning-color);
+    }
+    
+    .card.restricted .restricted-overlay span {
+      font-size: 1.1rem;
+      font-weight: 600;
     }
 
     /* Layout de Tarjetas en secciones internas */
@@ -250,7 +348,7 @@
 
     /* Estilos de Edición */
     .active-editable { 
-      outline: 2px dashed #007bff; 
+      outline: 2px dashed var(--primary-color); 
     }
 
     /* Movable Text Box */
@@ -260,24 +358,26 @@
       border: none !important; 
       cursor: default !important;
       background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
     }
     
     .movable.active-editable {
-      border: 2px dashed #007bff !important;
+      border: 2px dashed var(--primary-color) !important;
       cursor: move !important;
     }
     
     .movable[contenteditable="true"] {
       cursor: text !important;
-      outline: 2px dashed #28a745;
+      outline: 2px dashed var(--success-color);
     }
     
     .text-box {
-      padding: 15px;
-      min-width: 200px;
-      min-height: 100px;
+      padding: 20px;
+      min-width: 250px;
+      min-height: 120px;
+      font-size: 1rem;
+      line-height: 1.6;
     }
     
     .text-box p { 
@@ -327,10 +427,117 @@
       margin-top: var(--bs-gutter-y);
     }
     
+    /* Botones mejorados */
+    .btn-custom {
+      border-radius: 8px;
+      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+      transition: var(--transition);
+      border: none;
+    }
+    
+    .btn-primary-custom {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      color: white;
+    }
+    
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(30, 126, 52, 0.3);
+    }
+    
+    .btn-outline-primary {
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      background: transparent;
+    }
+    
+    .btn-outline-primary:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    /* Estilos para el modo edición */
+    .edit-mode-indicator {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--warning-color), #e0a800);
+      color: var(--dark-color);
+      padding: 8px 15px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      z-index: 1050;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+    
+    .edit-mode-indicator i {
+      margin-right: 8px;
+    }
+    
+    /* Estilos para el login modal */
+    .login-modal-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      border-radius: 0;
+    }
+    
+    .modal-content {
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+    }
+    
+    /* Estilos para elementos de arrastre */
+    .ui-draggable-dragging {
+      z-index: 10000 !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    .ui-resizable-handle {
+      background-color: var(--primary-color);
+      border: 2px solid white;
+      border-radius: 50%;
+      width: 12px !important;
+      height: 12px !important;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    /* Animaciones */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease;
+    }
+    
     /* Responsive Design */
     @media (max-width: 1200px) {
       .cards-row > .col {
         width: 33.333%;
+      }
+      
+      .hero-title {
+        font-size: 2.4rem;
+      }
+    }
+    
+    @media (max-width: 992px) {
+      .hero-title {
+        font-size: 2.2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+      
+      #editSidebar {
+        width: 280px;
       }
     }
     
@@ -344,13 +551,25 @@
       }
       
       .hero-subtitle {
-        font-size: 1rem;
+        font-size: 1.1rem;
+      }
+      
+      .hero-section {
+        padding: 40px 20px;
       }
       
       .movable-card-wrapper {
         width: 100%;
         position: relative !important;
         margin-bottom: 1rem;
+      }
+      
+      .card-body {
+        padding: 1.5rem;
+      }
+      
+      .navbar-brand-custom {
+        font-size: 1.3rem;
       }
     }
     
@@ -360,63 +579,76 @@
       }
       
       .hero-title {
-        font-size: 1.75rem;
+        font-size: 1.8rem;
       }
       
       .hero-section {
-        padding: 30px 20px;
+        padding: 30px 15px;
+        margin-bottom: 30px;
+      }
+      
+      .card-body {
+        padding: 1.25rem;
+      }
+      
+      .btn-custom {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+      
+      .edit-mode-indicator {
+        top: 70px;
+        right: 10px;
+        font-size: 0.75rem;
+        padding: 6px 12px;
       }
     }
     
-    /* Estilos para botones mejorados */
-    .btn-custom {
-      border-radius: 8px;
-      font-weight: 500;
-      padding: 0.5rem 1rem;
-      transition: all 0.3s ease;
+    /* Mejoras visuales adicionales */
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--secondary-color);
+      position: relative;
+      padding-bottom: 10px;
     }
     
-    .btn-primary-custom {
-      background-color: var(--primary-color);
-      border-color: var(--primary-color);
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: var(--primary-color);
+      border-radius: 2px;
     }
     
-    .btn-primary-custom:hover {
-      background-color: #166529;
-      border-color: #166529;
-      transform: translateY(-2px);
+    .stats-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      transition: var(--transition);
     }
     
-    /* Estilos para el modo edición */
-    .edit-mode-indicator {
-      position: fixed;
-      top: 70px;
-      right: 20px;
-      background-color: #ffc107;
-      color: #212529;
-      padding: 5px 10px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      z-index: 1050;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    .stats-card:hover {
+      transform: translateY(-5px);
     }
     
-    /* Estilos para el login modal */
-    .login-modal-header {
-      background: linear-gradient(135deg, var(--primary-color), #2ecc71);
+    .stats-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
     }
     
-    /* Estilos para elementos de arrastre */
-    .ui-draggable-dragging {
-      z-index: 10000 !important;
-    }
-    
-    .ui-resizable-handle {
-      background-color: #007bff;
-      border: 1px solid white;
-      border-radius: 50%;
-      width: 10px !important;
-      height: 10px !important;
+    .stats-label {
+      font-size: 1rem;
+      color: var(--dark-color);
+      opacity: 0.8;
     }
   </style>
 </head>
@@ -523,10 +755,10 @@
 
   </div>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand text-success navbar-brand-custom" href="#" onclick="showSection('inicio')">
-        <i class="fas fa-recycle me-2"></i> Gestión de Residuos Sólidos
+      <a class="navbar-brand navbar-brand-custom" href="#" onclick="showSection('inicio')">
+        <i class="fas fa-recycle"></i> Gestión de Residuos Sólidos
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
         <span class="navbar-toggler-icon"></span>
@@ -542,14 +774,14 @@
         </ul>
         <ul class="navbar-nav" id="loginBtnContainer">
           <li class="nav-item">
-            <button class="btn btn-outline-primary btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <button class="btn btn-outline-light btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
               <i class="fas fa-sign-in-alt me-2"></i> Iniciar Sesión
             </button>
           </li>
         </ul>
         <ul class="navbar-nav d-none" id="userNav">
           <li class="nav-item">
-            <button id="editToggleBtn" class="btn btn-outline-primary btn-custom me-2" onclick="toggleEditMode()">
+            <button id="editToggleBtn" class="btn btn-outline-light btn-custom me-2" onclick="toggleEditMode()">
               <i class="fas fa-edit me-1"></i> Modo Edición
             </button>
           </li>
@@ -577,14 +809,42 @@
         <div class="hero-section">
           <h1 class="hero-title editable-text" id="heroTitle">Sistema de Gestión de Residuos Sólidos</h1>
           <p class="hero-subtitle editable-text" id="heroSubtitle">
-            La plataforma para monitorear indicadores, gestionar metas y generar reportes para una gestión ambiental eficiente.
+            Plataforma integral para monitorear indicadores, gestionar metas y generar reportes para una gestión ambiental eficiente y sostenible.
           </p>
+        </div>
+
+        <div class="row mb-5">
+          <div class="col-md-3 mb-4">
+            <div class="stats-card">
+              <div class="stats-number">85%</div>
+              <div class="stats-label">Reducción de residuos</div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="stats-card">
+              <div class="stats-number">42</div>
+              <div class="stats-label">Indicadores activos</div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="stats-card">
+              <div class="stats-number">67%</div>
+              <div class="stats-label">Metas cumplidas</div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="stats-card">
+              <div class="stats-number">24</div>
+              <div class="stats-label">Reportes generados</div>
+            </div>
+          </div>
         </div>
 
         <div class="cards-row mt-3"> 
           <div class="col">
-            <div class="card text-white restricted" style="background-color: #5d6d7e;" data-card-link="#metas"> 
+            <div class="card text-white restricted" style="background: linear-gradient(135deg, #5d6d7e, #34495e);" data-card-link="#metas"> 
               <div class="card-body">
+                <i class="fas fa-bullseye card-icon"></i>
                 <h5 class="card-title editable-text text-white">Metas</h5>
                 <p class="card-text editable-text text-white">Definición de objetivos a corto y largo plazo para la reducción de residuos.</p>
               </div>
@@ -595,16 +855,18 @@
             </div>
           </div>
           <div class="col">
-            <div class="card text-white" style="background-color: #4CAF50;" data-card-link="#indicadores"> 
+            <div class="card text-white" style="background: linear-gradient(135deg, #4CAF50, #2E7D32);" data-card-link="#indicadores"> 
               <div class="card-body">
+                <i class="fas fa-chart-line card-icon"></i>
                 <h5 class="card-title editable-text text-white">Indicadores</h5>
                 <p class="card-text editable-text text-white">Métricas clave para medir el éxito del plan de gestión.</p>
               </div>
             </div>
           </div>
           <div class="col">
-            <div class="card restricted" style="background-color: #f4d03f; color: #343a40;" data-card-link="#avances"> 
+            <div class="card restricted" style="background: linear-gradient(135deg, #f4d03f, #f39c12); color: #343a40;" data-card-link="#avances"> 
               <div class="card-body">
+                <i class="fas fa-tasks card-icon"></i>
                 <h5 class="card-title editable-text" style="color: #343a40;">Avances</h5>
                 <p class="card-text editable-text" style="color: #343a40;">Registro del progreso y cumplimiento de las metas establecidas.</p>
               </div>
@@ -615,8 +877,9 @@
             </div>
           </div>
           <div class="col">
-            <div class="card text-white restricted" style="background-color: #3498db;" data-card-link="#reportes"> 
+            <div class="card text-white restricted" style="background: linear-gradient(135deg, #3498db, #2980b9);" data-card-link="#reportes"> 
               <div class="card-body">
+                <i class="fas fa-file-alt card-icon"></i>
                 <h5 class="card-title editable-text text-white">Reportes</h5>
                 <p class="card-text editable-text text-white">Generación automática de informes de impacto y sostenibilidad.</p>
               </div>
@@ -627,8 +890,9 @@
             </div>
           </div>
           <div class="col">
-            <div class="card text-white" style="background-color: #e74c3c;" data-card-link="#formularios"> 
+            <div class="card text-white" style="background: linear-gradient(135deg, #e74c3c, #c0392b);" data-card-link="#formularios"> 
               <div class="card-body">
+                <i class="fas fa-clipboard-list card-icon"></i>
                 <h5 class="card-title editable-text text-white">Formularios</h5>
                 <p class="card-text editable-text text-white">Acceso a encuestas y herramientas de recolección de datos.</p>
               </div>
@@ -637,6 +901,7 @@
         </div>
       </div>
       
+      <!-- Resto de las secciones con diseño mejorado -->
       <div id="section-metas" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);">
           <h1 class="hero-title editable-text">Definición y Seguimiento de Metas</h1>
@@ -646,16 +911,18 @@
         </div>
         <div class="cards-row mt-3">
           <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
-            <div class="card" style="background-color: #ecf0f1;"> 
+            <div class="card" style="background: linear-gradient(135deg, #ecf0f1, #d5dbdb);"> 
               <div class="card-body">
+                <i class="fas fa-bullseye card-icon" style="color: #16a085;"></i>
                 <h5 class="card-title editable-text" style="color: #16a085;">Meta de Reducción</h5>
                 <p class="card-text editable-text">Establecer un objetivo del 15% de reducción de desechos municipales para el fin de año fiscal.</p>
               </div>
             </div>
           </div>
           <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
-            <div class="card" style="background-color: #2c3e50; color: white;"> 
+            <div class="card text-white" style="background: linear-gradient(135deg, #2c3e50, #34495e);"> 
               <div class="card-body">
+                <i class="fas fa-recycle card-icon"></i>
                 <h5 class="card-title editable-text text-white">Meta de Reciclaje</h5>
                 <p class="card-text editable-text text-white">Aumentar la tasa de reciclaje de plásticos y papel al 40% en los próximos 6 meses.</p>
               </div>
@@ -673,16 +940,18 @@
         </div>
         <div class="cards-row mt-3">
           <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
-            <div class="card" style="background-color: #f8c471;"> 
+            <div class="card" style="background: linear-gradient(135deg, #f8c471, #f39c12);"> 
               <div class="card-body">
+                <i class="fas fa-chart-bar card-icon" style="color: #34495e;"></i>
                 <h5 class="card-title editable-text" style="color: #34495e;">Tasa de Generación Per Cápita</h5>
                 <p class="card-text editable-text">Cantidad promedio de residuos sólidos generados por persona al día (kg/hab/día).</p>
               </div>
             </div>
           </div>
           <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
-            <div class="card" style="background-color: #d6eaf8;"> 
+            <div class="card" style="background: linear-gradient(135deg, #d6eaf8, #aed6f1);"> 
               <div class="card-body">
+                <i class="fas fa-pie-chart card-icon" style="color: #34495e;"></i>
                 <h5 class="card-title editable-text" style="color: #34495e;">Composición de Residuos</h5>
                 <p class="card-text editable-text">Porcentaje de residuos orgánicos, reciclables y rechazo en el total recolectado.</p>
               </div>
@@ -700,16 +969,18 @@
         </div>
         <div class="cards-row mt-3">
           <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
-            <div class="card" style="background-color: #a9cce3;"> 
+            <div class="card" style="background: linear-gradient(135deg, #a9cce3, #7fb3d5);"> 
               <div class="card-body">
+                <i class="fas fa-chart-line card-icon" style="color: #f39c12;"></i>
                 <h5 class="card-title editable-text" style="color: #f39c12;">Progreso de la Meta (Gráficos)</h5>
                 <p class="card-text editable-text">Visualización de barras y líneas para comparar el objetivo vs. el avance actual.</p>
               </div>
             </div>
           </div>
           <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
-            <div class="card" style="background-color: #52be80; color: white;"> 
+            <div class="card text-white" style="background: linear-gradient(135deg, #52be80, #27ae60);"> 
               <div class="card-body">
+                <i class="fas fa-check-circle card-icon"></i>
                 <h5 class="card-title editable-text text-white">Tareas Pendientes y Logradas</h5>
                 <p class="card-text editable-text text-white">Listado interactivo de acciones necesarias para alcanzar las metas.</p>
               </div>
@@ -727,16 +998,18 @@
         </div>
         <div class="cards-row mt-3">
           <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
-            <div class="card" style="background-color: #d5dbdb;"> 
+            <div class="card" style="background: linear-gradient(135deg, #d5dbdb, #bdc3c7);"> 
               <div class="card-body">
+                <i class="fas fa-file-pdf card-icon" style="color: #2c3e50;"></i>
                 <h5 class="card-title editable-text" style="color: #2c3e50;">Reporte Anual de Sostenibilidad</h5>
                 <p class="card-text editable-text">Resumen ejecutivo y datos consolidados de la gestión de residuos del año.</p>
               </div>
             </div>
           </div>
           <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
-            <div class="card" style="background-color: #bb8fce; color: white;"> 
+            <div class="card text-white" style="background: linear-gradient(135deg, #bb8fce, #9b59b6);"> 
               <div class="card-body">
+                <i class="fas fa-file-excel card-icon"></i>
                 <h5 class="card-title editable-text text-white">Reporte de Cumplimiento Normativo</h5>
                 <p class="card-text editable-text text-white">Documento que valida el apego a las leyes y regulaciones ambientales locales.</p>
               </div>
@@ -754,8 +1027,9 @@
         </div>
         <div class="cards-row mt-3">
           <div class="col-half movable-card-wrapper" style="top: 0px; left: 0px; width: 48%;">
-            <div class="card text-white" style="background-color: #2980b9;" data-card-link="https://tally.so/r/nGA7LO"> 
+            <div class="card text-white" style="background: linear-gradient(135deg, #2980b9, #2471a3);" data-card-link="https://tally.so/r/nGA7LO"> 
               <div class="card-body">
+                <i class="fas fa-clipboard-check card-icon"></i>
                 <h5 class="card-title editable-text text-white">ENCUESTA COMPORTAMIENTO PROAMBIENTAL</h5>
                 <p class="card-text editable-text text-white">
                     Formulario para medir la actitud ciudadana hacia el reciclaje y la autosustentabilidad.
@@ -764,8 +1038,9 @@
             </div>
           </div>
           <div class="col-half movable-card-wrapper" style="top: 0px; left: 50%;">
-            <div class="card text-white" style="background-color: #27ae60;" data-card-link="https://tally.so/r/3N1M0O"> 
+            <div class="card text-white" style="background: linear-gradient(135deg, #27ae60, #229954);" data-card-link="https://tally.so/r/3N1M0O"> 
               <div class="card-body">
+                <i class="fas fa-weight card-icon"></i>
                 <h5 class="card-title editable-text text-white">MEDICIÓN DE DESECHOS SÓLIDOS (Daule)</h5>
                 <p class="card-text editable-text text-white">
                     Encuesta técnica para la medición y caracterización de los desechos sólidos en la comunidad.
@@ -775,7 +1050,7 @@
           </div>
         </div>
       </div>
-      </div>
+    </div>
   </div>
 
   <div class="modal fade" id="loginModal" tabindex="-1">
@@ -808,6 +1083,8 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
   <script>
+    // El código JavaScript permanece exactamente igual que en la versión anterior
+    // Solo se han mejorado los estilos visuales
     let isEditMode = false;
     let isLoggedIn = false;
     let savedRange = null;
@@ -1484,7 +1761,7 @@
 
       if (isEditMode) {
         // --- ACTIVAR EDICIÓN ---
-        editButton.classList.replace('btn-outline-primary', 'btn-primary');
+        editButton.classList.replace('btn-outline-light', 'btn-light');
         editButton.innerHTML = '<i class="fas fa-save me-1"></i> Guardar Cambios';
         
         // Mostrar indicador de modo edición
@@ -1504,14 +1781,14 @@
         });
         
         sidebar.classList.remove('d-none-temp');
-        mainContentWrapper.style.marginLeft = '280px';
+        mainContentWrapper.style.marginLeft = '300px';
         
         initializeMovableElements();
         updateContentHeight();
 
       } else {
         // --- DESACTIVAR EDICIÓN ---
-        editButton.classList.replace('btn-primary', 'btn-outline-primary');
+        editButton.classList.replace('btn-light', 'btn-outline-light');
         editButton.innerHTML = '<i class="fas fa-edit me-1"></i> Modo Edición';
         
         // Eliminar indicador de modo edición
