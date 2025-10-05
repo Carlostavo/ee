@@ -47,6 +47,7 @@
       padding-top: env(safe-area-inset-top);
       padding-bottom: constant(safe-area-inset-bottom);
       padding-bottom: env(safe-area-inset-bottom);
+      overflow-x: hidden;
     }
     
     /* Navbar mejorada con soporte para notch y áreas seguras */
@@ -68,6 +69,10 @@
       color: white !important;
       display: flex;
       align-items: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 70vw;
     }
     
     .navbar-brand-custom i {
@@ -83,6 +88,7 @@
       margin: 0 2px;
       transition: var(--transition);
       font-size: clamp(0.9rem, 2.5vw, 1rem);
+      white-space: nowrap;
     }
     
     .navbar-nav .nav-link:hover, 
@@ -643,6 +649,24 @@
       .navbar-brand-custom {
         font-size: 1.3rem;
       }
+      
+      /* Mejoras específicas para móviles */
+      .hero-title {
+        font-size: clamp(1.5rem, 5vw, 2.2rem);
+      }
+      
+      .hero-subtitle {
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
+      }
+      
+      .card-body {
+        padding: 1rem;
+      }
+      
+      .btn-custom {
+        min-height: 48px;
+        padding: 0.75rem 1rem;
+      }
     }
     
     @media (max-width: 576px) {
@@ -663,6 +687,15 @@
       .container {
         padding-left: 10px;
         padding-right: 10px;
+      }
+      
+      .navbar-brand-custom {
+        max-width: 60vw;
+      }
+      
+      .hero-section {
+        padding: 20px 15px;
+        margin-bottom: 20px;
       }
     }
     
@@ -685,6 +718,10 @@
       
       .hero-subtitle {
         font-size: 0.9rem;
+      }
+      
+      .card-body {
+        padding: 0.75rem;
       }
     }
     
@@ -750,6 +787,28 @@
       background: var(--primary-color);
       border-radius: 2px;
     }
+    
+    /* Mejoras para formularios en móviles */
+    .form-control {
+      font-size: 16px; /* Evita zoom automático en iOS */
+    }
+    
+    /* Mejoras para elementos interactivos en móviles */
+    .touch-target {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Mejoras para scroll en móviles */
+    .mobile-scroll-container {
+      -webkit-overflow-scrolling: touch;
+      overflow-y: auto;
+    }
+    
+    /* Mejoras para elementos de arrastre en móviles */
+    .touch-draggable {
+      touch-action: pan-x pan-y;
+    }
   </style>
 </head>
 <body>
@@ -759,14 +818,14 @@
     <div class="sidebar-section">
         <h6 class="sidebar-heading text-secondary"><i class="fas fa-layer-group"></i> Elementos</h6>
         
-        <button class="btn btn-sm btn-outline-success w-100 mb-2" onclick="addRandomColoredCard()">
+        <button class="btn btn-sm btn-outline-success w-100 mb-2 touch-target" onclick="addRandomColoredCard()">
           <i class="fas fa-credit-card me-1"></i> Añadir Tarjeta
         </button>
 
-        <button class="btn btn-sm btn-outline-primary w-100 mb-2" onclick="addTextBox()">
+        <button class="btn btn-sm btn-outline-primary w-100 mb-2 touch-target" onclick="addTextBox()">
           <i class="fas fa-square-plus me-1"></i> Agregar Cuadro de Texto
         </button>
-        <button class="btn btn-sm btn-outline-danger w-100 mb-4" onclick="deleteSelectedElement()">
+        <button class="btn btn-sm btn-outline-danger w-100 mb-4 touch-target" onclick="deleteSelectedElement()">
           <i class="fas fa-trash me-1"></i> Eliminar Seleccionado
         </button>
     </div>
@@ -795,24 +854,24 @@
     <div class="sidebar-section">
         <h6 class="sidebar-heading text-secondary"><i class="fas fa-font"></i> Formato</h6>
         <div class="btn-group w-100 mb-2" role="group">
-          <button class="btn btn-sm btn-outline-dark" onclick="formatText('bold')" title="Negrita"><i class="fas fa-bold"></i></button>
-          <button class="btn btn-sm btn-outline-dark" onclick="formatText('italic')" title="Cursiva"><i class="fas fa-italic"></i></button>
-          <button class="btn btn-sm btn-outline-dark" onclick="formatText('underline')" title="Subrayado"><i class="fas fa-underline"></i></button>
-          <button class="btn btn-sm btn-outline-primary" onclick="addLink()" title="Añadir enlace"><i class="fas fa-link"></i></button>
+          <button class="btn btn-sm btn-outline-dark touch-target" onclick="formatText('bold')" title="Negrita"><i class="fas fa-bold"></i></button>
+          <button class="btn btn-sm btn-outline-dark touch-target" onclick="formatText('italic')" title="Cursiva"><i class="fas fa-italic"></i></button>
+          <button class="btn btn-sm btn-outline-dark touch-target" onclick="formatText('underline')" title="Subrayado"><i class="fas fa-underline"></i></button>
+          <button class="btn btn-sm btn-outline-primary touch-target" onclick="addLink()" title="Añadir enlace"><i class="fas fa-link"></i></button>
         </div>
 
         <h6 class="sidebar-heading text-secondary mt-3"><i class="fas fa-align-left"></i> Alineación</h6>
         <div class="btn-group w-100 mb-2" role="group">
-          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyLeft')"><i class="fas fa-align-left"></i></button>
-          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyCenter')"><i class="fas fa-align-center"></i></button>
-          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyRight')"><i class="fas fa-align-right"></i></button>
-          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('justifyFull')"><i class="fas fa-align-justify"></i></button>
+          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('justifyLeft')"><i class="fas fa-align-left"></i></button>
+          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('justifyCenter')"><i class="fas fa-align-center"></i></button>
+          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('justifyRight')"><i class="fas fa-align-right"></i></button>
+          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('justifyFull')"><i class="fas fa-align-justify"></i></button>
         </div>
 
         <h6 class="sidebar-heading text-secondary mt-3"><i class="fas fa-list-ul"></i> Listas</h6>
         <div class="btn-group w-100 mb-4" role="group">
-          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('insertUnorderedList')" title="Viñetas"><i class="fas fa-list-ul"></i></button>
-          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('insertOrderedList')" title="Numeración"><i class="fas fa-list-ol"></i></button>
+          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('insertUnorderedList')" title="Viñetas"><i class="fas fa-list-ul"></i></button>
+          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('insertOrderedList')" title="Numeración"><i class="fas fa-list-ol"></i></button>
         </div>
     </div>
     
@@ -848,8 +907,8 @@
     <div class="sidebar-section">
         <h6 class="sidebar-heading text-secondary"><i class="fas fa-history"></i> Historial</h6>
         <div class="btn-group w-100 mb-3" role="group">
-          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('undo')" title="Deshacer"><i class="fas fa-undo"></i></button>
-          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('redo')" title="Rehacer"><i class="fas fa-redo"></i></button>
+          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('undo')" title="Deshacer"><i class="fas fa-undo"></i></button>
+          <button class="btn btn-sm btn-outline-secondary touch-target" onclick="formatText('redo')" title="Rehacer"><i class="fas fa-redo"></i></button>
         </div>
     </div>
 
@@ -860,41 +919,41 @@
       <a class="navbar-brand navbar-brand-custom" href="#" onclick="showSection('inicio')">
         <i class="fas fa-recycle"></i> Gestión de Residuos Sólidos
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <button class="navbar-toggler touch-target" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('inicio')">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link restricted-nav" href="#" onclick="showSection('metas')">Metas <i class="fas fa-lock ms-1"></i></a></li>
-          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('indicadores')">Indicadores</a></li>
-          <li class="nav-item"><a class="nav-link restricted-nav" href="#" onclick="showSection('avances')">Avances <i class="fas fa-lock ms-1"></i></a></li>
-          <li class="nav-item"><a class="nav-link restricted-nav" href="#" onclick="showSection('reportes')">Reportes <i class="fas fa-lock ms-1"></i></a></li>
-          <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('formularios')">Formularios</a></li>
+          <li class="nav-item"><a class="nav-link touch-target" href="#" onclick="showSection('inicio')">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link restricted-nav touch-target" href="#" onclick="showSection('metas')">Metas <i class="fas fa-lock ms-1"></i></a></li>
+          <li class="nav-item"><a class="nav-link touch-target" href="#" onclick="showSection('indicadores')">Indicadores</a></li>
+          <li class="nav-item"><a class="nav-link restricted-nav touch-target" href="#" onclick="showSection('avances')">Avances <i class="fas fa-lock ms-1"></i></a></li>
+          <li class="nav-item"><a class="nav-link restricted-nav touch-target" href="#" onclick="showSection('reportes')">Reportes <i class="fas fa-lock ms-1"></i></a></li>
+          <li class="nav-item"><a class="nav-link touch-target" href="#" onclick="showSection('formularios')">Formularios</a></li>
         </ul>
         <ul class="navbar-nav" id="loginBtnContainer">
           <li class="nav-item">
-            <button class="btn btn-outline-light btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <button class="btn btn-outline-light btn-custom touch-target" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
               <i class="fas fa-sign-in-alt me-2"></i> Iniciar Sesión
             </button>
           </li>
         </ul>
         <ul class="navbar-nav d-none" id="userNav">
           <li class="nav-item">
-            <button id="editToggleBtn" class="btn btn-outline-light btn-custom me-2" onclick="toggleEditMode()">
+            <button id="editToggleBtn" class="btn btn-outline-light btn-custom me-2 touch-target" onclick="toggleEditMode()">
               <i class="fas fa-edit me-1"></i> Modo Edición
             </button>
           </li>
-          <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-bell"></i></a></li>
+          <li class="nav-item"><a class="nav-link touch-target" href="#"><i class="fas fa-bell"></i></a></li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <a class="nav-link dropdown-toggle touch-target" href="#" role="button" data-bs-toggle="dropdown">
               <i class="fas fa-user-circle me-1"></i> <span id="userNameDisplay">Usuario</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Gestión de Usuarios</a></li>
-              <li><a class="dropdown-item" href="#"><i class="fas fa-address-card me-2"></i> Mi Perfil</a></li>
+              <li><a class="dropdown-item touch-target" href="#"><i class="fas fa-cog me-2"></i> Gestión de Usuarios</a></li>
+              <li><a class="dropdown-item touch-target" href="#"><i class="fas fa-address-card me-2"></i> Mi Perfil</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger" href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión</a></li>
+              <li><a class="dropdown-item text-danger touch-target" href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión</a></li>
             </ul>
           </li>
         </ul>
@@ -1144,7 +1203,7 @@
               <input type="password" class="form-control" id="inputPassword" value="1234" required>
             </div>
             <div class="d-grid">
-              <button type="button" class="btn btn-success mt-3 btn-custom" onclick="handleLogin()">Ingresar</button>
+              <button type="button" class="btn btn-success mt-3 btn-custom touch-target" onclick="handleLogin()">Ingresar</button>
             </div>
           </form>
         </div>
