@@ -986,8 +986,8 @@
     <div class="sidebar-section">
         <h6 class="sidebar-heading text-secondary"><i class="fas fa-history"></i> Historial</h6>
         <div class="btn-group w-100 mb-3" role="group">
-          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('undo')" title="Deshacer"><i class="fas fa-undo"></i></button>
-          <button class="btn btn-sm btn-outline-secondary" onclick="formatText('redo')" title="Rehacer"><i class="fas fa-redo"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="undoAction()" title="Deshacer"><i class="fas fa-undo"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="redoAction()" title="Rehacer"><i class="fas fa-redo"></i></button>
         </div>
     </div>
 
@@ -1597,8 +1597,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
   <script>
-    // El código JavaScript permanece igual pero con mejoras de rendimiento
-    // para dispositivos móviles
+    // Variables globales
     let isEditMode = false;
     let isLoggedIn = false;
     let savedRange = null;
@@ -1606,6 +1605,15 @@
     const MOVE_STEP = 1;
     const CONTENT_PADDING = 100;
     const RESTRICTED_SECTIONS = ['metas', 'avances', 'reportes'];
+    
+    // Historial de acciones para undo/redo
+    let actionHistory = [];
+    let currentHistoryIndex = -1;
+    const MAX_HISTORY_SIZE = 50;
+    
+    // Sistema de navegación
+    let navigationHistory = [];
+    let currentNavigationIndex = -1;
     
     const MODERN_CARD_COLORS = [
         { bg: '#5D6D7E', text: 'white' },
@@ -1621,8 +1629,127 @@
     // Detectar dispositivo táctil
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
+    // --- Sistema de Historial de Acciones ---
+    function saveAction(action) {
+      // Si estamos en medio del historial, eliminamos las acciones futuras
+      if (currentHistoryIndex < actionHistory.length - 1) {
+        actionHistory = actionHistory.slice(0, currentHistoryIndex + 1);
+      }
+      
+      // Agregamos la nueva acción
+      actionHistory.push(action);
+      currentHistoryIndex = actionHistory.length - 1;
+      
+      // Limitamos el tamaño del historial
+      if (actionHistory.length > MAX_HISTORY_SIZE) {
+        actionHistory.shift();
+        currentHistoryIndex--;
+      }
+      
+      // Guardamos en localStorage
+      saveToLocalStorage();
+    }
+    
+    function undoAction() {
+      if (currentHistoryIndex >= 0) {
+        const action = actionHistory[currentHistoryIndex];
+        if (action && action.undo) {
+          action.undo();
+          currentHistoryIndex--;
+          saveToLocalStorage();
+        }
+      }
+    }
+    
+    function redoAction() {
+      if (currentHistoryIndex < actionHistory.length - 1) {
+        currentHistoryIndex++;
+        const action = actionHistory[currentHistoryIndex];
+        if (action && action.redo) {
+          action.redo();
+          saveToLocalStorage();
+        }
+      }
+    }
+
+    // --- Sistema de Navegación ---
+    function addToNavigationHistory(sectionId) {
+      // Si estamos en medio del historial, eliminamos las navegaciones futuras
+      if (currentNavigationIndex < navigationHistory.length - 1) {
+        navigationHistory = navigationHistory.slice(0, currentNavigationIndex + 1);
+      }
+      
+      // Agregamos la nueva navegación
+      navigationHistory.push(sectionId);
+      currentNavigationIndex = navigationHistory.length - 1;
+      
+      // Limitamos el tamaño del historial de navegación
+      if (navigationHistory.length > 20) {
+        navigationHistory.shift();
+        currentNavigationIndex--;
+      }
+    }
+    
+    function navigateBack() {
+      if (currentNavigationIndex > 0) {
+        currentNavigationIndex--;
+        const sectionId = navigationHistory[currentNavigationIndex];
+        showSection(sectionId, false); // false para no agregar al historial
+      }
+    }
+    
+    function navigateForward() {
+      if (currentNavigationIndex < navigationHistory.length - 1) {
+        currentNavigationIndex++;
+        const sectionId = navigationHistory[currentNavigationIndex];
+        showSection(sectionId, false); // false para no agregar al historial
+      }
+    }
+
+    // --- Sistema de localStorage ---
+    function saveToLocalStorage() {
+      if (!isLoggedIn) return;
+      
+      const saveData = {
+        content: document.getElementById('mainContent').innerHTML,
+        actionHistory: actionHistory,
+        currentHistoryIndex: currentHistoryIndex,
+        navigationHistory: navigationHistory,
+        currentNavigationIndex: currentNavigationIndex
+      };
+      
+      localStorage.setItem('wasteManagementSystem', JSON.stringify(saveData));
+    }
+    
+    function loadFromLocalStorage() {
+      const savedData = localStorage.getItem('wasteManagementSystem');
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        
+        // Restaurar contenido
+        if (data.content) {
+          document.getElementById('mainContent').innerHTML = data.content;
+        }
+        
+        // Restaurar historial de acciones
+        if (data.actionHistory) {
+          actionHistory = data.actionHistory;
+          currentHistoryIndex = data.currentHistoryIndex || -1;
+        }
+        
+        // Restaurar historial de navegación
+        if (data.navigationHistory) {
+          navigationHistory = data.navigationHistory;
+          currentNavigationIndex = data.currentNavigationIndex || -1;
+        }
+        
+        // Re-inicializar elementos movibles
+        initializeMovableElements();
+      }
+    }
+
     // --- Lógica de Navegación (SPA) ---
-    function showSection(sectionId) {
+    function showSection(sectionId, addToHistory = true) {
         // Validación de restricción
         if (RESTRICTED_SECTIONS.includes(sectionId) && !isLoggedIn) {
             const toast = document.createElement('div');
@@ -1641,9 +1768,14 @@
             }, 3000);
             
             if (sectionId !== 'inicio') {
-                 showSection('inicio');
+                 showSection('inicio', addToHistory);
             }
             return;
+        }
+
+        // Agregar al historial de navegación si es necesario
+        if (addToHistory) {
+          addToNavigationHistory(sectionId);
         }
 
         // Muestra/Oculta secciones
@@ -1985,6 +2117,22 @@
             setMovableTextEditMode(newBox, true);
             newBox.focus();
             updateContentHeight();
+            
+            // Guardar acción en el historial
+            saveAction({
+                type: 'addTextBox',
+                element: newBox.outerHTML,
+                container: container.id,
+                undo: function() {
+                    newBox.remove();
+                    updateContentHeight();
+                },
+                redo: function() {
+                    container.appendChild(newBox);
+                    makeElementDraggableAndResizable(newBox);
+                    updateContentHeight();
+                }
+            });
         }
     }
 
@@ -2065,36 +2213,129 @@
              cardText.classList.add('active-editable');
              updateContentHeight();
              updatePositionInputs();
+             
+             // Guardar acción en el historial
+             saveAction({
+                 type: 'addCard',
+                 element: newCol.outerHTML,
+                 container: cardsRow.id || cardsRow.className,
+                 undo: function() {
+                     newCol.remove();
+                     updateContentHeight();
+                 },
+                 redo: function() {
+                     cardsRow.appendChild(newCol);
+                     if (!isHomeSection) {
+                         makeElementDraggableAndResizable(newCol);
+                     }
+                     updateContentHeight();
+                 }
+             });
         }
     }
 
+    // --- Función mejorada de eliminación ---
     function deleteSelectedElement() {
       if (activeEditable) {
-        if (confirm("¿Desea eliminar este elemento?")) {
-          const targetMovable = activeEditable.closest('.movable, .movable-card-wrapper');
-          
-          if (targetMovable) {
-            if ($(targetMovable).data('ui-draggable')) { $(targetMovable).draggable('destroy'); }
-            if ($(targetMovable).data('ui-resizable')) { $(targetMovable).resizable('destroy'); }
-            targetMovable.remove();
-          } 
-          else if (activeEditable.closest('.card') && activeEditable.closest('#section-inicio')) {
-              const cardCol = activeEditable.closest('.col');
-              if (cardCol) {
-                  cardCol.remove();
-              }
-          }
-          else if (activeEditable.closest('.hero-section')) {
-               activeEditable.innerHTML = "";
-          }
-          activeEditable = null;
-          updatePositionInputs();
-          updateContentHeight();
-        }
+        const elementToDelete = activeEditable;
+        const parentElement = elementToDelete.parentElement;
+        
+        // Crear copia del elemento para poder restaurarlo
+        const elementCopy = elementToDelete.cloneNode(true);
+        
+        // Guardar información para el historial
+        const actionInfo = {
+            type: 'deleteElement',
+            element: elementCopy.outerHTML,
+            parent: parentElement.outerHTML.substring(0, 100), // Solo guardar parte del HTML para no hacerlo muy grande
+            elementId: elementToDelete.id || '',
+            elementClass: elementToDelete.className,
+            undo: function() {
+                if (parentElement) {
+                    parentElement.appendChild(elementCopy);
+                    if (isEditMode) {
+                        // Re-inicializar elementos movibles si es necesario
+                        if (elementCopy.classList.contains('movable') || elementCopy.classList.contains('movable-card-wrapper')) {
+                            makeElementDraggableAndResizable(elementCopy);
+                        }
+                    }
+                    updateContentHeight();
+                }
+            },
+            redo: function() {
+                if (elementCopy.parentElement) {
+                    elementCopy.remove();
+                    updateContentHeight();
+                }
+            }
+        };
+        
+        // Eliminar el elemento
+        elementToDelete.remove();
+        
+        // Limpiar selección
+        activeEditable = null;
+        updatePositionInputs();
+        updateContentHeight();
+        
+        // Guardar en el historial
+        saveAction(actionInfo);
+        
       } else {
         alert("Seleccione primero un elemento para eliminar.");
       }
     }
+
+    // --- Teclas de acceso rápido ---
+    document.addEventListener('keydown', function(e) {
+        // Tecla Suprimir (Delete)
+        if (e.key === 'Delete' && isEditMode && activeEditable) {
+            e.preventDefault();
+            deleteSelectedElement();
+        }
+        
+        // Ctrl+Z para deshacer
+        if (e.ctrlKey && e.key === 'z' && isEditMode) {
+            e.preventDefault();
+            undoAction();
+        }
+        
+        // Ctrl+Y para rehacer
+        if (e.ctrlKey && e.key === 'y' && isEditMode) {
+            e.preventDefault();
+            redoAction();
+        }
+        
+        // Navegación con teclas de flecha cuando un elemento está seleccionado
+        const target = activeEditable ? activeEditable.closest('.movable, .movable-card-wrapper') : null;
+        if (!isEditMode || !target) return;
+        
+        if (activeEditable.getAttribute('contenteditable') === 'true' && document.activeElement === activeEditable) return; 
+
+        let currentLeft = parseFloat(target.style.left.replace('px', '')) || 0;
+        let currentTop = parseFloat(target.style.top.replace('px', '')) || 0;
+        let moved = false;
+
+        switch (e.key) {
+            case 'ArrowUp': currentTop -= MOVE_STEP; moved = true; break;
+            case 'ArrowDown': currentTop += MOVE_STEP; moved = true; break;
+            case 'ArrowLeft': currentLeft -= MOVE_STEP; moved = true; break;
+            case 'ArrowRight': currentLeft += MOVE_STEP; moved = true; break;
+        }
+
+        if (moved) {
+            e.preventDefault();
+            
+            currentLeft = Math.max(0, currentLeft);
+            currentTop = Math.max(0, currentTop);
+            
+            target.style.left = `${currentLeft}px`;
+            target.style.top = `${currentTop}px`;
+            
+            updatePositionInputs();
+            updateContentHeight();
+        }
+    });
 
     // --- Lógica de Clic y Selección optimizada para touch ---
     let lastClickTime = 0;
@@ -2344,6 +2585,9 @@
         sidebar.classList.add('d-none-temp');
         mainContentWrapper.style.marginLeft = '0';
         document.getElementById('mainContent').style.minHeight = '';
+        
+        // Guardar cambios al salir del modo edición
+        saveToLocalStorage();
       }
     }
 
@@ -2367,6 +2611,9 @@
         document.querySelectorAll('.card.restricted').forEach(card => {
             card.classList.remove('restricted');
         });
+        
+        // Cargar datos guardados
+        loadFromLocalStorage();
 
       } else {
           alert("Credenciales incorrectas. Inténtalo de nuevo.");
@@ -2399,46 +2646,25 @@
       showSection('inicio');
     }
 
-    // Inicializar el modo de movimiento por flechas
-    document.addEventListener('keydown', function(e) {
-        const target = activeEditable ? activeEditable.closest('.movable, .movable-card-wrapper') : null;
-        if (!isEditMode || !target) return;
-        
-        if (activeEditable.getAttribute('contenteditable') === 'true' && document.activeElement === activeEditable) return; 
-
-        let currentLeft = parseFloat(target.style.left.replace('px', '')) || 0;
-        let currentTop = parseFloat(target.style.top.replace('px', '')) || 0;
-        let moved = false;
-
-        switch (e.key) {
-            case 'ArrowUp': currentTop -= MOVE_STEP; moved = true; break;
-            case 'ArrowDown': currentTop += MOVE_STEP; moved = true; break;
-            case 'ArrowLeft': currentLeft -= MOVE_STEP; moved = true; break;
-            case 'ArrowRight': currentLeft += MOVE_STEP; moved = true; break;
-        }
-
-        if (moved) {
-            e.preventDefault();
-            
-            currentLeft = Math.max(0, currentLeft);
-            currentTop = Math.max(0, currentTop);
-            
-            target.style.left = `${currentLeft}px`;
-            target.style.top = `${currentTop}px`;
-            
-            updatePositionInputs();
-            updateContentHeight();
-        }
-    });
-    
     // Inicialización al cargar la página 
     document.addEventListener('DOMContentLoaded', () => {
         showSection('inicio'); 
+        addToNavigationHistory('inicio');
         
         // Mejora de rendimiento para dispositivos móviles
         if (isTouchDevice) {
             // Optimizar para rendimiento en dispositivos táctiles
             document.body.classList.add('touch-device');
+        }
+        
+        // Cargar datos guardados si el usuario ya estaba logueado
+        const savedData = localStorage.getItem('wasteManagementSystem');
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            if (data.content) {
+                // El usuario tenía datos guardados, podríamos ofrecer restaurarlos
+                // cuando haga login
+            }
         }
     });
 
