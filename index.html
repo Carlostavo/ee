@@ -3,25 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <title>Sistema de Gestión de Residuos Sólidos</title>
+  <title>Sistema de Gestión de Residuos Sólidos - Cantón Daule</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    /* Variables de diseño optimizadas para múltiples navegadores */
+    /* Variables de diseño profesionales y suaves */
     :root {
-      --primary-color: #1e7e34;
-      --primary-dark: #166529;
-      --secondary-color: #2c3e50;
-      --accent-color: #3498db;
-      --light-color: #f8f9fa;
-      --dark-color: #343a40;
-      --success-color: #28a745;
-      --warning-color: #ffc107;
-      --danger-color: #dc3545;
-      --info-color: #17a2b8;
+      --primary-color: #2E8B57;
+      --primary-light: #3CB371;
+      --primary-dark: #228B22;
+      --secondary-color: #4A6FA5;
+      --secondary-light: #6B8CBE;
+      --accent-color: #FF7E5F;
+      --light-color: #F8F9FA;
+      --light-gray: #E9ECEF;
+      --medium-gray: #CED4DA;
+      --dark-gray: #6C757D;
+      --dark-color: #343A40;
+      --success-color: #28A745;
+      --warning-color: #FFC107;
+      --danger-color: #DC3545;
+      --info-color: #17A2B8;
       --border-radius: 12px;
-      --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      --box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      --box-shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
       --transition: all 0.3s ease;
       --safe-area-inset-top: env(safe-area-inset-top);
       --safe-area-inset-bottom: env(safe-area-inset-bottom);
@@ -29,7 +36,7 @@
       --safe-area-inset-right: env(safe-area-inset-right);
     }
     
-    /* Reset mejorado para compatibilidad entre navegadores */
+    /* Reset mejorado */
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
@@ -40,16 +47,18 @@
     /* Estilos Generales optimizados */
     body { 
       background-color: #f8f9fa; 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Segoe UI', system-ui, -apple-system, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
       line-height: 1.6;
-      color: #333;
+      color: #495057;
       padding-top: constant(safe-area-inset-top);
       padding-top: env(safe-area-inset-top);
       padding-bottom: constant(safe-area-inset-bottom);
       padding-bottom: env(safe-area-inset-bottom);
+      margin: 0;
+      padding: 0;
     }
     
-    /* Navbar mejorada con soporte para notch y áreas seguras */
+    /* Navbar mejorada con colores suaves */
     .navbar {
       background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -111,7 +120,7 @@
       height: 1.2em;
     }
 
-    /* Panel Lateral mejorado con soporte táctil */
+    /* Panel Lateral mejorado */
     #editSidebar {
       position: fixed;
       top: 0;
@@ -121,19 +130,19 @@
       padding-top: calc(70px + constant(safe-area-inset-top));
       padding-top: calc(70px + env(safe-area-inset-top));
       z-index: 1040;
-      border-right: 1px solid #e9ecef;
+      border-right: 1px solid var(--light-gray);
       overflow-y: auto;
       background: white;
       transition: all 0.3s ease;
       font-size: 0.9rem;
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+      box-shadow: var(--box-shadow-light);
       -webkit-overflow-scrolling: touch;
       overscroll-behavior: contain;
     }
     
     .sidebar-section { 
       padding: 15px 0; 
-      border-bottom: 1px solid #e9ecef; 
+      border-bottom: 1px solid var(--light-gray); 
     }
     
     .sidebar-section:last-child { 
@@ -163,6 +172,8 @@
       display: none; 
       padding-top: 20px; 
       animation: fadeIn 0.5s ease;
+      position: relative;
+      min-height: 100px;
     } 
     
     #section-inicio { 
@@ -181,12 +192,13 @@
     #mainContent {
       position: relative;
       max-width: 1400px;
-      padding-bottom: 50px; 
+      padding-bottom: 20px;
+      min-height: auto;
     }
     
-    /* Hero Section optimizado para móviles */
+    /* Hero Section optimizado */
     .hero-section {
-      background: linear-gradient(135deg, var(--secondary-color) 0%, #34495e 100%);
+      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-light) 100%);
       color: white;
       padding: clamp(30px, 8vw, 60px) clamp(15px, 4vw, 30px);
       border-radius: var(--border-radius);
@@ -214,7 +226,7 @@
     
     .hero-title {
       font-size: clamp(1.8rem, 6vw, 2.8rem);
-      font-weight: 800;
+      font-weight: 700;
       margin-bottom: clamp(15px, 4vw, 20px);
       position: relative;
       line-height: 1.2;
@@ -229,13 +241,13 @@
       font-weight: 400;
     }
 
-    /* Cards optimizadas para touch */
+    /* Cards optimizadas con colores suaves */
     .card {
       height: 100%;
       transition: var(--transition);
       border: none;
       border-radius: var(--border-radius);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      box-shadow: var(--box-shadow-light);
       cursor: pointer; 
       position: relative;
       overflow: hidden;
@@ -247,8 +259,8 @@
     }
     
     .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
     }
     
     /* Mejora para dispositivos táctiles */
@@ -274,7 +286,7 @@
     }
     
     .card-title { 
-      font-weight: 700; 
+      font-weight: 600; 
       font-size: clamp(1.1rem, 3vw, 1.3rem);
       margin-bottom: clamp(0.75rem, 2vw, 1rem);
       position: relative;
@@ -389,7 +401,7 @@
     .section-content:not(#section-inicio) .cards-row {
       position: relative; 
       display: block; 
-      min-height: 200px; 
+      min-height: 100px;
       margin-top: 0;
     }
     
@@ -407,12 +419,12 @@
       transform: none !important; 
     }
 
-    /* Estilos de Edición optimizados para touch */
+    /* Estilos de Edición optimizados */
     .active-editable { 
       outline: 2px dashed var(--primary-color); 
     }
 
-    /* Movable Text Box mejorado para dispositivos táctiles */
+    /* Movable Text Box mejorado */
     .movable {
       position: absolute !important;
       z-index: 1000;
@@ -420,7 +432,7 @@
       cursor: default !important;
       background-color: white;
       border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
+      box-shadow: var(--box-shadow-light);
       touch-action: none;
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -506,7 +518,7 @@
       transition: var(--transition);
       border: none;
       font-size: clamp(0.9rem, 2.5vw, 1rem);
-      min-height: 44px; /* Tamaño mínimo para touch */
+      min-height: 44px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -519,7 +531,7 @@
     
     .btn-primary-custom:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(30, 126, 52, 0.3);
+      box-shadow: 0 5px 15px rgba(46, 139, 87, 0.3);
     }
     
     .btn-outline-primary {
@@ -763,7 +775,7 @@
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
-      box-shadow: var(--box-shadow);
+      box-shadow: var(--box-shadow-light);
       margin-bottom: 1.5rem;
     }
     
@@ -771,7 +783,7 @@
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
-      box-shadow: var(--box-shadow);
+      box-shadow: var(--box-shadow-light);
       margin-bottom: 1.5rem;
     }
     
@@ -784,7 +796,7 @@
       background: white;
       border-radius: var(--border-radius);
       overflow: hidden;
-      box-shadow: var(--box-shadow);
+      box-shadow: var(--box-shadow-light);
     }
     
     .data-table th {
@@ -797,7 +809,7 @@
       background: white;
       border-radius: var(--border-radius);
       padding: 2rem;
-      box-shadow: var(--box-shadow);
+      box-shadow: var(--box-shadow-light);
     }
     
     .form-card .form-label {
@@ -810,7 +822,7 @@
       padding: 1.5rem;
       border-radius: var(--border-radius);
       background: white;
-      box-shadow: var(--box-shadow);
+      box-shadow: var(--box-shadow-light);
     }
     
     .metric-value {
@@ -841,7 +853,7 @@
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
-      box-shadow: var(--box-shadow);
+      box-shadow: var(--box-shadow-light);
       margin-bottom: 1.5rem;
     }
     
@@ -865,7 +877,7 @@
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
-      box-shadow: var(--box-shadow);
+      box-shadow: var(--box-shadow-light);
       margin-bottom: 1.5rem;
     }
     
@@ -888,6 +900,114 @@
     .goal-card .goal-description {
       margin-bottom: 1.5rem;
     }
+    
+    /* Estilos para formularios de gestión */
+    .form-section {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow-light);
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-section h5 {
+      color: var(--secondary-color);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--light-gray);
+    }
+    
+    /* Estilos para tablas de gestión */
+    .management-table {
+      background: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow-light);
+    }
+    
+    .management-table th {
+      background-color: var(--primary-color);
+      color: white;
+      font-weight: 600;
+    }
+    
+    /* Estilos para dashboard */
+    .dashboard-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow-light);
+      height: 100%;
+    }
+    
+    .dashboard-card .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--secondary-color);
+    }
+    
+    /* Estilos para filtros */
+    .filter-section {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow-light);
+      margin-bottom: 1.5rem;
+    }
+    
+    .filter-section h6 {
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+    }
+    
+    /* Estilos para indicadores de carga */
+    .loading-indicator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-left-color: var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    /* Estilos para mensajes de estado */
+    .status-message {
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 1rem;
+    }
+    
+    .status-success {
+      background-color: rgba(40, 167, 69, 0.1);
+      border-left: 4px solid var(--success-color);
+      color: var(--success-color);
+    }
+    
+    .status-error {
+      background-color: rgba(220, 53, 69, 0.1);
+      border-left: 4px solid var(--danger-color);
+      color: var(--danger-color);
+    }
+    
+    .status-info {
+      background-color: rgba(23, 162, 184, 0.1);
+      border-left: 4px solid var(--info-color);
+      color: var(--info-color);
+    }
   </style>
 </head>
 <body>
@@ -897,8 +1017,8 @@
     <div class="sidebar-section">
         <h6 class="sidebar-heading text-secondary"><i class="fas fa-layer-group"></i> Elementos</h6>
         
-        <button class="btn btn-sm btn-outline-success w-100 mb-2" onclick="addRandomColoredCard()">
-          <i class="fas fa-credit-card me-1"></i> Añadir Tarjeta
+        <button class="btn btn-sm btn-outline-success w-100 mb-2" onclick="showCardCustomizationDialog()">
+          <i class="fas fa-credit-card me-1"></i> Añadir Tarjeta Personalizada
         </button>
 
         <button class="btn btn-sm btn-outline-primary w-100 mb-2" onclick="addTextBox()">
@@ -906,6 +1026,9 @@
         </button>
         <button class="btn btn-sm btn-outline-danger w-100 mb-4" onclick="deleteSelectedElement()">
           <i class="fas fa-trash me-1"></i> Eliminar Seleccionado
+        </button>
+        <button class="btn btn-sm btn-outline-warning w-100 mb-2" onclick="deleteSelectedCard()">
+          <i class="fas fa-trash-alt me-1"></i> Eliminar Tarjeta
         </button>
     </div>
     
@@ -993,6 +1116,63 @@
 
   </div>
 
+  <!-- Modal para personalizar tarjeta -->
+  <div class="modal fade" id="cardCustomizationModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header login-modal-header text-white">
+          <h5 class="modal-title"><i class="fas fa-palette me-2"></i> Personalizar Tarjeta</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="cardCustomizationForm">
+            <div class="mb-3">
+              <label for="cardTitleInput" class="form-label">Título de la Tarjeta</label>
+              <input type="text" class="form-control" id="cardTitleInput" value="Nueva Tarjeta" required>
+            </div>
+            <div class="mb-3">
+              <label for="cardDescriptionInput" class="form-label">Descripción</label>
+              <textarea class="form-control" id="cardDescriptionInput" rows="3">Descripción de la tarjeta personalizada.</textarea>
+            </div>
+            <div class="mb-3">
+              <label for="cardIconSelect" class="form-label">Icono</label>
+              <select class="form-select" id="cardIconSelect">
+                <option value="fa-bullseye">Objetivo</option>
+                <option value="fa-chart-line">Gráfico</option>
+                <option value="fa-tasks">Tareas</option>
+                <option value="fa-file-alt">Documento</option>
+                <option value="fa-clipboard-list">Formulario</option>
+                <option value="fa-recycle">Reciclaje</option>
+                <option value="fa-leaf">Ecológico</option>
+                <option value="fa-globe">Global</option>
+                <option value="fa-users">Usuarios</option>
+                <option value="fa-cog">Configuración</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="cardColorInput" class="form-label">Color de Fondo</label>
+              <input type="color" class="form-control form-control-color" id="cardColorInput" value="#5D6D7E" title="Elige un color">
+            </div>
+            <div class="mb-3">
+              <label for="cardLinkInput" class="form-label">Enlace (URL o #sección)</label>
+              <input type="text" class="form-control" id="cardLinkInput" placeholder="#inicio o https://ejemplo.com">
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="cardRestrictedCheck">
+              <label class="form-check-label" for="cardRestrictedCheck">
+                Tarjeta restringida (requiere login)
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-success" onclick="createCustomCard()">Crear Tarjeta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
       <a class="navbar-brand navbar-brand-custom" href="#" onclick="showSection('inicio')">
@@ -1047,7 +1227,7 @@
         <div class="hero-section">
           <h1 class="hero-title editable-text" id="heroTitle">Sistema de Gestión de Residuos Sólidos</h1>
           <p class="hero-subtitle editable-text" id="heroSubtitle">
-            Plataforma integral para monitorear indicadores, gestionar metas y generar reportes para una gestión ambiental eficiente y sostenible.
+            Plataforma integral para monitorear indicadores, gestionar metas y generar reportes para una gestión ambiental eficiente y sostenible en el Cantón Daule.
           </p>
         </div>
 
@@ -1121,402 +1301,61 @@
           </p>
         </div>
         
-        <div class="row mt-4">
-          <div class="col-md-8">
-            <div class="goal-card">
-              <div class="goal-title editable-text">Meta de Reducción de Residuos</div>
-              <div class="goal-deadline editable-text">Fecha límite: 31 de diciembre 2023</div>
-              <div class="goal-progress">
-                <div class="d-flex justify-content-between mb-1">
-                  <span class="editable-text">Progreso actual</span>
-                  <span class="editable-text">65%</span>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-              <div class="goal-description editable-text">
-                Reducir en un 15% la cantidad de residuos sólidos municipales generados para finales del año fiscal actual.
-              </div>
-              <div class="d-flex justify-content-between">
-                <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
-                <button class="btn btn-sm btn-outline-success">Actualizar progreso</button>
-              </div>
-            </div>
-            
-            <div class="goal-card">
-              <div class="goal-title editable-text">Meta de Reciclaje</div>
-              <div class="goal-deadline editable-text">Fecha límite: 30 de junio 2023</div>
-              <div class="goal-progress">
-                <div class="d-flex justify-content-between mb-1">
-                  <span class="editable-text">Progreso actual</span>
-                  <span class="editable-text">42%</span>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 42%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
-              <div class="goal-description editable-text">
-                Aumentar la tasa de reciclaje de plásticos y papel al 40% en los próximos 6 meses.
-              </div>
-              <div class="d-flex justify-content-between">
-                <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
-                <button class="btn btn-sm btn-outline-success">Actualizar progreso</button>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-4">
-            <div class="metric-card mb-4">
-              <i class="fas fa-bullseye fa-2x text-primary"></i>
-              <div class="metric-value editable-text">12</div>
-              <div class="metric-label editable-text">Metas Activas</div>
-            </div>
-            
-            <div class="metric-card mb-4">
-              <i class="fas fa-check-circle fa-2x text-success"></i>
-              <div class="metric-value editable-text">8</div>
-              <div class="metric-label editable-text">Metas Completadas</div>
-            </div>
-            
-            <div class="metric-card mb-4">
-              <i class="fas fa-clock fa-2x text-warning"></i>
-              <div class="metric-value editable-text">4</div>
-              <div class="metric-label editable-text">Metas en Progreso</div>
-            </div>
+        <div id="metas-content">
+          <div class="loading-indicator">
+            <div class="spinner"></div>
+            <span class="ms-2">Cargando metas...</span>
           </div>
         </div>
       </div>
 
-      <!-- Sección de Indicadores mejorada -->
+      <!-- Sección de Indicadores actualizada según propuesta -->
       <div id="section-indicadores" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #34495e 0%, #5d6d7e 100%);">
-          <h1 class="hero-title editable-text">Indicadores de Desempeño (KPIs)</h1>
+          <h1 class="hero-title editable-text">Indicadores de Gestión de Residuos Sólidos</h1>
           <p class="hero-subtitle editable-text">
-            Visualice los datos en tiempo real sobre la generación, recolección y destino final de los residuos sólidos.
+            Sistema de indicadores para medir la eficiencia en la gestión de residuos sólidos en el cantón Daule.
           </p>
         </div>
         
-        <div class="row mt-4">
-          <div class="col-md-3 mb-4">
-            <div class="metric-card">
-              <i class="fas fa-weight fa-2x text-primary"></i>
-              <div class="metric-value editable-text">1.2 kg</div>
-              <div class="metric-label editable-text">Generación Per Cápita</div>
-              <div class="metric-change positive editable-text">+5.3%</div>
-            </div>
-          </div>
-          
-          <div class="col-md-3 mb-4">
-            <div class="metric-card">
-              <i class="fas fa-recycle fa-2x text-success"></i>
-              <div class="metric-value editable-text">32%</div>
-              <div class="metric-label editable-text">Tasa de Reciclaje</div>
-              <div class="metric-change positive editable-text">+8.7%</div>
-            </div>
-          </div>
-          
-          <div class="col-md-3 mb-4">
-            <div class="metric-card">
-              <i class="fas fa-truck fa-2x text-info"></i>
-              <div class="metric-value editable-text">87%</div>
-              <div class="metric-label editable-text">Cobertura de Recolección</div>
-              <div class="metric-change positive editable-text">+2.1%</div>
-            </div>
-          </div>
-          
-          <div class="col-md-3 mb-4">
-            <div class="metric-card">
-              <i class="fas fa-landmark fa-2x text-warning"></i>
-              <div class="metric-value editable-text">45%</div>
-              <div class="metric-label editable-text">Residuos en Relleno</div>
-              <div class="metric-change negative editable-text">-3.2%</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row mt-2">
-          <div class="col-md-8">
-            <div class="chart-container">
-              <h5 class="editable-text">Composición de Residuos Sólidos</h5>
-              <div class="d-flex justify-content-center align-items-center" style="height: 300px; background-color: #f8f9fa; border-radius: 8px;">
-                <p class="text-muted editable-text">Gráfico de composición de residuos aparecerá aquí</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-4">
-            <div class="chart-container">
-              <h5 class="editable-text">Tendencia Mensual</h5>
-              <div class="d-flex justify-content-center align-items-center" style="height: 300px; background-color: #f8f9fa; border-radius: 8px;">
-                <p class="text-muted editable-text">Gráfico de tendencia aparecerá aquí</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row mt-4">
-          <div class="col-12">
-            <div class="data-table">
-              <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th class="editable-text">Indicador</th>
-                    <th class="editable-text">Valor Actual</th>
-                    <th class="editable-text">Meta</th>
-                    <th class="editable-text">Variación</th>
-                    <th class="editable-text">Estado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="editable-text">Generación per cápita (kg/hab/día)</td>
-                    <td class="editable-text">1.2</td>
-                    <td class="editable-text">1.0</td>
-                    <td class="editable-text">+0.2</td>
-                    <td><span class="badge bg-warning editable-text">Por mejorar</span></td>
-                  </tr>
-                  <tr>
-                    <td class="editable-text">Tasa de reciclaje (%)</td>
-                    <td class="editable-text">32</td>
-                    <td class="editable-text">40</td>
-                    <td class="editable-text">+8</td>
-                    <td><span class="badge bg-success editable-text">En progreso</span></td>
-                  </tr>
-                  <tr>
-                    <td class="editable-text">Cobertura de recolección (%)</td>
-                    <td class="editable-text">87</td>
-                    <td class="editable-text">95</td>
-                    <td class="editable-text">+8</td>
-                    <td><span class="badge bg-info editable-text">En progreso</span></td>
-                  </tr>
-                  <tr>
-                    <td class="editable-text">Residuos en relleno sanitario (%)</td>
-                    <td class="editable-text">45</td>
-                    <td class="editable-text">35</td>
-                    <td class="editable-text">-10</td>
-                    <td><span class="badge bg-danger editable-text">Crítico</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+        <div id="indicadores-content">
+          <div class="loading-indicator">
+            <div class="spinner"></div>
+            <span class="ms-2">Cargando indicadores...</span>
           </div>
         </div>
       </div>
 
-      <!-- Sección de Avances mejorada -->
+      <!-- Sección de Avances actualizada según propuesta -->
       <div id="section-avances" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #f39c12 0%, #f7dc6f 100%); color: #343a40;">
-          <h1 class="hero-title editable-text" style="color: #343a40;">Monitor de Avances y Cumplimiento</h1>
+          <h1 class="hero-title editable-text" style="color: #343a40;">Seguimiento de Avances del Plan de Gestión</h1>
           <p class="hero-subtitle editable-text" style="color: #343a40;">
-            Seguimiento detallado de cada meta y acción implementada. Identifique cuellos de botella y éxitos.
+            Monitoreo del cumplimiento de metas y evaluación del impacto de las acciones implementadas.
           </p>
         </div>
         
-        <div class="row mt-4">
-          <div class="col-md-6">
-            <div class="progress-card">
-              <h5 class="editable-text">Reducción de Residuos</h5>
-              <div class="d-flex justify-content-between mb-1">
-                <span class="editable-text">Progreso: 65%</span>
-                <span class="editable-text">Meta: 15% reducción</span>
-              </div>
-              <div class="progress">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div class="mt-3">
-                <h6 class="editable-text">Actividades recientes:</h6>
-                <ul>
-                  <li class="editable-text">Campaña de concientización completada (15% de participación)</li>
-                  <li class="editable-text">Implementación de puntos de reciclaje en 5 barrios</li>
-                  <li class="editable-text">Reducción del 8% en residuos orgánicos</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-6">
-            <div class="progress-card">
-              <h5 class="editable-text">Incremento del Reciclaje</h5>
-              <div class="d-flex justify-content-between mb-1">
-                <span class="editable-text">Progreso: 42%</span>
-                <span class="editable-text">Meta: 40% de reciclaje</span>
-              </div>
-              <div class="progress">
-                <div class="progress-bar bg-info" role="progressbar" style="width: 42%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <div class="mt-3">
-                <h6 class="editable-text">Actividades recientes:</h6>
-                <ul>
-                  <li class="editable-text">Instalación de 20 contenedores de separación</li>
-                  <li class="editable-text">Capacitación a 150 familias en reciclaje</li>
-                  <li class="editable-text">Alianza con 3 empresas recicladoras</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row mt-4">
-          <div class="col-12">
-            <div class="chart-container">
-              <h5 class="editable-text">Progreso de Metas por Mes</h5>
-              <div class="d-flex justify-content-center align-items-center" style="height: 300px; background-color: #f8f9fa; border-radius: 8px;">
-                <p class="text-muted editable-text">Gráfico de progreso de metas aparecerá aquí</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row mt-4">
-          <div class="col-12">
-            <div class="data-table">
-              <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th class="editable-text">Meta</th>
-                    <th class="editable-text">Fecha Inicio</th>
-                    <th class="editable-text">Fecha Límite</th>
-                    <th class="editable-text">Progreso</th>
-                    <th class="editable-text">Estado</th>
-                    <th class="editable-text">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="editable-text">Reducción del 15% de residuos</td>
-                    <td class="editable-text">01/01/2023</td>
-                    <td class="editable-text">31/12/2023</td>
-                    <td>
-                      <div class="progress" style="height: 10px;">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
-                    <td><span class="badge bg-warning editable-text">En progreso</span></td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary">Detalles</button>
-                      <button class="btn btn-sm btn-outline-success">Actualizar</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="editable-text">40% de tasa de reciclaje</td>
-                    <td class="editable-text">01/03/2023</td>
-                    <td class="editable-text">30/06/2023</td>
-                    <td>
-                      <div class="progress" style="height: 10px;">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 42%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
-                    <td><span class="badge bg-info editable-text">En progreso</span></td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary">Detalles</button>
-                      <button class="btn btn-sm btn-outline-success">Actualizar</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="editable-text">95% de cobertura de recolección</td>
-                    <td class="editable-text">01/02/2023</td>
-                    <td class="editable-text">31/08/2023</td>
-                    <td>
-                      <div class="progress" style="height: 10px;">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </td>
-                    <td><span class="badge bg-warning editable-text">En progreso</span></td>
-                    <td>
-                      <button class="btn btn-sm btn-outline-primary">Detalles</button>
-                      <button class="btn btn-sm btn-outline-success">Actualizar</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+        <div id="avances-content">
+          <div class="loading-indicator">
+            <div class="spinner"></div>
+            <span class="ms-2">Cargando avances...</span>
           </div>
         </div>
       </div>
 
-      <!-- Sección de Reportes mejorada -->
+      <!-- Sección de Reportes actualizada según propuesta -->
       <div id="section-reportes" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);">
-          <h1 class="hero-title editable-text">Generación de Documentos y Reportes</h1>
+          <h1 class="hero-title editable-text">Sistema de Reportes y Documentación</h1>
           <p class="hero-subtitle editable-text">
-            Genere reportes anuales, trimestrales y de impacto ambiental en formato PDF o Excel.
+            Generación de reportes técnicos, informes de gestión y documentación del sistema.
           </p>
         </div>
         
-        <div class="row mt-4">
-          <div class="col-md-6">
-            <div class="report-card">
-              <div class="report-title editable-text">Reporte Anual de Sostenibilidad 2022</div>
-              <div class="report-date editable-text">Generado: 15 de enero, 2023</div>
-              <div class="report-description editable-text">
-                Resumen ejecutivo y datos consolidados de la gestión de residuos del año 2022, incluyendo indicadores clave y logros.
-              </div>
-              <div class="d-flex justify-content-between">
-                <button class="btn btn-sm btn-outline-primary">
-                  <i class="fas fa-eye me-1"></i> Vista previa
-                </button>
-                <button class="btn btn-sm btn-outline-success">
-                  <i class="fas fa-download me-1"></i> Descargar PDF
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-6">
-            <div class="report-card">
-              <div class="report-title editable-text">Reporte Trimestral Q1 2023</div>
-              <div class="report-date editable-text">Generado: 10 de abril, 2023</div>
-              <div class="report-description editable-text">
-                Análisis detallado del primer trimestre del año, con comparativas mensuales y proyecciones para el resto del año.
-              </div>
-              <div class="d-flex justify-content-between">
-                <button class="btn btn-sm btn-outline-primary">
-                  <i class="fas fa-eye me-1"></i> Vista previa
-                </button>
-                <button class="btn btn-sm btn-outline-success">
-                  <i class="fas fa-download me-1"></i> Descargar PDF
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row mt-4">
-          <div class="col-md-6">
-            <div class="report-card">
-              <div class="report-title editable-text">Reporte de Cumplimiento Normativo</div>
-              <div class="report-date editable-text">Generado: 5 de marzo, 2023</div>
-              <div class="report-description editable-text">
-                Documento que valida el apego a las leyes y regulaciones ambientales locales y nacionales.
-              </div>
-              <div class="d-flex justify-content-between">
-                <button class="btn btn-sm btn-outline-primary">
-                  <i class="fas fa-eye me-1"></i> Vista previa
-                </button>
-                <button class="btn btn-sm btn-outline-success">
-                  <i class="fas fa-download me-1"></i> Descargar PDF
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-6">
-            <div class="report-card">
-              <div class="report-title editable-text">Análisis de Impacto Ambiental</div>
-              <div class="report-date editable-text">Generado: 20 de febrero, 2023</div>
-              <div class="report-description editable-text">
-                Evaluación del impacto de las operaciones de gestión de residuos en el medio ambiente local.
-              </div>
-              <div class="d-flex justify-content-between">
-                <button class="btn btn-sm btn-outline-primary">
-                  <i class="fas fa-eye me-1"></i> Vista previa
-                </button>
-                <button class="btn btn-sm btn-outline-success">
-                  <i class="fas fa-download me-1"></i> Descargar PDF
-                </button>
-              </div>
-            </div>
+        <div id="reportes-content">
+          <div class="loading-indicator">
+            <div class="spinner"></div>
+            <span class="ms-2">Cargando reportes...</span>
           </div>
         </div>
       </div>
@@ -1597,14 +1436,30 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
   <script>
+    // Configuración de Supabase
+    const SUPABASE_URL = 'https://dutapywxsiuxboqsjqvf.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1dGFweXd4c2l1eGJvcXNqcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MTk1MTUsImV4cCI6MjA2OTI5NTUxNX0.SBIDeV_WAWlyLs-ROD1ibXtqqY5bbbh0gouY8gRB9Y4';
+    
+    // Inicializar Supabase
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
     // Variables globales
     let isEditMode = false;
     let isLoggedIn = false;
     let savedRange = null;
     let activeEditable = null;
     const MOVE_STEP = 1;
-    const CONTENT_PADDING = 100;
+    const CONTENT_PADDING = 30;
     const RESTRICTED_SECTIONS = ['metas', 'avances', 'reportes'];
+    
+    // Datos de la aplicación
+    let appData = {
+      metas: [],
+      indicadores: [],
+      avances: [],
+      reportes: [],
+      usuarios: []
+    };
     
     // Historial de acciones para undo/redo
     let actionHistory = [];
@@ -1614,40 +1469,559 @@
     // Sistema de navegación
     let navigationHistory = [];
     let currentNavigationIndex = -1;
-    
-    const MODERN_CARD_COLORS = [
-        { bg: '#5D6D7E', text: 'white' },
-        { bg: '#4CAF50', text: 'white' },
-        { bg: '#3498DB', text: 'white' },
-        { bg: '#F4D03F', text: '#343a40' },
-        { bg: '#A93226', text: 'white' },
-        { bg: '#9B59B6', text: 'white' },
-        { bg: '#F5B041', text: '#343a40' },
-        { bg: '#2ECC71', text: 'white' },
-    ];
 
     // Detectar dispositivo táctil
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
+    // --- Sistema de Datos con Supabase ---
+    
+    // Cargar todos los datos de la aplicación
+    async function loadAppData() {
+      try {
+        // Cargar metas
+        const { data: metasData, error: metasError } = await supabase
+          .from('metas')
+          .select('*')
+          .order('fecha_creacion', { ascending: false });
+          
+        if (!metasError) {
+          appData.metas = metasData || [];
+          renderMetas();
+        } else {
+          console.error('Error cargando metas:', metasError);
+        }
+        
+        // Cargar indicadores
+        const { data: indicadoresData, error: indicadoresError } = await supabase
+          .from('indicadores')
+          .select('*')
+          .order('categoria', { ascending: true });
+          
+        if (!indicadoresError) {
+          appData.indicadores = indicadoresData || [];
+          renderIndicadores();
+        } else {
+          console.error('Error cargando indicadores:', indicadoresError);
+        }
+        
+        // Cargar avances
+        const { data: avancesData, error: avancesError } = await supabase
+          .from('avances')
+          .select('*, metas(nombre)')
+          .order('fecha_registro', { ascending: false });
+          
+        if (!avancesError) {
+          appData.avances = avancesData || [];
+          renderAvances();
+        } else {
+          console.error('Error cargando avances:', avancesError);
+        }
+        
+        // Cargar reportes
+        const { data: reportesData, error: reportesError } = await supabase
+          .from('reportes')
+          .select('*')
+          .order('fecha_generacion', { ascending: false });
+          
+        if (!reportesError) {
+          appData.reportes = reportesData || [];
+          renderReportes();
+        } else {
+          console.error('Error cargando reportes:', reportesError);
+        }
+        
+      } catch (error) {
+        console.error('Error cargando datos de la aplicación:', error);
+      }
+    }
+    
+    // Renderizar metas
+    function renderMetas() {
+      const container = document.getElementById('metas-content');
+      if (!container) return;
+      
+      if (appData.metas.length === 0) {
+        container.innerHTML = `
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            No hay metas registradas en el sistema.
+          </div>
+        `;
+        return;
+      }
+      
+      let html = `
+        <div class="row mt-4">
+          <div class="col-md-8">
+            ${appData.metas.map(meta => `
+              <div class="goal-card">
+                <div class="goal-title">${meta.nombre}</div>
+                <div class="goal-deadline">Fecha límite: ${new Date(meta.fecha_limite).toLocaleDateString()}</div>
+                <div class="goal-progress">
+                  <div class="d-flex justify-content-between mb-1">
+                    <span>Progreso actual</span>
+                    <span>${meta.progreso_actual}%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: ${meta.progreso_actual}%" 
+                         aria-valuenow="${meta.progreso_actual}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                <div class="goal-description">
+                  ${meta.descripcion}
+                </div>
+                <div class="d-flex justify-content-between">
+                  <button class="btn btn-sm btn-outline-primary" onclick="viewMetaDetails(${meta.id})">Ver detalles</button>
+                  <button class="btn btn-sm btn-outline-success" onclick="updateMetaProgress(${meta.id})">Actualizar progreso</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          
+          <div class="col-md-4">
+            <div class="metric-card mb-4">
+              <i class="fas fa-bullseye fa-2x text-primary"></i>
+              <div class="metric-value">${appData.metas.length}</div>
+              <div class="metric-label">Metas Activas</div>
+            </div>
+            
+            <div class="metric-card mb-4">
+              <i class="fas fa-check-circle fa-2x text-success"></i>
+              <div class="metric-value">${appData.metas.filter(m => m.progreso_actual >= 100).length}</div>
+              <div class="metric-label">Metas Completadas</div>
+            </div>
+            
+            <div class="metric-card mb-4">
+              <i class="fas fa-clock fa-2x text-warning"></i>
+              <div class="metric-value">${appData.metas.filter(m => m.progreso_actual > 0 && m.progreso_actual < 100).length}</div>
+              <div class="metric-label">Metas en Progreso</div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      container.innerHTML = html;
+    }
+    
+    // Renderizar indicadores
+    function renderIndicadores() {
+      const container = document.getElementById('indicadores-content');
+      if (!container) return;
+      
+      if (appData.indicadores.length === 0) {
+        container.innerHTML = `
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            No hay indicadores registrados en el sistema.
+          </div>
+        `;
+        return;
+      }
+      
+      // Agrupar indicadores por categoría
+      const indicadoresPorCategoria = {};
+      appData.indicadores.forEach(ind => {
+        if (!indicadoresPorCategoria[ind.categoria]) {
+          indicadoresPorCategoria[ind.categoria] = [];
+        }
+        indicadoresPorCategoria[ind.categoria].push(ind);
+      });
+      
+      let html = '';
+      
+      // Métricas principales
+      html += `
+        <div class="row mt-4">
+          <div class="col-md-3 mb-4">
+            <div class="metric-card">
+              <i class="fas fa-weight fa-2x text-primary"></i>
+              <div class="metric-value">1.2 kg</div>
+              <div class="metric-label">Generación Per Cápita</div>
+              <div class="metric-change positive">+5.3%</div>
+            </div>
+          </div>
+          
+          <div class="col-md-3 mb-4">
+            <div class="metric-card">
+              <i class="fas fa-recycle fa-2x text-success"></i>
+              <div class="metric-value">32%</div>
+              <div class="metric-label">Tasa de Reciclaje</div>
+              <div class="metric-change positive">+8.7%</div>
+            </div>
+          </div>
+          
+          <div class="col-md-3 mb-4">
+            <div class="metric-card">
+              <i class="fas fa-truck fa-2x text-info"></i>
+              <div class="metric-value">87%</div>
+              <div class="metric-label">Cobertura de Recolección</div>
+              <div class="metric-change positive">+2.1%</div>
+            </div>
+          </div>
+          
+          <div class="col-md-3 mb-4">
+            <div class="metric-card">
+              <i class="fas fa-landmark fa-2x text-warning"></i>
+              <div class="metric-value">45%</div>
+              <div class="metric-label">Residuos en Relleno</div>
+              <div class="metric-change negative">-3.2%</div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // Tablas por categoría
+      Object.keys(indicadoresPorCategoria).forEach(categoria => {
+        const indicadoresCategoria = indicadoresPorCategoria[categoria];
+        
+        html += `
+          <div class="row mt-4">
+            <div class="col-12">
+              <div class="form-section">
+                <h5>Indicadores de ${categoria}</h5>
+                <div class="table-responsive">
+                  <table class="table table-striped management-table">
+                    <thead>
+                      <tr>
+                        <th>Indicador</th>
+                        <th>Descripción</th>
+                        <th>Fórmula</th>
+                        <th>Unidad</th>
+                        <th>Meta</th>
+                        <th>Valor Actual</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${indicadoresCategoria.map(ind => `
+                        <tr>
+                          <td>${ind.nombre}</td>
+                          <td>${ind.descripcion}</td>
+                          <td>${ind.formula}</td>
+                          <td>${ind.unidad}</td>
+                          <td>${ind.meta}</td>
+                          <td>${ind.valor_actual}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+    
+    // Renderizar avances
+    function renderAvances() {
+      const container = document.getElementById('avances-content');
+      if (!container) return;
+      
+      if (appData.avances.length === 0) {
+        container.innerHTML = `
+          <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            No hay avances registrados en el sistema.
+          </div>
+        `;
+        return;
+      }
+      
+      let html = `
+        <div class="row mt-4">
+          <div class="col-md-12">
+            <div class="filter-section">
+              <h6>Filtros de Avances</h6>
+              <div class="row">
+                <div class="col-md-4">
+                  <label class="form-label">Periodo</label>
+                  <select class="form-select" id="avancePeriodo">
+                    <option>Último mes</option>
+                    <option>Último trimestre</option>
+                    <option>Último año</option>
+                    <option>Personalizado</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Tipo de Meta</label>
+                  <select class="form-select" id="avanceTipo">
+                    <option>Todas</option>
+                    <option>Reducción</option>
+                    <option>Reciclaje</option>
+                    <option>Educación</option>
+                    <option>Infraestructura</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Estado</label>
+                  <select class="form-select" id="avanceEstado">
+                    <option>Todos</option>
+                    <option>En progreso</option>
+                    <option>Completado</option>
+                    <option>Retrasado</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="dashboard-card">
+              <div class="card-title">Avance General del Plan</div>
+              <div class="progress mb-3" style="height: 25px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                  <span class="fw-bold">65%</span>
+                </div>
+              </div>
+              <div class="row text-center">
+                <div class="col-4">
+                  <div class="metric-value" style="font-size: 1.5rem;">${appData.metas.length}</div>
+                  <div class="metric-label">Metas Totales</div>
+                </div>
+                <div class="col-4">
+                  <div class="metric-value" style="font-size: 1.5rem;">${appData.metas.filter(m => m.progreso_actual > 0 && m.progreso_actual < 100).length}</div>
+                  <div class="metric-label">En Progreso</div>
+                </div>
+                <div class="col-4">
+                  <div class="metric-value" style="font-size: 1.5rem;">${appData.metas.filter(m => m.progreso_actual >= 100).length}</div>
+                  <div class="metric-label">Completadas</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="dashboard-card">
+              <div class="card-title">Próximos Vencimientos</div>
+              <div class="list-group list-group-flush">
+                ${appData.metas
+                  .filter(m => new Date(m.fecha_limite) > new Date())
+                  .sort((a, b) => new Date(a.fecha_limite) - new Date(b.fecha_limite))
+                  .slice(0, 3)
+                  .map(meta => `
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                      <div>
+                        <h6 class="mb-1">${meta.nombre}</h6>
+                        <small class="text-muted">Vence: ${new Date(meta.fecha_limite).toLocaleDateString()}</small>
+                      </div>
+                      <span class="badge bg-warning rounded-pill">${meta.progreso_actual}%</span>
+                    </div>
+                  `).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="form-section">
+              <h5>Detalle de Avances por Meta</h5>
+              <div class="table-responsive">
+                <table class="table table-striped management-table">
+                  <thead>
+                    <tr>
+                      <th>Meta</th>
+                      <th>Fecha Inicio</th>
+                      <th>Fecha Límite</th>
+                      <th>Progreso</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${appData.metas.map(meta => {
+                      let estadoBadge = '';
+                      if (meta.progreso_actual >= 100) {
+                        estadoBadge = '<span class="badge bg-success">Completada</span>';
+                      } else if (new Date(meta.fecha_limite) < new Date()) {
+                        estadoBadge = '<span class="badge bg-danger">Retrasada</span>';
+                      } else if (meta.progreso_actual > 0) {
+                        estadoBadge = '<span class="badge bg-warning">En progreso</span>';
+                      } else {
+                        estadoBadge = '<span class="badge bg-info">No iniciada</span>';
+                      }
+                      
+                      return `
+                        <tr>
+                          <td>${meta.nombre}</td>
+                          <td>${new Date(meta.fecha_creacion).toLocaleDateString()}</td>
+                          <td>${new Date(meta.fecha_limite).toLocaleDateString()}</td>
+                          <td>
+                            <div class="progress" style="height: 10px;">
+                              <div class="progress-bar bg-success" role="progressbar" style="width: ${meta.progreso_actual}%" 
+                                   aria-valuenow="${meta.progreso_actual}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                          <td>${estadoBadge}</td>
+                          <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewMetaDetails(${meta.id})">Detalles</button>
+                            <button class="btn btn-sm btn-outline-success" onclick="updateMetaProgress(${meta.id})">Actualizar</button>
+                          </td>
+                        </tr>
+                      `;
+                    }).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      container.innerHTML = html;
+    }
+    
+    // Renderizar reportes
+    function renderReportes() {
+      const container = document.getElementById('reportes-content');
+      if (!container) return;
+      
+      let html = `
+        <div class="row mt-4">
+          <div class="col-md-12">
+            <div class="filter-section">
+              <h6>Generar Nuevo Reporte</h6>
+              <div class="row">
+                <div class="col-md-3">
+                  <label class="form-label">Tipo de Reporte</label>
+                  <select class="form-select" id="reportType">
+                    <option value="indicadores">Reporte de Indicadores</option>
+                    <option value="avances">Reporte de Avances</option>
+                    <option value="mensual">Reporte Mensual</option>
+                    <option value="trimestral">Reporte Trimestral</option>
+                    <option value="anual">Reporte Anual</option>
+                    <option value="especial">Reporte Especial</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Periodo</label>
+                  <select class="form-select" id="reportPeriod">
+                    <option value="mes">Último mes</option>
+                    <option value="trimestre">Último trimestre</option>
+                    <option value="anio">Último año</option>
+                    <option value="personalizado">Personalizado</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Formato</label>
+                  <select class="form-select" id="reportFormat">
+                    <option value="pdf">PDF</option>
+                    <option value="excel">Excel</option>
+                    <option value="word">Word</option>
+                  </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                  <button class="btn btn-success w-100" onclick="generateReport()">
+                    <i class="fas fa-download me-2"></i> Generar Reporte
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      if (appData.reportes.length > 0) {
+        html += `
+          <div class="row mt-4">
+            <div class="col-12">
+              <div class="form-section">
+                <h5>Reportes del Sistema</h5>
+                <div class="table-responsive">
+                  <table class="table table-striped management-table">
+                    <thead>
+                      <tr>
+                        <th>Reporte</th>
+                        <th>Descripción</th>
+                        <th>Frecuencia</th>
+                        <th>Última Generación</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${appData.reportes.map(reporte => `
+                        <tr>
+                          <td>${reporte.nombre}</td>
+                          <td>${reporte.descripcion}</td>
+                          <td>${reporte.frecuencia}</td>
+                          <td>${new Date(reporte.fecha_generacion).toLocaleDateString()}</td>
+                          <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewReport(${reporte.id})">Vista Previa</button>
+                            <button class="btn btn-sm btn-outline-success" onclick="downloadReport(${reporte.id})">Descargar</button>
+                          </td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        html += `
+          <div class="alert alert-info mt-4">
+            <i class="fas fa-info-circle me-2"></i>
+            No hay reportes generados en el sistema.
+          </div>
+        `;
+      }
+      
+      container.innerHTML = html;
+    }
+    
+    // Funciones auxiliares para acciones
+    function viewMetaDetails(metaId) {
+      alert(`Ver detalles de la meta ID: ${metaId}`);
+      // Implementar lógica para mostrar detalles de la meta
+    }
+    
+    function updateMetaProgress(metaId) {
+      const nuevaProgresion = prompt('Ingrese el nuevo porcentaje de progreso:');
+      if (nuevaProgresion !== null && !isNaN(nuevaProgresion)) {
+        alert(`Actualizando progreso de la meta ID: ${metaId} a ${nuevaProgresion}%`);
+        // Implementar lógica para actualizar el progreso en Supabase
+      }
+    }
+    
+    function generateReport() {
+      const reportType = document.getElementById('reportType').value;
+      const reportPeriod = document.getElementById('reportPeriod').value;
+      const reportFormat = document.getElementById('reportFormat').value;
+      
+      alert(`Generando reporte de tipo: ${reportType} para el periodo: ${reportPeriod} en formato: ${reportFormat}`);
+      // Implementar lógica para generar reportes
+    }
+    
+    function viewReport(reporteId) {
+      alert(`Vista previa del reporte ID: ${reporteId}`);
+      // Implementar lógica para vista previa de reportes
+    }
+    
+    function downloadReport(reporteId) {
+      alert(`Descargando reporte ID: ${reporteId}`);
+      // Implementar lógica para descargar reportes
+    }
+
     // --- Sistema de Historial de Acciones ---
     function saveAction(action) {
-      // Si estamos en medio del historial, eliminamos las acciones futuras
       if (currentHistoryIndex < actionHistory.length - 1) {
         actionHistory = actionHistory.slice(0, currentHistoryIndex + 1);
       }
       
-      // Agregamos la nueva acción
       actionHistory.push(action);
       currentHistoryIndex = actionHistory.length - 1;
       
-      // Limitamos el tamaño del historial
       if (actionHistory.length > MAX_HISTORY_SIZE) {
         actionHistory.shift();
         currentHistoryIndex--;
       }
       
-      // Guardamos en localStorage
-      saveToLocalStorage();
+      saveToSupabase();
     }
     
     function undoAction() {
@@ -1656,7 +2030,7 @@
         if (action && action.undo) {
           action.undo();
           currentHistoryIndex--;
-          saveToLocalStorage();
+          saveToSupabase();
         }
       }
     }
@@ -1667,23 +2041,20 @@
         const action = actionHistory[currentHistoryIndex];
         if (action && action.redo) {
           action.redo();
-          saveToLocalStorage();
+          saveToSupabase();
         }
       }
     }
 
     // --- Sistema de Navegación ---
     function addToNavigationHistory(sectionId) {
-      // Si estamos en medio del historial, eliminamos las navegaciones futuras
       if (currentNavigationIndex < navigationHistory.length - 1) {
         navigationHistory = navigationHistory.slice(0, currentNavigationIndex + 1);
       }
       
-      // Agregamos la nueva navegación
       navigationHistory.push(sectionId);
       currentNavigationIndex = navigationHistory.length - 1;
       
-      // Limitamos el tamaño del historial de navegación
       if (navigationHistory.length > 20) {
         navigationHistory.shift();
         currentNavigationIndex--;
@@ -1694,7 +2065,7 @@
       if (currentNavigationIndex > 0) {
         currentNavigationIndex--;
         const sectionId = navigationHistory[currentNavigationIndex];
-        showSection(sectionId, false); // false para no agregar al historial
+        showSection(sectionId, false);
       }
     }
     
@@ -1702,12 +2073,12 @@
       if (currentNavigationIndex < navigationHistory.length - 1) {
         currentNavigationIndex++;
         const sectionId = navigationHistory[currentNavigationIndex];
-        showSection(sectionId, false); // false para no agregar al historial
+        showSection(sectionId, false);
       }
     }
 
-    // --- Sistema de localStorage ---
-    function saveToLocalStorage() {
+    // --- Sistema de Supabase ---
+    async function saveToSupabase() {
       if (!isLoggedIn) return;
       
       const saveData = {
@@ -1715,42 +2086,107 @@
         actionHistory: actionHistory,
         currentHistoryIndex: currentHistoryIndex,
         navigationHistory: navigationHistory,
-        currentNavigationIndex: currentNavigationIndex
+        currentNavigationIndex: currentNavigationIndex,
+        last_updated: new Date().toISOString()
       };
       
-      localStorage.setItem('wasteManagementSystem', JSON.stringify(saveData));
+      try {
+        const { data, error } = await supabase
+          .from('system_data')
+          .upsert({ 
+            id: 1, 
+            data: saveData,
+            updated_at: new Date().toISOString()
+          });
+          
+        if (error) {
+          console.error('Error saving to Supabase:', error);
+        } else {
+          console.log('Data saved to Supabase successfully');
+        }
+      } catch (error) {
+        console.error('Error saving to Supabase:', error);
+      }
     }
     
-    function loadFromLocalStorage() {
-      const savedData = localStorage.getItem('wasteManagementSystem');
-      if (savedData) {
-        const data = JSON.parse(savedData);
-        
-        // Restaurar contenido
-        if (data.content) {
-          document.getElementById('mainContent').innerHTML = data.content;
+    async function loadFromSupabase() {
+      try {
+        const { data, error } = await supabase
+          .from('system_data')
+          .select('*')
+          .eq('id', 1)
+          .single();
+          
+        if (error) {
+          console.error('Error loading from Supabase:', error);
+          return;
         }
         
-        // Restaurar historial de acciones
-        if (data.actionHistory) {
-          actionHistory = data.actionHistory;
-          currentHistoryIndex = data.currentHistoryIndex || -1;
+        if (data && data.data) {
+          const savedData = data.data;
+          
+          if (savedData.content) {
+            document.getElementById('mainContent').innerHTML = savedData.content;
+          }
+          
+          if (savedData.actionHistory) {
+            actionHistory = savedData.actionHistory;
+            currentHistoryIndex = savedData.currentHistoryIndex || -1;
+          }
+          
+          if (savedData.navigationHistory) {
+            navigationHistory = savedData.navigationHistory;
+            currentNavigationIndex = savedData.currentNavigationIndex || -1;
+          }
+          
+          initializeMovableElements();
+          setTimeout(updateContentHeight, 100);
         }
-        
-        // Restaurar historial de navegación
-        if (data.navigationHistory) {
-          navigationHistory = data.navigationHistory;
-          currentNavigationIndex = data.currentNavigationIndex || -1;
-        }
-        
-        // Re-inicializar elementos movibles
-        initializeMovableElements();
+      } catch (error) {
+        console.error('Error loading from Supabase:', error);
       }
+    }
+    
+    // Suscribirse a cambios en tiempo real
+    function subscribeToChanges() {
+      supabase
+        .channel('system_changes')
+        .on('postgres_changes', 
+          { 
+            event: '*', 
+            schema: 'public', 
+            table: 'system_data' 
+          }, 
+          payload => {
+            console.log('Change received!', payload);
+            if (payload.new && payload.new.id === 1) {
+              loadFromSupabase();
+            }
+          }
+        )
+        .subscribe();
+        
+      // Suscribirse a cambios en las tablas de datos
+      ['metas', 'indicadores', 'avances', 'reportes'].forEach(table => {
+        supabase
+          .channel(`${table}_changes`)
+          .on('postgres_changes', 
+            { 
+              event: '*', 
+              schema: 'public', 
+              table: table 
+            }, 
+            payload => {
+              console.log(`Change in ${table}:`, payload);
+              loadAppData(); // Recargar datos cuando hay cambios
+            }
+          )
+          .subscribe();
+      });
     }
 
     // --- Lógica de Navegación (SPA) ---
     function showSection(sectionId, addToHistory = true) {
-        // Validación de restricción
         if (RESTRICTED_SECTIONS.includes(sectionId) && !isLoggedIn) {
             const toast = document.createElement('div');
             toast.className = 'position-fixed top-0 start-50 translate-middle-x mt-3 p-3 bg-warning text-dark rounded shadow';
@@ -1773,12 +2209,10 @@
             return;
         }
 
-        // Agregar al historial de navegación si es necesario
         if (addToHistory) {
           addToNavigationHistory(sectionId);
         }
 
-        // Muestra/Oculta secciones
         document.querySelectorAll('.section-content').forEach(section => {
             section.style.display = 'none';
         });
@@ -1787,7 +2221,6 @@
             sectionToShow.style.display = 'block';
         }
 
-        // Limpiar la selección y actualizar estados
         if (activeEditable) {
             activeEditable.classList.remove('active-editable');
             const targetMovable = activeEditable.closest('.movable, .movable-card-wrapper');
@@ -1797,10 +2230,7 @@
         }
         updatePositionInputs();
         
-        // Espera un momento para asegurar que el contenido se cargue antes de medir la altura
         setTimeout(updateContentHeight, 50);
-        
-        // Reinicializa Draggable/Resizable para la nueva sección
         initializeMovableElements();
     }
     
@@ -1815,54 +2245,42 @@
         }
     }
 
-    // --- Funciones de Mantenimiento de Altura ---
+    // --- FUNCIÓN MEJORADA: Cálculo optimizado de altura ---
     function updateContentHeight() {
         const activeSection = document.querySelector('.section-content[style*="block"]');
         if (!activeSection) return;
 
-        // En la página de inicio, solo considerar elementos movibles (no las tarjetas)
-        if (activeSection.id === 'section-inicio') {
-            const movableElements = activeSection.querySelectorAll('.movable');
-            let maxBottom = 0;
+        const movableElements = activeSection.querySelectorAll('.movable, .movable-card-wrapper');
+        let maxBottom = 0;
 
-            if (movableElements.length === 0) {
-                document.getElementById('mainContent').style.minHeight = '';
-                return; 
+        if (movableElements.length === 0) {
+            // Si no hay elementos movibles, usar el contenido estático
+            const staticContent = activeSection.querySelector('.hero-section');
+            if (staticContent) {
+                const rect = staticContent.getBoundingClientRect();
+                const containerRect = activeSection.getBoundingClientRect();
+                const relativeTop = rect.top - containerRect.top;
+                const height = rect.height;
+                maxBottom = relativeTop + height;
             }
-
-            movableElements.forEach(el => {
-                const top = parseFloat(el.style.top.replace('px', '')) || 0;
-                const height = el.offsetHeight || 0; 
-                maxBottom = Math.max(maxBottom, top + height);
-            });
-
-            const newMinHeight = maxBottom + CONTENT_PADDING;
-            document.getElementById('mainContent').style.minHeight = `${newMinHeight}px`;
-        } else {
-            // Para otras páginas, mantener la lógica original
-            const movableElements = activeSection.querySelectorAll('.movable, .movable-card-wrapper');
-            let maxBottom = 0;
-
-            if (movableElements.length === 0) {
-                const cardsRow = activeSection.querySelector('.cards-row');
-                if (cardsRow) cardsRow.style.minHeight = '';
-                document.getElementById('mainContent').style.minHeight = '';
-                return; 
-            }
-
-            movableElements.forEach(el => {
-                const top = parseFloat(el.style.top.replace('px', '')) || 0;
-                const height = el.offsetHeight || 0; 
-                maxBottom = Math.max(maxBottom, top + height);
-            });
-
-            const container = activeSection.querySelector('.cards-row') || document.getElementById('mainContent');
-            const newMinHeight = maxBottom + CONTENT_PADDING;
-
-            if (container) {
-                 container.style.minHeight = `${newMinHeight}px`;
-            }
+            
+            // Aplicar altura mínima solo si hay contenido
+            const newMinHeight = maxBottom > 0 ? maxBottom + CONTENT_PADDING : 'auto';
+            document.getElementById('mainContent').style.minHeight = newMinHeight;
+            return; 
         }
+
+        movableElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const containerRect = activeSection.getBoundingClientRect();
+            const relativeTop = rect.top - containerRect.top;
+            const height = el.offsetHeight;
+            const bottom = relativeTop + height;
+            maxBottom = Math.max(maxBottom, bottom);
+        });
+
+        const newMinHeight = maxBottom + CONTENT_PADDING;
+        document.getElementById('mainContent').style.minHeight = `${newMinHeight}px`;
     }
 
     // --- Funciones de Formato, Posición y Elementos Movibles ---
@@ -2014,7 +2432,6 @@
             $(el).draggable('disable');
             $(el).resizable('disable');
             el.classList.add('active-editable');
-
         } else {
             if (activeEditable) activeEditable.removeAttribute('contenteditable');
             $(el).draggable('enable');
@@ -2023,24 +2440,33 @@
         }
     }
     
+    // FUNCIÓN MEJORADA: Hacer elementos arrastrables y redimensionables sin límites
     function makeElementDraggableAndResizable(el) {
         const container = document.querySelector('.section-content[style*="block"]');
         if (!container) return;
 
-        // Configuración optimizada para dispositivos táctiles
+        // Calcular límites dinámicos basados en el contenido actual
+        const containerHeight = container.scrollHeight;
+        const containerWidth = container.offsetWidth;
+        
+        // Configuración de arrastre sin límites verticales
         const dragOptions = {
-            containment: `#${container.id}`,
+            containment: [0, 0, containerWidth, containerHeight + 1000], // Permitir movimiento hacia abajo
             scroll: false,
             start: function(event, ui) { 
                 if (el.classList.contains('movable-card-wrapper') && activeEditable) {
                     activeEditable.removeAttribute('contenteditable');
                 }
             },
-            drag: function(event, ui) { updateContentHeight(); },
-            stop: function(event, ui) { updatePositionInputs(); updateContentHeight(); }
+            drag: function(event, ui) { 
+                updateContentHeight(); 
+            },
+            stop: function(event, ui) { 
+                updatePositionInputs(); 
+                updateContentHeight(); 
+            }
         };
 
-        // Mejoras para dispositivos táctiles
         if (isTouchDevice) {
             dragOptions.delay = 200;
             dragOptions.distance = 10;
@@ -2058,8 +2484,13 @@
                     activeEditable.removeAttribute('contenteditable');
                 }
             },
-            resize: function(event, ui) { updatePositionInputs(); updateContentHeight(); },
-             stop: function(event, ui) { updateContentHeight(); }
+            resize: function(event, ui) { 
+                updatePositionInputs(); 
+                updateContentHeight(); 
+            },
+            stop: function(event, ui) { 
+                updateContentHeight(); 
+            }
         });
     }
 
@@ -2093,7 +2524,7 @@
         newBox.style.minHeight = '100px';
         
         const heroSection = container.querySelector('.hero-section');
-        const staticContentBottom = heroSection ? heroSection.getBoundingClientRect().bottom - container.getBoundingClientRect().top + 50 : 200;
+        const staticContentBottom = heroSection ? heroSection.getBoundingClientRect().bottom - container.getBoundingClientRect().top + 20 : 100;
         
         newBox.style.left = '100px';
         newBox.style.top = `${staticContentBottom}px`; 
@@ -2118,7 +2549,6 @@
             newBox.focus();
             updateContentHeight();
             
-            // Guardar acción en el historial
             saveAction({
                 type: 'addTextBox',
                 element: newBox.outerHTML,
@@ -2136,28 +2566,47 @@
         }
     }
 
-    function addRandomColoredCard() {
+    // --- Funciones para Tarjetas Personalizables ---
+    function showCardCustomizationDialog() {
+        const modal = new bootstrap.Modal(document.getElementById('cardCustomizationModal'));
+        modal.show();
+    }
+
+    function createCustomCard() {
+        const title = document.getElementById('cardTitleInput').value || 'Nueva Tarjeta';
+        const description = document.getElementById('cardDescriptionInput').value || 'Descripción de la tarjeta personalizada.';
+        const icon = document.getElementById('cardIconSelect').value;
+        const color = document.getElementById('cardColorInput').value;
+        const link = document.getElementById('cardLinkInput').value;
+        const isRestricted = document.getElementById('cardRestrictedCheck').checked;
+        
+        const rgb = hexToRgb(color);
+        const brightness = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
+        const textColor = brightness > 128 ? '#343a40' : 'white';
+        
         const activeSection = getActiveContentContainer();
-        const cardsRow = activeSection.querySelector('.cards-row');
+        
+        let cardsRow = activeSection.querySelector('.cards-row');
         if (!cardsRow) {
-             alert("No se encontró el contenedor de tarjetas en esta sección. No se puede añadir.");
-             return;
+            cardsRow = document.createElement('div');
+            cardsRow.className = 'cards-row mt-4';
+            activeSection.appendChild(cardsRow);
         }
 
-        const colorIndex = Math.floor(Math.random() * MODERN_CARD_COLORS.length);
-        const color = MODERN_CARD_COLORS[colorIndex];
-        const isLight = color.text === '#343a40';
-
         const isHomeSection = activeSection.id === 'section-inicio';
-        const colClass = isHomeSection ? 'col' : 'col-half movable-card-wrapper';
+        const colClass = isHomeSection ? 'col' : 'movable-card-wrapper';
         
         const newCol = document.createElement('div');
         newCol.className = colClass;
         
         const newCard = document.createElement('div');
-        newCard.className = isLight ? 'card h-100' : 'card text-white h-100';
-        newCard.style.backgroundColor = color.bg;
-        newCard.dataset.cardLink = '';
+        newCard.className = textColor === 'white' ? 'card text-white h-100' : 'card h-100';
+        newCard.style.backgroundColor = color;
+        newCard.dataset.cardLink = link || '';
+        
+        if (isRestricted) {
+            newCard.classList.add('restricted');
+        }
 
         if (!isHomeSection) {
             const movableElements = cardsRow.querySelectorAll('.movable-card-wrapper');
@@ -2181,19 +2630,34 @@
         const cardBody = document.createElement('div');
         cardBody.className = 'card-body';
         
+        const cardIcon = document.createElement('i');
+        cardIcon.className = `fas ${icon} card-icon`;
+        
         const cardTitle = document.createElement('h5');
         cardTitle.className = 'card-title editable-text';
-        cardTitle.textContent = "Nueva Tarjeta";
-        cardTitle.style.color = color.text;
+        cardTitle.textContent = title;
+        cardTitle.style.color = textColor;
 
         const cardText = document.createElement('p');
         cardText.className = 'card-text editable-text';
-        cardText.textContent = "Edite el título y la descripción.";
-        cardText.style.color = color.text;
+        cardText.textContent = description;
+        cardText.style.color = textColor;
 
+        cardBody.appendChild(cardIcon);
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(cardText);
         newCard.appendChild(cardBody);
+        
+        if (isRestricted) {
+            const restrictedOverlay = document.createElement('div');
+            restrictedOverlay.className = 'restricted-overlay';
+            restrictedOverlay.innerHTML = `
+                <i class="fas fa-lock"></i>
+                <span>Inicia sesión para acceder</span>
+            `;
+            newCard.appendChild(restrictedOverlay);
+        }
+        
         newCol.appendChild(newCard);
         cardsRow.appendChild(newCol);
         
@@ -2202,19 +2666,21 @@
                  makeElementDraggableAndResizable(newCol);
              }
 
+             // CORRECCIÓN: Mejor manejo de la selección para tarjetas personalizadas
              if (activeEditable) {
                 activeEditable.classList.remove('active-editable');
                 const prevMovable = activeEditable.closest('.movable, .movable-card-wrapper');
                 if (prevMovable) setMovableTextEditMode(prevMovable, false);
             }
-             activeEditable = cardTitle; 
+             
+             // Marcar los elementos como editables pero sin activar el modo de edición inmediatamente
              newCard.classList.add('active-editable');
              cardTitle.classList.add('active-editable');
              cardText.classList.add('active-editable');
+             
              updateContentHeight();
              updatePositionInputs();
              
-             // Guardar acción en el historial
              saveAction({
                  type: 'addCard',
                  element: newCol.outerHTML,
@@ -2232,29 +2698,38 @@
                  }
              });
         }
+        
+        const modal = bootstrap.Modal.getInstance(document.getElementById('cardCustomizationModal'));
+        modal.hide();
     }
 
-    // --- Función mejorada de eliminación ---
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : {r: 0, g: 0, b: 0};
+    }
+
+    // --- FUNCIONES MEJORADAS DE ELIMINACIÓN ---
     function deleteSelectedElement() {
       if (activeEditable) {
         const elementToDelete = activeEditable;
         const parentElement = elementToDelete.parentElement;
         
-        // Crear copia del elemento para poder restaurarlo
         const elementCopy = elementToDelete.cloneNode(true);
         
-        // Guardar información para el historial
         const actionInfo = {
             type: 'deleteElement',
             element: elementCopy.outerHTML,
-            parent: parentElement.outerHTML.substring(0, 100), // Solo guardar parte del HTML para no hacerlo muy grande
+            parent: parentElement.outerHTML.substring(0, 100),
             elementId: elementToDelete.id || '',
             elementClass: elementToDelete.className,
             undo: function() {
                 if (parentElement) {
                     parentElement.appendChild(elementCopy);
                     if (isEditMode) {
-                        // Re-inicializar elementos movibles si es necesario
                         if (elementCopy.classList.contains('movable') || elementCopy.classList.contains('movable-card-wrapper')) {
                             makeElementDraggableAndResizable(elementCopy);
                         }
@@ -2270,15 +2745,13 @@
             }
         };
         
-        // Eliminar el elemento
         elementToDelete.remove();
-        
-        // Limpiar selección
         activeEditable = null;
         updatePositionInputs();
-        updateContentHeight();
         
-        // Guardar en el historial
+        // CORRECCIÓN: Llamar a updateContentHeight después de un breve delay
+        setTimeout(updateContentHeight, 10);
+        
         saveAction(actionInfo);
         
       } else {
@@ -2286,27 +2759,71 @@
       }
     }
 
+    function deleteSelectedCard() {
+      if (activeEditable) {
+        const card = activeEditable.closest('.card');
+        if (card) {
+          const cardWrapper = card.closest('.col, .movable-card-wrapper');
+          if (cardWrapper) {
+            const cardCopy = cardWrapper.cloneNode(true);
+            
+            const actionInfo = {
+                type: 'deleteCard',
+                element: cardCopy.outerHTML,
+                parent: cardWrapper.parentElement.id || cardWrapper.parentElement.className,
+                undo: function() {
+                    if (cardWrapper.parentElement) {
+                        cardWrapper.parentElement.appendChild(cardCopy);
+                        if (isEditMode) {
+                            if (cardCopy.classList.contains('movable-card-wrapper')) {
+                                makeElementDraggableAndResizable(cardCopy);
+                            }
+                        }
+                        updateContentHeight();
+                    }
+                },
+                redo: function() {
+                    if (cardCopy.parentElement) {
+                        cardCopy.remove();
+                        updateContentHeight();
+                    }
+                }
+            };
+            
+            cardWrapper.remove();
+            activeEditable = null;
+            updatePositionInputs();
+            
+            // CORRECCIÓN: Llamar a updateContentHeight después de un breve delay
+            setTimeout(updateContentHeight, 10);
+            
+            saveAction(actionInfo);
+          }
+        } else {
+          alert("Seleccione primero una tarjeta para eliminar.");
+        }
+      } else {
+        alert("Seleccione primero una tarjeta para eliminar.");
+      }
+    }
+
     // --- Teclas de acceso rápido ---
     document.addEventListener('keydown', function(e) {
-        // Tecla Suprimir (Delete)
         if (e.key === 'Delete' && isEditMode && activeEditable) {
             e.preventDefault();
             deleteSelectedElement();
         }
         
-        // Ctrl+Z para deshacer
         if (e.ctrlKey && e.key === 'z' && isEditMode) {
             e.preventDefault();
             undoAction();
         }
         
-        // Ctrl+Y para rehacer
         if (e.ctrlKey && e.key === 'y' && isEditMode) {
             e.preventDefault();
             redoAction();
         }
         
-        // Navegación con teclas de flecha cuando un elemento está seleccionado
         const target = activeEditable ? activeEditable.closest('.movable, .movable-card-wrapper') : null;
         if (!isEditMode || !target) return;
         
@@ -2337,9 +2854,10 @@
         }
     });
 
-    // --- Lógica de Clic y Selección optimizada para touch ---
+    // --- Lógica de Clic y Selección CORREGIDA para tarjetas personalizadas ---
     let lastClickTime = 0;
     let clickCount = 0;
+    let isEditingText = false;
 
     document.addEventListener('click', function(e) {
       if (!isEditMode) {
@@ -2364,13 +2882,18 @@
       const now = new Date().getTime();
       const timeDiff = now - lastClickTime;
 
-      if (activeEditable) {
-            const activeMovable = activeEditable.closest('.movable, .movable-card-wrapper');
-            if (activeMovable && activeMovable !== e.target.closest('.movable, .movable-card-wrapper')) {
-                 setMovableTextEditMode(activeMovable, false);
-            }
+      // CORRECCIÓN: Manejo mejorado para evitar que se pierda la selección
+      if (activeEditable && activeEditable !== el) {
+          const activeMovable = activeEditable.closest('.movable, .movable-card-wrapper');
+          if (activeMovable && activeMovable !== e.target.closest('.movable, .movable-card-wrapper')) {
+              // Solo desactivar si no estamos en medio de una edición de texto
+              if (!isEditingText) {
+                  setMovableTextEditMode(activeMovable, false);
+              }
+          }
       }
       
+      // Manejo de enlaces de tarjetas
       if (card && !el) {
           e.stopPropagation();
           e.preventDefault();
@@ -2388,7 +2911,7 @@
               }
           }
           
-          if (activeEditable) {
+          if (activeEditable && !isEditingText) {
             activeEditable.classList.remove('active-editable');
             activeEditable = null;
           }
@@ -2396,14 +2919,17 @@
           return;
       }
       
+      // Manejo de clics en elementos editables
       if (el && activeEditable === el) {
           if (timeDiff < 300) { clickCount++; } else { clickCount = 1; }
       } else { clickCount = 1; }
       lastClickTime = now;
 
-      if (el && clickCount >= 3) {
+      // CORRECCIÓN: Manejo mejorado del doble clic
+      if (el && clickCount >= 2) {
           e.preventDefault();
           e.stopPropagation();
+          isEditingText = true;
           const targetMovable = el.closest('.movable, .movable-card-wrapper');
           if (targetMovable) { 
               setMovableTextEditMode(targetMovable, true); 
@@ -2415,7 +2941,8 @@
           return;
       }
 
-      if (el) {
+      // CORRECCIÓN: Selección normal sin interrumpir la edición
+      if (el && !isEditingText) {
         e.stopPropagation();
 
         if (activeEditable && activeEditable !== el) {
@@ -2435,7 +2962,7 @@
         }
 
         updatePositionInputs();
-      } else if (!e.target.closest('.movable, .movable-card-wrapper')) {
+      } else if (!e.target.closest('.movable, .movable-card-wrapper') && !isEditingText) {
         if (activeEditable) {
             activeEditable.classList.remove('active-editable');
             const targetMovable = activeEditable.closest('.movable, .movable-card-wrapper');
@@ -2455,13 +2982,18 @@
         const el = e.target.closest('.editable-text');
         if (el) {
             e.preventDefault();
+            isEditingText = true;
             const targetMovable = el.closest('.movable, .movable-card-wrapper');
-            if (targetMovable) { setMovableTextEditMode(targetMovable, true); } 
-            else { el.setAttribute('contenteditable', 'true'); }
+            if (targetMovable) { 
+                setMovableTextEditMode(targetMovable, true); 
+            } else { 
+                el.setAttribute('contenteditable', 'true'); 
+            }
             el.focus();
         }
     });
 
+    // CORRECCIÓN: Manejo mejorado del focusout
     document.addEventListener('focusout', function(e) {
         if (!isEditMode) return;
         const el = e.target;
@@ -2474,13 +3006,35 @@
                 const targetMovable = el.closest('.movable, .movable-card-wrapper');
 
                 if (!sidebar.contains(newFocus) || isSelectingFont) {
-                    if (targetMovable) { setMovableTextEditMode(targetMovable, false); } 
-                    else { el.removeAttribute('contenteditable'); }
+                    if (targetMovable) { 
+                        setMovableTextEditMode(targetMovable, false); 
+                    } else { 
+                        el.removeAttribute('contenteditable'); 
+                    }
+                    isEditingText = false;
                 } else {
                     el.focus(); 
                     restoreSelection();
                 }
             }, 100);
+        }
+    });
+
+    // CORRECCIÓN: Manejo de eventos de teclado para mantener la selección
+    document.addEventListener('keydown', function(e) {
+        if (isEditingText && (e.key === 'Escape' || (e.ctrlKey && e.key === 's'))) {
+            e.preventDefault();
+            const el = document.activeElement;
+            if (el && el.classList.contains('editable-text')) {
+                const targetMovable = el.closest('.movable, .movable-card-wrapper');
+                if (targetMovable) {
+                    setMovableTextEditMode(targetMovable, false);
+                } else {
+                    el.removeAttribute('contenteditable');
+                }
+                isEditingText = false;
+                el.blur();
+            }
         }
     });
 
@@ -2527,11 +3081,9 @@
       const mainContentWrapper = document.getElementById('mainContentWrapper');
 
       if (isEditMode) {
-        // --- ACTIVAR EDICIÓN ---
         editButton.classList.replace('btn-outline-light', 'btn-light');
         editButton.innerHTML = '<i class="fas fa-save me-1"></i> Guardar Cambios';
         
-        // Mostrar indicador de modo edición
         const editIndicator = document.createElement('div');
         editIndicator.className = 'edit-mode-indicator';
         editIndicator.id = 'editModeIndicator';
@@ -2554,11 +3106,9 @@
         updateContentHeight();
 
       } else {
-        // --- DESACTIVAR EDICIÓN ---
         editButton.classList.replace('btn-light', 'btn-outline-light');
         editButton.innerHTML = '<i class="fas fa-edit me-1"></i> Modo Edición';
         
-        // Eliminar indicador de modo edición
         const editIndicator = document.getElementById('editModeIndicator');
         if (editIndicator) editIndicator.remove();
         
@@ -2580,14 +3130,14 @@
         if (activeEditable) activeEditable.classList.remove('active-editable');
         activeEditable = null;
         savedRange = null; 
+        isEditingText = false;
         updatePositionInputs();
         
         sidebar.classList.add('d-none-temp');
         mainContentWrapper.style.marginLeft = '0';
-        document.getElementById('mainContent').style.minHeight = '';
+        document.getElementById('mainContent').style.minHeight = 'auto';
         
-        // Guardar cambios al salir del modo edición
-        saveToLocalStorage();
+        saveToSupabase();
       }
     }
 
@@ -2601,19 +3151,18 @@
         document.getElementById('userNav').classList.remove('d-none');
         document.getElementById('userNameDisplay').textContent = 'Administrador Daule';
         
-        // Remover el bloqueo visual en la navegación
         document.querySelectorAll('.restricted-nav').forEach(el => {
             el.classList.remove('restricted-nav');
             el.querySelector('.fa-lock').classList.add('d-none');
         });
         
-        // Remover la clase restricted de las tarjetas
         document.querySelectorAll('.card.restricted').forEach(card => {
             card.classList.remove('restricted');
         });
         
-        // Cargar datos guardados
-        loadFromLocalStorage();
+        loadFromSupabase();
+        loadAppData();
+        subscribeToChanges();
 
       } else {
           alert("Credenciales incorrectas. Inténtalo de nuevo.");
@@ -2626,7 +3175,6 @@
       document.getElementById('userNav').classList.add('d-none');
       document.getElementById('loginBtnContainer').classList.remove('d-none');
 
-      // Restaurar el bloqueo visual en la navegación
       document.querySelectorAll('.navbar-nav .nav-item a').forEach(el => {
           const sectionId = el.getAttribute('onclick').match(/'(.*?)'/)[1];
           if (RESTRICTED_SECTIONS.includes(sectionId)) {
@@ -2635,7 +3183,6 @@
           }
       });
       
-      // Restaurar la clase restricted a las tarjetas
       document.querySelectorAll('.card').forEach(card => {
           const link = card.dataset.cardLink;
           if (link && RESTRICTED_SECTIONS.includes(link.substring(1))) {
@@ -2651,24 +3198,15 @@
         showSection('inicio'); 
         addToNavigationHistory('inicio');
         
-        // Mejora de rendimiento para dispositivos móviles
         if (isTouchDevice) {
-            // Optimizar para rendimiento en dispositivos táctiles
             document.body.classList.add('touch-device');
         }
         
-        // Cargar datos guardados si el usuario ya estaba logueado
-        const savedData = localStorage.getItem('wasteManagementSystem');
-        if (savedData) {
-            const data = JSON.parse(savedData);
-            if (data.content) {
-                // El usuario tenía datos guardados, podríamos ofrecer restaurarlos
-                // cuando haga login
-            }
-        }
+        // Cargar datos iniciales de Supabase
+        loadFromSupabase();
+        loadAppData();
     });
 
   </script>
 </body>
 </html>
-
