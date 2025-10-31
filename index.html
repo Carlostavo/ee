@@ -3,40 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <title>Sistema de Gestión de Residuos Sólidos - Cantón Daule</title>
+  <title>Sistema de Gestión de Residuos Sólidos</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    /* Variables de diseño profesionales y suaves */
+    /* Variables de diseño optimizadas para estilos más claros y suaves */
     :root {
-      --primary-color: #2E8B57;
-      --primary-light: #3CB371;
-      --primary-dark: #228B22;
-      --secondary-color: #4A6FA5;
-      --secondary-light: #6B8CBE;
-      --accent-color: #FF7E5F;
-      --light-color: #F8F9FA;
-      --light-gray: #E9ECEF;
-      --medium-gray: #CED4DA;
-      --dark-gray: #6C757D;
-      --dark-color: #343A40;
-      --success-color: #28A745;
-      --warning-color: #FFC107;
-      --danger-color: #DC3545;
-      --info-color: #17A2B8;
-      --border-radius: 12px;
-      --box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-      --box-shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
-      --transition: all 0.3s ease;
+      --primary-color: #2e8b57; /* Verde más suave */
+      --primary-dark: #1e6b47;
+      --secondary-color: #4a6572; /* Gris azulado más suave */
+      --accent-color: #5d9cec; /* Azul más suave */
+      --light-color: #f9fbfd; /* Fondo más claro */
+      --dark-color: #3a3a3a; /* Texto más suave */
+      --success-color: #4caf50;
+      --warning-color: #ffb74d;
+      --danger-color: #e57373;
+      --info-color: #4fc3f7;
+      --border-radius: 10px; /* Bordes más suaves */
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Sombras más suaves */
+      --transition: all 0.25s ease;
       --safe-area-inset-top: env(safe-area-inset-top);
       --safe-area-inset-bottom: env(safe-area-inset-bottom);
       --safe-area-inset-left: env(safe-area-inset-left);
       --safe-area-inset-right: env(safe-area-inset-right);
     }
     
-    /* Reset mejorado */
+    /* Reset mejorado para compatibilidad entre navegadores */
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
@@ -44,12 +38,12 @@
       -moz-osx-font-smoothing: grayscale;
     }
     
-    /* Estilos Generales optimizados */
+    /* Estilos Generales optimizados con colores más claros */
     body { 
-      background-color: #f8f9fa; 
-      font-family: 'Segoe UI', system-ui, -apple-system, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      background-color: var(--light-color); 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
       line-height: 1.6;
-      color: #495057;
+      color: var(--dark-color);
       padding-top: constant(safe-area-inset-top);
       padding-top: env(safe-area-inset-top);
       padding-bottom: constant(safe-area-inset-bottom);
@@ -58,10 +52,10 @@
       padding: 0;
     }
     
-    /* Navbar mejorada con colores suaves */
+    /* Navbar mejorada con colores más suaves */
     .navbar {
       background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
       padding: 0.8rem 1rem;
       padding-top: calc(0.8rem + constant(safe-area-inset-top));
       padding-top: calc(0.8rem + env(safe-area-inset-top));
@@ -120,7 +114,7 @@
       height: 1.2em;
     }
 
-    /* Panel Lateral mejorado */
+    /* Panel Lateral mejorado con fondo más claro */
     #editSidebar {
       position: fixed;
       top: 0;
@@ -130,19 +124,19 @@
       padding-top: calc(70px + constant(safe-area-inset-top));
       padding-top: calc(70px + env(safe-area-inset-top));
       z-index: 1040;
-      border-right: 1px solid var(--light-gray);
+      border-right: 1px solid #e9ecef;
       overflow-y: auto;
-      background: white;
+      background: #f8fafc; /* Fondo más claro */
       transition: all 0.3s ease;
       font-size: 0.9rem;
-      box-shadow: var(--box-shadow-light);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.03); /* Sombra más suave */
       -webkit-overflow-scrolling: touch;
       overscroll-behavior: contain;
     }
     
     .sidebar-section { 
       padding: 15px 0; 
-      border-bottom: 1px solid var(--light-gray); 
+      border-bottom: 1px solid #e9ecef; 
     }
     
     .sidebar-section:last-child { 
@@ -173,7 +167,7 @@
       padding-top: 20px; 
       animation: fadeIn 0.5s ease;
       position: relative;
-      min-height: 100px;
+      min-height: 100px; /* Reducido para permitir ajuste automático */
     } 
     
     #section-inicio { 
@@ -193,12 +187,12 @@
       position: relative;
       max-width: 1400px;
       padding-bottom: 20px;
-      min-height: auto;
+      min-height: auto; /* Permitir ajuste automático */
     }
     
-    /* Hero Section optimizado */
+    /* Hero Section con colores más suaves */
     .hero-section {
-      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-light) 100%);
+      background: linear-gradient(135deg, var(--secondary-color) 0%, #5a7686 100%); /* Gradiente más suave */
       color: white;
       padding: clamp(30px, 8vw, 60px) clamp(15px, 4vw, 30px);
       border-radius: var(--border-radius);
@@ -226,7 +220,7 @@
     
     .hero-title {
       font-size: clamp(1.8rem, 6vw, 2.8rem);
-      font-weight: 700;
+      font-weight: 700; /* Peso de fuente más suave */
       margin-bottom: clamp(15px, 4vw, 20px);
       position: relative;
       line-height: 1.2;
@@ -241,13 +235,13 @@
       font-weight: 400;
     }
 
-    /* Cards optimizadas con colores suaves */
+    /* Cards optimizadas con estilos más suaves */
     .card {
       height: 100%;
       transition: var(--transition);
       border: none;
       border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow-light);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); /* Sombra más suave */
       cursor: pointer; 
       position: relative;
       overflow: hidden;
@@ -259,8 +253,8 @@
     }
     
     .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+      transform: translateY(-5px); /* Elevación más suave */
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08); /* Sombra más suave */
     }
     
     /* Mejora para dispositivos táctiles */
@@ -286,7 +280,7 @@
     }
     
     .card-title { 
-      font-weight: 600; 
+      font-weight: 600; /* Peso de fuente más suave */
       font-size: clamp(1.1rem, 3vw, 1.3rem);
       margin-bottom: clamp(0.75rem, 2vw, 1rem);
       position: relative;
@@ -299,7 +293,7 @@
       bottom: -8px;
       left: 0;
       width: 40px;
-      height: 3px;
+      height: 2px; /* Línea más delgada */
       background: var(--primary-color);
       border-radius: 2px;
     }
@@ -315,7 +309,7 @@
       top: 20px;
       right: 20px;
       font-size: clamp(2rem, 5vw, 2.5rem);
-      opacity: 0.1;
+      opacity: 0.08; /* Icono más sutil */
       z-index: 1;
     }
 
@@ -334,7 +328,7 @@
 
     /* Estilo para tarjetas restringidas */
     .card.restricted {
-      filter: grayscale(0.7) brightness(0.9);
+      filter: grayscale(0.5) brightness(0.95); /* Efecto más suave */
       position: relative;
       overflow: hidden;
     }
@@ -346,7 +340,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.2); /* Overlay más suave */
       z-index: 1;
     }
     
@@ -365,7 +359,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.6); /* Overlay más suave */
       color: white;
       z-index: 3;
       opacity: 0;
@@ -401,7 +395,7 @@
     .section-content:not(#section-inicio) .cards-row {
       position: relative; 
       display: block; 
-      min-height: 100px;
+      min-height: 100px; /* Reducido para permitir ajuste automático */
       margin-top: 0;
     }
     
@@ -419,12 +413,12 @@
       transform: none !important; 
     }
 
-    /* Estilos de Edición optimizados */
+    /* Estilos de Edición optimizados para touch */
     .active-editable { 
       outline: 2px dashed var(--primary-color); 
     }
 
-    /* Movable Text Box mejorado */
+    /* Movable Text Box mejorado para dispositivos táctiles */
     .movable {
       position: absolute !important;
       z-index: 1000;
@@ -432,7 +426,7 @@
       cursor: default !important;
       background-color: white;
       border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow-light);
+      box-shadow: var(--box-shadow);
       touch-action: none;
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -510,15 +504,15 @@
       margin-top: var(--bs-gutter-y);
     }
     
-    /* Botones mejorados con mejor área táctil */
+    /* Botones mejorados con estilos más suaves */
     .btn-custom {
       border-radius: 8px;
-      font-weight: 600;
+      font-weight: 500; /* Peso de fuente más suave */
       padding: clamp(0.5rem, 2vw, 0.6rem) clamp(1rem, 3vw, 1.2rem);
       transition: var(--transition);
       border: none;
       font-size: clamp(0.9rem, 2.5vw, 1rem);
-      min-height: 44px;
+      min-height: 44px; /* Tamaño mínimo para touch */
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -531,11 +525,11 @@
     
     .btn-primary-custom:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(46, 139, 87, 0.3);
+      box-shadow: 0 4px 12px rgba(46, 139, 87, 0.2); /* Sombra más suave */
     }
     
     .btn-outline-primary {
-      border: 2px solid var(--primary-color);
+      border: 1px solid var(--primary-color); /* Borde más delgado */
       color: var(--primary-color);
       background: transparent;
     }
@@ -563,14 +557,14 @@
       position: fixed;
       top: clamp(70px, 12vw, 80px);
       right: clamp(10px, 3vw, 20px);
-      background: linear-gradient(135deg, var(--warning-color), #e0a800);
+      background: linear-gradient(135deg, var(--warning-color), #ffa726); /* Gradiente más suave */
       color: var(--dark-color);
       padding: clamp(6px, 2vw, 8px) clamp(12px, 3vw, 15px);
       border-radius: 30px;
       font-size: clamp(0.75rem, 2.5vw, 0.85rem);
       z-index: 1050;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Sombra más suave */
+      font-weight: 500; /* Peso de fuente más suave */
       display: flex;
       align-items: center;
       backdrop-filter: blur(10px);
@@ -598,7 +592,7 @@
     /* Estilos para elementos de arrastre optimizados */
     .ui-draggable-dragging {
       z-index: 10000 !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important; /* Sombra más suave */
       transform: scale(1.02);
     }
     
@@ -608,17 +602,17 @@
       border-radius: 50%;
       width: clamp(10px, 3vw, 12px) !important;
       height: clamp(10px, 3vw, 12px) !important;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Sombra más suave */
     }
     
     /* Animaciones optimizadas */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(10px); } /* Movimiento más suave */
       to { opacity: 1; transform: translateY(0); }
     }
     
     .fade-in {
-      animation: fadeIn 0.5s ease;
+      animation: fadeIn 0.4s ease; /* Animación más rápida */
     }
     
     /* Responsive Design mejorado */
@@ -746,7 +740,7 @@
     /* Mejoras visuales adicionales */
     .section-title {
       font-size: clamp(1.8rem, 5vw, 2.2rem);
-      font-weight: 700;
+      font-weight: 600; /* Peso de fuente más suave */
       margin-bottom: clamp(1rem, 3vw, 1.5rem);
       color: var(--secondary-color);
       position: relative;
@@ -759,7 +753,7 @@
       bottom: 0;
       left: 0;
       width: 60px;
-      height: 4px;
+      height: 3px; /* Línea más delgada */
       background: var(--primary-color);
       border-radius: 2px;
     }
@@ -775,7 +769,7 @@
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
-      box-shadow: var(--box-shadow-light);
+      box-shadow: var(--box-shadow);
       margin-bottom: 1.5rem;
     }
     
@@ -783,12 +777,12 @@
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
-      box-shadow: var(--box-shadow-light);
+      box-shadow: var(--box-shadow);
       margin-bottom: 1.5rem;
     }
     
     .progress-card .progress {
-      height: 12px;
+      height: 8px; /* Barra de progreso más delgada */
       margin: 10px 0;
     }
     
@@ -796,24 +790,24 @@
       background: white;
       border-radius: var(--border-radius);
       overflow: hidden;
-      box-shadow: var(--box-shadow-light);
+      box-shadow: var(--box-shadow);
     }
     
     .data-table th {
       background-color: var(--primary-color);
       color: white;
-      font-weight: 600;
+      font-weight: 500; /* Peso de fuente más suave */
     }
     
     .form-card {
       background: white;
       border-radius: var(--border-radius);
       padding: 2rem;
-      box-shadow: var(--box-shadow-light);
+      box-shadow: var(--box-shadow);
     }
     
     .form-card .form-label {
-      font-weight: 600;
+      font-weight: 500; /* Peso de fuente más suave */
       color: var(--secondary-color);
     }
     
@@ -822,12 +816,12 @@
       padding: 1.5rem;
       border-radius: var(--border-radius);
       background: white;
-      box-shadow: var(--box-shadow-light);
+      box-shadow: var(--box-shadow);
     }
     
     .metric-value {
-      font-size: 2.5rem;
-      font-weight: 700;
+      font-size: 2.2rem; /* Tamaño más moderado */
+      font-weight: 600; /* Peso de fuente más suave */
       margin: 10px 0;
     }
     
@@ -838,7 +832,7 @@
     
     .metric-change {
       font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 500; /* Peso de fuente más suave */
     }
     
     .metric-change.positive {
@@ -853,7 +847,7 @@
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
-      box-shadow: var(--box-shadow-light);
+      box-shadow: var(--box-shadow);
       margin-bottom: 1.5rem;
     }
     
@@ -877,7 +871,7 @@
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
-      box-shadow: var(--box-shadow-light);
+      box-shadow: var(--box-shadow);
       margin-bottom: 1.5rem;
     }
     
@@ -901,50 +895,71 @@
       margin-bottom: 1.5rem;
     }
     
-    /* Estilos para formularios de gestión */
-    .form-section {
+    /* Estilos para indicadores de datos */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
-      box-shadow: var(--box-shadow-light);
-      margin-bottom: 1.5rem;
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      transition: var(--transition);
     }
     
-    .form-section h5 {
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin: 0.5rem 0;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
       color: var(--secondary-color);
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--light-gray);
+      font-weight: 500;
     }
     
-    /* Estilos para tablas de gestión */
-    .management-table {
+    .stat-icon {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+    
+    /* Estilos para gráficos */
+    .chart-placeholder {
+      background: #f8f9fa;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      color: var(--secondary-color);
+      font-weight: 500;
+    }
+    
+    /* Estilos para tablas de datos */
+    .data-table-container {
       background: white;
       border-radius: var(--border-radius);
       overflow: hidden;
-      box-shadow: var(--box-shadow-light);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
     }
     
-    .management-table th {
-      background-color: var(--primary-color);
-      color: white;
-      font-weight: 600;
-    }
-    
-    /* Estilos para dashboard */
-    .dashboard-card {
-      background: white;
-      border-radius: var(--border-radius);
-      padding: 1.5rem;
-      box-shadow: var(--box-shadow-light);
-      height: 100%;
-    }
-    
-    .dashboard-card .card-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--secondary-color);
+    .table-responsive {
+      max-height: 500px;
+      overflow-y: auto;
     }
     
     /* Estilos para filtros */
@@ -952,61 +967,37 @@
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
-      box-shadow: var(--box-shadow-light);
-      margin-bottom: 1.5rem;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
     }
     
-    .filter-section h6 {
-      color: var(--secondary-color);
+    .filter-title {
+      font-size: 1.1rem;
+      font-weight: 600;
       margin-bottom: 1rem;
+      color: var(--secondary-color);
     }
     
-    /* Estilos para indicadores de carga */
-    .loading-indicator {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
+    /* Estilos para estado de carga */
+    .loading-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--secondary-color);
     }
     
-    .spinner {
+    .loading-spinner {
       width: 40px;
       height: 40px;
-      border: 4px solid rgba(0, 0, 0, 0.1);
-      border-left-color: var(--primary-color);
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary-color);
       border-radius: 50%;
       animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
     }
     
     @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-    
-    /* Estilos para mensajes de estado */
-    .status-message {
-      padding: 1rem;
-      border-radius: var(--border-radius);
-      margin-bottom: 1rem;
-    }
-    
-    .status-success {
-      background-color: rgba(40, 167, 69, 0.1);
-      border-left: 4px solid var(--success-color);
-      color: var(--success-color);
-    }
-    
-    .status-error {
-      background-color: rgba(220, 53, 69, 0.1);
-      border-left: 4px solid var(--danger-color);
-      color: var(--danger-color);
-    }
-    
-    .status-info {
-      background-color: rgba(23, 162, 184, 0.1);
-      border-left: 4px solid var(--info-color);
-      color: var(--info-color);
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
@@ -1227,7 +1218,7 @@
         <div class="hero-section">
           <h1 class="hero-title editable-text" id="heroTitle">Sistema de Gestión de Residuos Sólidos</h1>
           <p class="hero-subtitle editable-text" id="heroSubtitle">
-            Plataforma integral para monitorear indicadores, gestionar metas y generar reportes para una gestión ambiental eficiente y sostenible en el Cantón Daule.
+            Plataforma integral para monitorear indicadores, gestionar metas y generar reportes para una gestión ambiental eficiente y sostenible.
           </p>
         </div>
 
@@ -1301,61 +1292,406 @@
           </p>
         </div>
         
-        <div id="metas-content">
-          <div class="loading-indicator">
-            <div class="spinner"></div>
-            <span class="ms-2">Cargando metas...</span>
+        <div class="row mt-4">
+          <div class="col-md-8">
+            <div class="goal-card">
+              <div class="goal-title editable-text">Meta de Reducción de Residuos</div>
+              <div class="goal-deadline editable-text">Fecha límite: 31 de diciembre 2023</div>
+              <div class="goal-progress">
+                <div class="d-flex justify-content-between mb-1">
+                  <span class="editable-text">Progreso actual</span>
+                  <span class="editable-text">65%</span>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="goal-description editable-text">
+                Reducir en un 15% la cantidad de residuos sólidos municipales generados para finales del año fiscal actual.
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
+                <button class="btn btn-sm btn-outline-success">Actualizar progreso</button>
+              </div>
+            </div>
+            
+            <div class="goal-card">
+              <div class="goal-title editable-text">Meta de Reciclaje</div>
+              <div class="goal-deadline editable-text">Fecha límite: 30 de junio 2023</div>
+              <div class="goal-progress">
+                <div class="d-flex justify-content-between mb-1">
+                  <span class="editable-text">Progreso actual</span>
+                  <span class="editable-text">42%</span>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 42%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="goal-description editable-text">
+                Aumentar la tasa de reciclaje de plásticos y papel al 40% en los próximos 6 meses.
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">Ver detalles</button>
+                <button class="btn btn-sm btn-outline-success">Actualizar progreso</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="metric-card mb-4">
+              <i class="fas fa-bullseye fa-2x text-primary"></i>
+              <div class="metric-value editable-text">12</div>
+              <div class="metric-label editable-text">Metas Activas</div>
+            </div>
+            
+            <div class="metric-card mb-4">
+              <i class="fas fa-check-circle fa-2x text-success"></i>
+              <div class="metric-value editable-text">8</div>
+              <div class="metric-label editable-text">Metas Completadas</div>
+            </div>
+            
+            <div class="metric-card mb-4">
+              <i class="fas fa-clock fa-2x text-warning"></i>
+              <div class="metric-value editable-text">4</div>
+              <div class="metric-label editable-text">Metas en Progreso</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Sección de Indicadores actualizada según propuesta -->
+      <!-- Sección de Indicadores con Datos de Supabase -->
       <div id="section-indicadores" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #34495e 0%, #5d6d7e 100%);">
-          <h1 class="hero-title editable-text">Indicadores de Gestión de Residuos Sólidos</h1>
+          <h1 class="hero-title editable-text">Indicadores de Desempeño (KPIs)</h1>
           <p class="hero-subtitle editable-text">
-            Sistema de indicadores para medir la eficiencia en la gestión de residuos sólidos en el cantón Daule.
+            Análisis en tiempo real de datos sobre comportamiento proambiental y autosustentabilidad.
           </p>
         </div>
         
-        <div id="indicadores-content">
-          <div class="loading-indicator">
-            <div class="spinner"></div>
-            <span class="ms-2">Cargando indicadores...</span>
+        <!-- Filtros -->
+        <div class="filter-section">
+          <div class="filter-title">Filtros</div>
+          <div class="row">
+            <div class="col-md-3 mb-3">
+              <label for="filtroSexo" class="form-label">Sexo</label>
+              <select class="form-select" id="filtroSexo" onchange="filtrarDatos()">
+                <option value="">Todos</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+              </select>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="filtroEdad" class="form-label">Grupo de Edad</label>
+              <select class="form-select" id="filtroEdad" onchange="filtrarDatos()">
+                <option value="">Todos</option>
+                <option value="18-25">18-25</option>
+                <option value="26-35">26-35</option>
+                <option value="36-50">36-50</option>
+                <option value="51+">51+</option>
+              </select>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="filtroEducacion" class="form-label">Educación</label>
+              <select class="form-select" id="filtroEducacion" onchange="filtrarDatos()">
+                <option value="">Todos</option>
+                <option value="Primaria">Primaria</option>
+                <option value="Secundaria">Secundaria</option>
+                <option value="Superior">Superior</option>
+              </select>
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="filtroIngreso" class="form-label">Ingreso Mensual</label>
+              <select class="form-select" id="filtroIngreso" onchange="filtrarDatos()">
+                <option value="">Todos</option>
+                <option value="Menos de $500">Menos de $500</option>
+                <option value="$500-$1000">$500-$1000</option>
+                <option value="Más de $1000">Más de $1000</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Estadísticas principales -->
+        <div class="stats-grid" id="estadisticasPrincipales">
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Cargando estadísticas...</p>
+          </div>
+        </div>
+        
+        <!-- Gráficos -->
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="chart-container">
+              <h5>Conocimiento sobre Desechos Sólidos</h5>
+              <div id="graficoConocimiento" class="chart-placeholder">
+                Cargando gráfico...
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="chart-container">
+              <h5>Prácticas de Reciclaje por Grupo</h5>
+              <div id="graficoReciclaje" class="chart-placeholder">
+                Cargando gráfico...
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tabla de datos -->
+        <div class="data-table-container mt-4">
+          <div class="p-3 border-bottom">
+            <h5 class="mb-0">Datos de Encuestas Comportamiento Proambiental</h5>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped table-hover mb-0" id="tablaDatos">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Fecha</th>
+                  <th>Nombre</th>
+                  <th>Sexo</th>
+                  <th>Edad</th>
+                  <th>Educación</th>
+                  <th>Conoce Desechos</th>
+                  <th>Separa Residuos</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tablaDatosBody">
+                <tr>
+                  <td colspan="9" class="text-center py-4">
+                    <div class="loading-spinner"></div>
+                    <p class="mt-2">Cargando datos...</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="p-3 border-top d-flex justify-content-between align-items-center">
+            <div id="infoPaginacion">Mostrando 0 de 0 registros</div>
+            <div>
+              <button class="btn btn-sm btn-outline-primary me-2" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>Anterior</button>
+              <button class="btn btn-sm btn-outline-primary" id="btnSiguiente" onclick="cambiarPagina(1)" disabled>Siguiente</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Sección de Avances actualizada según propuesta -->
+      <!-- Sección de Avances mejorada -->
       <div id="section-avances" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #f39c12 0%, #f7dc6f 100%); color: #343a40;">
-          <h1 class="hero-title editable-text" style="color: #343a40;">Seguimiento de Avances del Plan de Gestión</h1>
+          <h1 class="hero-title editable-text" style="color: #343a40;">Monitor de Avances y Cumplimiento</h1>
           <p class="hero-subtitle editable-text" style="color: #343a40;">
-            Monitoreo del cumplimiento de metas y evaluación del impacto de las acciones implementadas.
+            Seguimiento detallado de cada meta y acción implementada. Identifique cuellos de botella y éxitos.
           </p>
         </div>
         
-        <div id="avances-content">
-          <div class="loading-indicator">
-            <div class="spinner"></div>
-            <span class="ms-2">Cargando avances...</span>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="progress-card">
+              <h5 class="editable-text">Reducción de Residuos</h5>
+              <div class="d-flex justify-content-between mb-1">
+                <span class="editable-text">Progreso: 65%</span>
+                <span class="editable-text">Meta: 15% reducción</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="mt-3">
+                <h6 class="editable-text">Actividades recientes:</h6>
+                <ul>
+                  <li class="editable-text">Campaña de concientización completada (15% de participación)</li>
+                  <li class="editable-text">Implementación de puntos de reciclaje en 5 barrios</li>
+                  <li class="editable-text">Reducción del 8% en residuos orgánicos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="progress-card">
+              <h5 class="editable-text">Incremento del Reciclaje</h5>
+              <div class="d-flex justify-content-between mb-1">
+                <span class="editable-text">Progreso: 42%</span>
+                <span class="editable-text">Meta: 40% de reciclaje</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-info" role="progressbar" style="width: 42%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="mt-3">
+                <h6 class="editable-text">Actividades recientes:</h6>
+                <ul>
+                  <li class="editable-text">Instalación de 20 contenedores de separación</li>
+                  <li class="editable-text">Capacitación a 150 familias en reciclaje</li>
+                  <li class="editable-text">Alianza con 3 empresas recicladoras</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="chart-container">
+              <h5 class="editable-text">Progreso de Metas por Mes</h5>
+              <div class="d-flex justify-content-center align-items-center" style="height: 300px; background-color: #f8f9fa; border-radius: 8px;">
+                <p class="text-muted editable-text">Gráfico de progreso de metas aparecerá aquí</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="data-table">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th class="editable-text">Meta</th>
+                    <th class="editable-text">Fecha Inicio</th>
+                    <th class="editable-text">Fecha Límite</th>
+                    <th class="editable-text">Progreso</th>
+                    <th class="editable-text">Estado</th>
+                    <th class="editable-text">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="editable-text">Reducción del 15% de residuos</td>
+                    <td class="editable-text">01/01/2023</td>
+                    <td class="editable-text">31/12/2023</td>
+                    <td>
+                      <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </td>
+                    <td><span class="badge bg-warning editable-text">En progreso</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary">Detalles</button>
+                      <button class="btn btn-sm btn-outline-success">Actualizar</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="editable-text">40% de tasa de reciclaje</td>
+                    <td class="editable-text">01/03/2023</td>
+                    <td class="editable-text">30/06/2023</td>
+                    <td>
+                      <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 42%" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </td>
+                    <td><span class="badge bg-info editable-text">En progreso</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary">Detalles</button>
+                      <button class="btn btn-sm btn-outline-success">Actualizar</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="editable-text">95% de cobertura de recolección</td>
+                    <td class="editable-text">01/02/2023</td>
+                    <td class="editable-text">31/08/2023</td>
+                    <td>
+                      <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </td>
+                    <td><span class="badge bg-warning editable-text">En progreso</span></td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary">Detalles</button>
+                      <button class="btn btn-sm btn-outline-success">Actualizar</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Sección de Reportes actualizada según propuesta -->
+      <!-- Sección de Reportes mejorada -->
       <div id="section-reportes" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);">
-          <h1 class="hero-title editable-text">Sistema de Reportes y Documentación</h1>
+          <h1 class="hero-title editable-text">Generación de Documentos y Reportes</h1>
           <p class="hero-subtitle editable-text">
-            Generación de reportes técnicos, informes de gestión y documentación del sistema.
+            Genere reportes anuales, trimestrales y de impacto ambiental en formato PDF o Excel.
           </p>
         </div>
         
-        <div id="reportes-content">
-          <div class="loading-indicator">
-            <div class="spinner"></div>
-            <span class="ms-2">Cargando reportes...</span>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="report-card">
+              <div class="report-title editable-text">Reporte Anual de Sostenibilidad 2022</div>
+              <div class="report-date editable-text">Generado: 15 de enero, 2023</div>
+              <div class="report-description editable-text">
+                Resumen ejecutivo y datos consolidados de la gestión de residuos del año 2022, incluyendo indicadores clave y logros.
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">
+                  <i class="fas fa-eye me-1"></i> Vista previa
+                </button>
+                <button class="btn btn-sm btn-outline-success">
+                  <i class="fas fa-download me-1"></i> Descargar PDF
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="report-card">
+              <div class="report-title editable-text">Reporte Trimestral Q1 2023</div>
+              <div class="report-date editable-text">Generado: 10 de abril, 2023</div>
+              <div class="report-description editable-text">
+                Análisis detallado del primer trimestre del año, con comparativas mensuales y proyecciones para el resto del año.
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">
+                  <i class="fas fa-eye me-1"></i> Vista previa
+                </button>
+                <button class="btn btn-sm btn-outline-success">
+                  <i class="fas fa-download me-1"></i> Descargar PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="report-card">
+              <div class="report-title editable-text">Reporte de Cumplimiento Normativo</div>
+              <div class="report-date editable-text">Generado: 5 de marzo, 2023</div>
+              <div class="report-description editable-text">
+                Documento que valida el apego a las leyes y regulaciones ambientales locales y nacionales.
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">
+                  <i class="fas fa-eye me-1"></i> Vista previa
+                </button>
+                <button class="btn btn-sm btn-outline-success">
+                  <i class="fas fa-download me-1"></i> Descargar PDF
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="report-card">
+              <div class="report-title editable-text">Análisis de Impacto Ambiental</div>
+              <div class="report-date editable-text">Generado: 20 de febrero, 2023</div>
+              <div class="report-description editable-text">
+                Evaluación del impacto de las operaciones de gestión de residuos en el medio ambiente local.
+              </div>
+              <div class="d-flex justify-content-between">
+                <button class="btn btn-sm btn-outline-primary">
+                  <i class="fas fa-eye me-1"></i> Vista previa
+                </button>
+                <button class="btn btn-sm btn-outline-success">
+                  <i class="fas fa-download me-1"></i> Descargar PDF
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1436,30 +1772,14 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
   <script>
-    // Configuración de Supabase
-    const SUPABASE_URL = 'https://dutapywxsiuxboqsjqvf.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1dGFweXd4c2l1eGJvcXNqcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MTk1MTUsImV4cCI6MjA2OTI5NTUxNX0.SBIDeV_WAWlyLs-ROD1ibXtqqY5bbbh0gouY8gRB9Y4';
-    
-    // Inicializar Supabase
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    
     // Variables globales
     let isEditMode = false;
     let isLoggedIn = false;
     let savedRange = null;
     let activeEditable = null;
     const MOVE_STEP = 1;
-    const CONTENT_PADDING = 30;
+    const CONTENT_PADDING = 30; // Reducido para eliminar espacios en blanco
     const RESTRICTED_SECTIONS = ['metas', 'avances', 'reportes'];
-    
-    // Datos de la aplicación
-    let appData = {
-      metas: [],
-      indicadores: [],
-      avances: [],
-      reportes: [],
-      usuarios: []
-    };
     
     // Historial de acciones para undo/redo
     let actionHistory = [];
@@ -1473,538 +1793,287 @@
     // Detectar dispositivo táctil
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    // --- Sistema de Datos con Supabase ---
+    // Configuración de Supabase
+    const SUPABASE_URL = 'https://dutapywxsiuxboqsjqvf.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1dGFweXd4c2l1eGJvcXNqcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MTk1MTUsImV4cCI6MjA2OTI5NTUxNX0.SBIDeV_WAWlyLs-ROD1ibXtqqY5bbbh0gouY8gRB9Y4';
     
-    // Cargar todos los datos de la aplicación
-    async function loadAppData() {
+    // Inicializar Supabase
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // Variables para gestión de datos
+    let datosEncuestas = [];
+    let datosFiltrados = [];
+    let paginaActual = 1;
+    const registrosPorPagina = 10;
+
+    // --- Funciones para Supabase ---
+    async function cargarDatosEncuestas() {
       try {
-        // Cargar metas
-        const { data: metasData, error: metasError } = await supabase
-          .from('metas')
-          .select('*')
-          .order('fecha_creacion', { ascending: false });
-          
-        if (!metasError) {
-          appData.metas = metasData || [];
-          renderMetas();
-        } else {
-          console.error('Error cargando metas:', metasError);
-        }
+        mostrarEstadoCarga(true);
         
-        // Cargar indicadores
-        const { data: indicadoresData, error: indicadoresError } = await supabase
-          .from('indicadores')
+        const { data, error } = await supabase
+          .from('cuestionario_comportamiento_proambiental_autosustentabilidad')
           .select('*')
-          .order('categoria', { ascending: true });
-          
-        if (!indicadoresError) {
-          appData.indicadores = indicadoresData || [];
-          renderIndicadores();
-        } else {
-          console.error('Error cargando indicadores:', indicadoresError);
-        }
-        
-        // Cargar avances
-        const { data: avancesData, error: avancesError } = await supabase
-          .from('avances')
-          .select('*, metas(nombre)')
           .order('fecha_registro', { ascending: false });
-          
-        if (!avancesError) {
-          appData.avances = avancesData || [];
-          renderAvances();
-        } else {
-          console.error('Error cargando avances:', avancesError);
+        
+        if (error) {
+          console.error('Error al cargar datos:', error);
+          mostrarError('Error al cargar los datos de las encuestas');
+          return;
         }
         
-        // Cargar reportes
-        const { data: reportesData, error: reportesError } = await supabase
-          .from('reportes')
-          .select('*')
-          .order('fecha_generacion', { ascending: false });
-          
-        if (!reportesError) {
-          appData.reportes = reportesData || [];
-          renderReportes();
-        } else {
-          console.error('Error cargando reportes:', reportesError);
-        }
+        datosEncuestas = data || [];
+        datosFiltrados = [...datosEncuestas];
+        
+        actualizarEstadisticas();
+        actualizarTablaDatos();
+        mostrarEstadoCarga(false);
         
       } catch (error) {
-        console.error('Error cargando datos de la aplicación:', error);
+        console.error('Error inesperado:', error);
+        mostrarError('Error inesperado al cargar los datos');
+        mostrarEstadoCarga(false);
       }
     }
     
-    // Renderizar metas
-    function renderMetas() {
-      const container = document.getElementById('metas-content');
-      if (!container) return;
+    function filtrarDatos() {
+      const filtroSexo = document.getElementById('filtroSexo').value;
+      const filtroEdad = document.getElementById('filtroEdad').value;
+      const filtroEducacion = document.getElementById('filtroEducacion').value;
+      const filtroIngreso = document.getElementById('filtroIngreso').value;
       
-      if (appData.metas.length === 0) {
-        container.innerHTML = `
-          <div class="alert alert-info">
-            <i class="fas fa-info-circle me-2"></i>
-            No hay metas registradas en el sistema.
-          </div>
-        `;
-        return;
-      }
-      
-      let html = `
-        <div class="row mt-4">
-          <div class="col-md-8">
-            ${appData.metas.map(meta => `
-              <div class="goal-card">
-                <div class="goal-title">${meta.nombre}</div>
-                <div class="goal-deadline">Fecha límite: ${new Date(meta.fecha_limite).toLocaleDateString()}</div>
-                <div class="goal-progress">
-                  <div class="d-flex justify-content-between mb-1">
-                    <span>Progreso actual</span>
-                    <span>${meta.progreso_actual}%</span>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: ${meta.progreso_actual}%" 
-                         aria-valuenow="${meta.progreso_actual}" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-                <div class="goal-description">
-                  ${meta.descripcion}
-                </div>
-                <div class="d-flex justify-content-between">
-                  <button class="btn btn-sm btn-outline-primary" onclick="viewMetaDetails(${meta.id})">Ver detalles</button>
-                  <button class="btn btn-sm btn-outline-success" onclick="updateMetaProgress(${meta.id})">Actualizar progreso</button>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-          
-          <div class="col-md-4">
-            <div class="metric-card mb-4">
-              <i class="fas fa-bullseye fa-2x text-primary"></i>
-              <div class="metric-value">${appData.metas.length}</div>
-              <div class="metric-label">Metas Activas</div>
-            </div>
-            
-            <div class="metric-card mb-4">
-              <i class="fas fa-check-circle fa-2x text-success"></i>
-              <div class="metric-value">${appData.metas.filter(m => m.progreso_actual >= 100).length}</div>
-              <div class="metric-label">Metas Completadas</div>
-            </div>
-            
-            <div class="metric-card mb-4">
-              <i class="fas fa-clock fa-2x text-warning"></i>
-              <div class="metric-value">${appData.metas.filter(m => m.progreso_actual > 0 && m.progreso_actual < 100).length}</div>
-              <div class="metric-label">Metas en Progreso</div>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      container.innerHTML = html;
-    }
-    
-    // Renderizar indicadores
-    function renderIndicadores() {
-      const container = document.getElementById('indicadores-content');
-      if (!container) return;
-      
-      if (appData.indicadores.length === 0) {
-        container.innerHTML = `
-          <div class="alert alert-info">
-            <i class="fas fa-info-circle me-2"></i>
-            No hay indicadores registrados en el sistema.
-          </div>
-        `;
-        return;
-      }
-      
-      // Agrupar indicadores por categoría
-      const indicadoresPorCategoria = {};
-      appData.indicadores.forEach(ind => {
-        if (!indicadoresPorCategoria[ind.categoria]) {
-          indicadoresPorCategoria[ind.categoria] = [];
+      datosFiltrados = datosEncuestas.filter(encuesta => {
+        // Filtro por sexo
+        if (filtroSexo && encuesta.sexo !== filtroSexo) return false;
+        
+        // Filtro por grupo de edad
+        if (filtroEdad) {
+          const edad = encuesta.edad;
+          if (filtroEdad === '18-25' && (edad < 18 || edad > 25)) return false;
+          if (filtroEdad === '26-35' && (edad < 26 || edad > 35)) return false;
+          if (filtroEdad === '36-50' && (edad < 36 || edad > 50)) return false;
+          if (filtroEdad === '51+' && edad < 51) return false;
         }
-        indicadoresPorCategoria[ind.categoria].push(ind);
+        
+        // Filtro por educación
+        if (filtroEducacion && encuesta.educacion_jefe_hogar !== filtroEducacion) return false;
+        
+        // Filtro por ingreso
+        if (filtroIngreso && encuesta.ingreso_mensual_jefe_hogar !== filtroIngreso) return false;
+        
+        return true;
       });
       
-      let html = '';
-      
-      // Métricas principales
-      html += `
-        <div class="row mt-4">
-          <div class="col-md-3 mb-4">
-            <div class="metric-card">
-              <i class="fas fa-weight fa-2x text-primary"></i>
-              <div class="metric-value">1.2 kg</div>
-              <div class="metric-label">Generación Per Cápita</div>
-              <div class="metric-change positive">+5.3%</div>
-            </div>
-          </div>
-          
-          <div class="col-md-3 mb-4">
-            <div class="metric-card">
-              <i class="fas fa-recycle fa-2x text-success"></i>
-              <div class="metric-value">32%</div>
-              <div class="metric-label">Tasa de Reciclaje</div>
-              <div class="metric-change positive">+8.7%</div>
-            </div>
-          </div>
-          
-          <div class="col-md-3 mb-4">
-            <div class="metric-card">
-              <i class="fas fa-truck fa-2x text-info"></i>
-              <div class="metric-value">87%</div>
-              <div class="metric-label">Cobertura de Recolección</div>
-              <div class="metric-change positive">+2.1%</div>
-            </div>
-          </div>
-          
-          <div class="col-md-3 mb-4">
-            <div class="metric-card">
-              <i class="fas fa-landmark fa-2x text-warning"></i>
-              <div class="metric-value">45%</div>
-              <div class="metric-label">Residuos en Relleno</div>
-              <div class="metric-change negative">-3.2%</div>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      // Tablas por categoría
-      Object.keys(indicadoresPorCategoria).forEach(categoria => {
-        const indicadoresCategoria = indicadoresPorCategoria[categoria];
-        
-        html += `
-          <div class="row mt-4">
-            <div class="col-12">
-              <div class="form-section">
-                <h5>Indicadores de ${categoria}</h5>
-                <div class="table-responsive">
-                  <table class="table table-striped management-table">
-                    <thead>
-                      <tr>
-                        <th>Indicador</th>
-                        <th>Descripción</th>
-                        <th>Fórmula</th>
-                        <th>Unidad</th>
-                        <th>Meta</th>
-                        <th>Valor Actual</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      ${indicadoresCategoria.map(ind => `
-                        <tr>
-                          <td>${ind.nombre}</td>
-                          <td>${ind.descripcion}</td>
-                          <td>${ind.formula}</td>
-                          <td>${ind.unidad}</td>
-                          <td>${ind.meta}</td>
-                          <td>${ind.valor_actual}</td>
-                        </tr>
-                      `).join('')}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-      
-      container.innerHTML = html;
+      paginaActual = 1;
+      actualizarEstadisticas();
+      actualizarTablaDatos();
     }
     
-    // Renderizar avances
-    function renderAvances() {
-      const container = document.getElementById('avances-content');
-      if (!container) return;
+    function actualizarEstadisticas() {
+      const totalEncuestas = datosFiltrados.length;
+      const conoceDesechos = datosFiltrados.filter(e => e.conoce_desechos_solidos === 'Sí').length;
+      const separaResiduos = datosFiltrados.filter(e => e.separar_desechos_por_origen === 'Sí').length;
+      const preocupaExceso = datosFiltrados.filter(e => e.preocupa_exceso_desechos === 'Sí').length;
+      const participariaTalleres = datosFiltrados.filter(e => e.participaria_talleres_buenas_practicas === 'Sí').length;
       
-      if (appData.avances.length === 0) {
-        container.innerHTML = `
-          <div class="alert alert-info">
-            <i class="fas fa-info-circle me-2"></i>
-            No hay avances registrados en el sistema.
-          </div>
-        `;
-        return;
-      }
+      const porcentajeConocimiento = totalEncuestas > 0 ? Math.round((conoceDesechos / totalEncuestas) * 100) : 0;
+      const porcentajeSeparacion = totalEncuestas > 0 ? Math.round((separaResiduos / totalEncuestas) * 100) : 0;
+      const porcentajePreocupacion = totalEncuestas > 0 ? Math.round((preocupaExceso / totalEncuestas) * 100) : 0;
+      const porcentajeParticipacion = totalEncuestas > 0 ? Math.round((participariaTalleres / totalEncuestas) * 100) : 0;
       
-      let html = `
-        <div class="row mt-4">
-          <div class="col-md-12">
-            <div class="filter-section">
-              <h6>Filtros de Avances</h6>
-              <div class="row">
-                <div class="col-md-4">
-                  <label class="form-label">Periodo</label>
-                  <select class="form-select" id="avancePeriodo">
-                    <option>Último mes</option>
-                    <option>Último trimestre</option>
-                    <option>Último año</option>
-                    <option>Personalizado</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label">Tipo de Meta</label>
-                  <select class="form-select" id="avanceTipo">
-                    <option>Todas</option>
-                    <option>Reducción</option>
-                    <option>Reciclaje</option>
-                    <option>Educación</option>
-                    <option>Infraestructura</option>
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label">Estado</label>
-                  <select class="form-select" id="avanceEstado">
-                    <option>Todos</option>
-                    <option>En progreso</option>
-                    <option>Completado</option>
-                    <option>Retrasado</option>
-                  </select>
-                </div>
-              </div>
-            </div>
+      const estadisticasHTML = `
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
           </div>
+          <div class="stat-value">${totalEncuestas}</div>
+          <div class="stat-label">Total Encuestados</div>
         </div>
-        
-        <div class="row mt-4">
-          <div class="col-md-6">
-            <div class="dashboard-card">
-              <div class="card-title">Avance General del Plan</div>
-              <div class="progress mb-3" style="height: 25px;">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-                  <span class="fw-bold">65%</span>
-                </div>
-              </div>
-              <div class="row text-center">
-                <div class="col-4">
-                  <div class="metric-value" style="font-size: 1.5rem;">${appData.metas.length}</div>
-                  <div class="metric-label">Metas Totales</div>
-                </div>
-                <div class="col-4">
-                  <div class="metric-value" style="font-size: 1.5rem;">${appData.metas.filter(m => m.progreso_actual > 0 && m.progreso_actual < 100).length}</div>
-                  <div class="metric-label">En Progreso</div>
-                </div>
-                <div class="col-4">
-                  <div class="metric-value" style="font-size: 1.5rem;">${appData.metas.filter(m => m.progreso_actual >= 100).length}</div>
-                  <div class="metric-label">Completadas</div>
-                </div>
-              </div>
-            </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-brain"></i>
           </div>
-          
-          <div class="col-md-6">
-            <div class="dashboard-card">
-              <div class="card-title">Próximos Vencimientos</div>
-              <div class="list-group list-group-flush">
-                ${appData.metas
-                  .filter(m => new Date(m.fecha_limite) > new Date())
-                  .sort((a, b) => new Date(a.fecha_limite) - new Date(b.fecha_limite))
-                  .slice(0, 3)
-                  .map(meta => `
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                      <div>
-                        <h6 class="mb-1">${meta.nombre}</h6>
-                        <small class="text-muted">Vence: ${new Date(meta.fecha_limite).toLocaleDateString()}</small>
-                      </div>
-                      <span class="badge bg-warning rounded-pill">${meta.progreso_actual}%</span>
-                    </div>
-                  `).join('')}
-              </div>
-            </div>
-          </div>
+          <div class="stat-value">${porcentajeConocimiento}%</div>
+          <div class="stat-label">Conoce Desechos Sólidos</div>
         </div>
-        
-        <div class="row mt-4">
-          <div class="col-12">
-            <div class="form-section">
-              <h5>Detalle de Avances por Meta</h5>
-              <div class="table-responsive">
-                <table class="table table-striped management-table">
-                  <thead>
-                    <tr>
-                      <th>Meta</th>
-                      <th>Fecha Inicio</th>
-                      <th>Fecha Límite</th>
-                      <th>Progreso</th>
-                      <th>Estado</th>
-                      <th>Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${appData.metas.map(meta => {
-                      let estadoBadge = '';
-                      if (meta.progreso_actual >= 100) {
-                        estadoBadge = '<span class="badge bg-success">Completada</span>';
-                      } else if (new Date(meta.fecha_limite) < new Date()) {
-                        estadoBadge = '<span class="badge bg-danger">Retrasada</span>';
-                      } else if (meta.progreso_actual > 0) {
-                        estadoBadge = '<span class="badge bg-warning">En progreso</span>';
-                      } else {
-                        estadoBadge = '<span class="badge bg-info">No iniciada</span>';
-                      }
-                      
-                      return `
-                        <tr>
-                          <td>${meta.nombre}</td>
-                          <td>${new Date(meta.fecha_creacion).toLocaleDateString()}</td>
-                          <td>${new Date(meta.fecha_limite).toLocaleDateString()}</td>
-                          <td>
-                            <div class="progress" style="height: 10px;">
-                              <div class="progress-bar bg-success" role="progressbar" style="width: ${meta.progreso_actual}%" 
-                                   aria-valuenow="${meta.progreso_actual}" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                          </td>
-                          <td>${estadoBadge}</td>
-                          <td>
-                            <button class="btn btn-sm btn-outline-primary" onclick="viewMetaDetails(${meta.id})">Detalles</button>
-                            <button class="btn btn-sm btn-outline-success" onclick="updateMetaProgress(${meta.id})">Actualizar</button>
-                          </td>
-                        </tr>
-                      `;
-                    }).join('')}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-recycle"></i>
           </div>
+          <div class="stat-value">${porcentajeSeparacion}%</div>
+          <div class="stat-label">Separa Residuos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <div class="stat-value">${porcentajePreocupacion}%</div>
+          <div class="stat-label">Preocupados por Exceso</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-hands-helping"></i>
+          </div>
+          <div class="stat-value">${porcentajeParticipacion}%</div>
+          <div class="stat-label">Participaría en Talleres</div>
         </div>
       `;
       
-      container.innerHTML = html;
+      document.getElementById('estadisticasPrincipales').innerHTML = estadisticasHTML;
+      
+      // Actualizar gráficos (simulados)
+      actualizarGraficos();
     }
     
-    // Renderizar reportes
-    function renderReportes() {
-      const container = document.getElementById('reportes-content');
-      if (!container) return;
-      
-      let html = `
-        <div class="row mt-4">
-          <div class="col-md-12">
-            <div class="filter-section">
-              <h6>Generar Nuevo Reporte</h6>
-              <div class="row">
-                <div class="col-md-3">
-                  <label class="form-label">Tipo de Reporte</label>
-                  <select class="form-select" id="reportType">
-                    <option value="indicadores">Reporte de Indicadores</option>
-                    <option value="avances">Reporte de Avances</option>
-                    <option value="mensual">Reporte Mensual</option>
-                    <option value="trimestral">Reporte Trimestral</option>
-                    <option value="anual">Reporte Anual</option>
-                    <option value="especial">Reporte Especial</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <label class="form-label">Periodo</label>
-                  <select class="form-select" id="reportPeriod">
-                    <option value="mes">Último mes</option>
-                    <option value="trimestre">Último trimestre</option>
-                    <option value="anio">Último año</option>
-                    <option value="personalizado">Personalizado</option>
-                  </select>
-                </div>
-                <div class="col-md-3">
-                  <label class="form-label">Formato</label>
-                  <select class="form-select" id="reportFormat">
-                    <option value="pdf">PDF</option>
-                    <option value="excel">Excel</option>
-                    <option value="word">Word</option>
-                  </select>
-                </div>
-                <div class="col-md-3 d-flex align-items-end">
-                  <button class="btn btn-success w-100" onclick="generateReport()">
-                    <i class="fas fa-download me-2"></i> Generar Reporte
-                  </button>
-                </div>
-              </div>
-            </div>
+    function actualizarGraficos() {
+      // Simulación de gráficos - en una implementación real usaríamos una librería como Chart.js
+      document.getElementById('graficoConocimiento').innerHTML = `
+        <div class="text-center p-4">
+          <h6 class="mb-3">Nivel de Conocimiento sobre Desechos Sólidos</h6>
+          <div class="progress mb-2" style="height: 20px;">
+            <div class="progress-bar bg-success" style="width: ${datosFiltrados.filter(e => e.conoce_desechos_solidos === 'Sí').length / datosFiltrados.length * 100}%">Sí</div>
+          </div>
+          <div class="progress mb-2" style="height: 20px;">
+            <div class="progress-bar bg-warning" style="width: ${datosFiltrados.filter(e => e.conoce_desechos_solidos === 'No').length / datosFiltrados.length * 100}%">No</div>
+          </div>
+          <div class="progress" style="height: 20px;">
+            <div class="progress-bar bg-secondary" style="width: ${datosFiltrados.filter(e => !e.conoce_desechos_solidos || e.conoce_desechos_solidos === 'No sabe').length / datosFiltrados.length * 100}%">No sabe</div>
           </div>
         </div>
       `;
       
-      if (appData.reportes.length > 0) {
-        html += `
-          <div class="row mt-4">
-            <div class="col-12">
-              <div class="form-section">
-                <h5>Reportes del Sistema</h5>
-                <div class="table-responsive">
-                  <table class="table table-striped management-table">
-                    <thead>
-                      <tr>
-                        <th>Reporte</th>
-                        <th>Descripción</th>
-                        <th>Frecuencia</th>
-                        <th>Última Generación</th>
-                        <th>Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      ${appData.reportes.map(reporte => `
-                        <tr>
-                          <td>${reporte.nombre}</td>
-                          <td>${reporte.descripcion}</td>
-                          <td>${reporte.frecuencia}</td>
-                          <td>${new Date(reporte.fecha_generacion).toLocaleDateString()}</td>
-                          <td>
-                            <button class="btn btn-sm btn-outline-primary" onclick="viewReport(${reporte.id})">Vista Previa</button>
-                            <button class="btn btn-sm btn-outline-success" onclick="downloadReport(${reporte.id})">Descargar</button>
-                          </td>
-                        </tr>
-                      `).join('')}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+      document.getElementById('graficoReciclaje').innerHTML = `
+        <div class="text-center p-4">
+          <h6 class="mb-3">Prácticas de Reciclaje por Grupo</h6>
+          <div class="d-flex justify-content-around mb-3">
+            <div>
+              <div class="fw-bold">${datosFiltrados.filter(e => e.separar_desechos_por_origen === 'Sí').length}</div>
+              <div class="small">Separan</div>
+            </div>
+            <div>
+              <div class="fw-bold">${datosFiltrados.filter(e => e.separar_desechos_por_origen === 'No').length}</div>
+              <div class="small">No Separan</div>
             </div>
           </div>
+          <div class="d-flex justify-content-around">
+            <div>
+              <div class="fw-bold">${datosFiltrados.filter(e => e.practica_separacion_reciclaje_ingreso === 'Sí').length}</div>
+              <div class="small">Practican</div>
+            </div>
+            <div>
+              <div class="fw-bold">${datosFiltrados.filter(e => e.desechos_hogar_reutilizados === 'Sí').length}</div>
+              <div class="small">Reutilizan</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    function actualizarTablaDatos() {
+      const inicio = (paginaActual - 1) * registrosPorPagina;
+      const fin = inicio + registrosPorPagina;
+      const datosPagina = datosFiltrados.slice(inicio, fin);
+      
+      let tablaHTML = '';
+      
+      if (datosPagina.length === 0) {
+        tablaHTML = `
+          <tr>
+            <td colspan="9" class="text-center py-4">
+              <i class="fas fa-inbox fa-2x text-muted mb-2"></i>
+              <p class="mb-0">No se encontraron registros</p>
+            </td>
+          </tr>
         `;
       } else {
-        html += `
-          <div class="alert alert-info mt-4">
-            <i class="fas fa-info-circle me-2"></i>
-            No hay reportes generados en el sistema.
+        datosPagina.forEach(encuesta => {
+          tablaHTML += `
+            <tr>
+              <td>${encuesta.id}</td>
+              <td>${formatearFecha(encuesta.fecha_registro)}</td>
+              <td>${encuesta.nombre_encuestado || 'N/A'}</td>
+              <td>${encuesta.sexo || 'N/A'}</td>
+              <td>${encuesta.edad || 'N/A'}</td>
+              <td>${encuesta.educacion_jefe_hogar || 'N/A'}</td>
+              <td><span class="badge ${encuesta.conoce_desechos_solidos === 'Sí' ? 'bg-success' : 'bg-secondary'}">${encuesta.conoce_desechos_solidos || 'N/A'}</span></td>
+              <td><span class="badge ${encuesta.separar_desechos_por_origen === 'Sí' ? 'bg-success' : 'bg-secondary'}">${encuesta.separar_desechos_por_origen || 'N/A'}</span></td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary" onclick="verDetalles(${encuesta.id})">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </td>
+            </tr>
+          `;
+        });
+      }
+      
+      document.getElementById('tablaDatosBody').innerHTML = tablaHTML;
+      
+      // Actualizar información de paginación
+      const totalRegistros = datosFiltrados.length;
+      const totalPaginas = Math.ceil(totalRegistros / registrosPorPagina);
+      
+      document.getElementById('infoPaginacion').textContent = 
+        `Mostrando ${inicio + 1} - ${Math.min(fin, totalRegistros)} de ${totalRegistros} registros`;
+      
+      document.getElementById('btnAnterior').disabled = paginaActual <= 1;
+      document.getElementById('btnSiguiente').disabled = paginaActual >= totalPaginas;
+    }
+    
+    function cambiarPagina(direccion) {
+      const totalPaginas = Math.ceil(datosFiltrados.length / registrosPorPagina);
+      paginaActual += direccion;
+      
+      if (paginaActual < 1) paginaActual = 1;
+      if (paginaActual > totalPaginas) paginaActual = totalPaginas;
+      
+      actualizarTablaDatos();
+    }
+    
+    function formatearFecha(fechaString) {
+      if (!fechaString) return 'N/A';
+      
+      const fecha = new Date(fechaString);
+      return fecha.toLocaleDateString('es-ES');
+    }
+    
+    function verDetalles(id) {
+      const encuesta = datosFiltrados.find(e => e.id === id);
+      if (!encuesta) return;
+      
+      // En una implementación real, mostraríamos un modal con todos los detalles
+      alert(`Detalles de la encuesta ${id}\n\nNombre: ${encuesta.nombre_encuestado || 'N/A'}\nEdad: ${encuesta.edad || 'N/A'}\nSexo: ${encuesta.sexo || 'N/A'}\nConoce desechos: ${encuesta.conoce_desechos_solidos || 'N/A'}`);
+    }
+    
+    function mostrarEstadoCarga(cargando) {
+      if (cargando) {
+        document.getElementById('estadisticasPrincipales').innerHTML = `
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Cargando estadísticas...</p>
+          </div>
+        `;
+        
+        document.getElementById('graficoConocimiento').innerHTML = `
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Cargando gráfico...</p>
+          </div>
+        `;
+        
+        document.getElementById('graficoReciclaje').innerHTML = `
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Cargando gráfico...</p>
           </div>
         `;
       }
-      
-      container.innerHTML = html;
     }
     
-    // Funciones auxiliares para acciones
-    function viewMetaDetails(metaId) {
-      alert(`Ver detalles de la meta ID: ${metaId}`);
-      // Implementar lógica para mostrar detalles de la meta
-    }
-    
-    function updateMetaProgress(metaId) {
-      const nuevaProgresion = prompt('Ingrese el nuevo porcentaje de progreso:');
-      if (nuevaProgresion !== null && !isNaN(nuevaProgresion)) {
-        alert(`Actualizando progreso de la meta ID: ${metaId} a ${nuevaProgresion}%`);
-        // Implementar lógica para actualizar el progreso en Supabase
-      }
-    }
-    
-    function generateReport() {
-      const reportType = document.getElementById('reportType').value;
-      const reportPeriod = document.getElementById('reportPeriod').value;
-      const reportFormat = document.getElementById('reportFormat').value;
-      
-      alert(`Generando reporte de tipo: ${reportType} para el periodo: ${reportPeriod} en formato: ${reportFormat}`);
-      // Implementar lógica para generar reportes
-    }
-    
-    function viewReport(reporteId) {
-      alert(`Vista previa del reporte ID: ${reporteId}`);
-      // Implementar lógica para vista previa de reportes
-    }
-    
-    function downloadReport(reporteId) {
-      alert(`Descargando reporte ID: ${reporteId}`);
-      // Implementar lógica para descargar reportes
+    function mostrarError(mensaje) {
+      // En una implementación real, mostraríamos un toast o alerta más elegante
+      console.error(mensaje);
+      alert(mensaje);
     }
 
     // --- Sistema de Historial de Acciones ---
@@ -2021,7 +2090,7 @@
         currentHistoryIndex--;
       }
       
-      saveToSupabase();
+      saveToLocalStorage();
     }
     
     function undoAction() {
@@ -2030,7 +2099,7 @@
         if (action && action.undo) {
           action.undo();
           currentHistoryIndex--;
-          saveToSupabase();
+          saveToLocalStorage();
         }
       }
     }
@@ -2041,7 +2110,7 @@
         const action = actionHistory[currentHistoryIndex];
         if (action && action.redo) {
           action.redo();
-          saveToSupabase();
+          saveToLocalStorage();
         }
       }
     }
@@ -2077,8 +2146,8 @@
       }
     }
 
-    // --- Sistema de Supabase ---
-    async function saveToSupabase() {
+    // --- Sistema de localStorage ---
+    function saveToLocalStorage() {
       if (!isLoggedIn) return;
       
       const saveData = {
@@ -2086,103 +2155,35 @@
         actionHistory: actionHistory,
         currentHistoryIndex: currentHistoryIndex,
         navigationHistory: navigationHistory,
-        currentNavigationIndex: currentNavigationIndex,
-        last_updated: new Date().toISOString()
+        currentNavigationIndex: currentNavigationIndex
       };
       
-      try {
-        const { data, error } = await supabase
-          .from('system_data')
-          .upsert({ 
-            id: 1, 
-            data: saveData,
-            updated_at: new Date().toISOString()
-          });
-          
-        if (error) {
-          console.error('Error saving to Supabase:', error);
-        } else {
-          console.log('Data saved to Supabase successfully');
-        }
-      } catch (error) {
-        console.error('Error saving to Supabase:', error);
-      }
+      localStorage.setItem('wasteManagementSystem', JSON.stringify(saveData));
     }
     
-    async function loadFromSupabase() {
-      try {
-        const { data, error } = await supabase
-          .from('system_data')
-          .select('*')
-          .eq('id', 1)
-          .single();
-          
-        if (error) {
-          console.error('Error loading from Supabase:', error);
-          return;
+    function loadFromLocalStorage() {
+      const savedData = localStorage.getItem('wasteManagementSystem');
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        
+        if (data.content) {
+          document.getElementById('mainContent').innerHTML = data.content;
         }
         
-        if (data && data.data) {
-          const savedData = data.data;
-          
-          if (savedData.content) {
-            document.getElementById('mainContent').innerHTML = savedData.content;
-          }
-          
-          if (savedData.actionHistory) {
-            actionHistory = savedData.actionHistory;
-            currentHistoryIndex = savedData.currentHistoryIndex || -1;
-          }
-          
-          if (savedData.navigationHistory) {
-            navigationHistory = savedData.navigationHistory;
-            currentNavigationIndex = savedData.currentNavigationIndex || -1;
-          }
-          
-          initializeMovableElements();
-          setTimeout(updateContentHeight, 100);
+        if (data.actionHistory) {
+          actionHistory = data.actionHistory;
+          currentHistoryIndex = data.currentHistoryIndex || -1;
         }
-      } catch (error) {
-        console.error('Error loading from Supabase:', error);
+        
+        if (data.navigationHistory) {
+          navigationHistory = data.navigationHistory;
+          currentNavigationIndex = data.currentNavigationIndex || -1;
+        }
+        
+        initializeMovableElements();
+        // Actualizar altura después de cargar
+        setTimeout(updateContentHeight, 100);
       }
-    }
-    
-    // Suscribirse a cambios en tiempo real
-    function subscribeToChanges() {
-      supabase
-        .channel('system_changes')
-        .on('postgres_changes', 
-          { 
-            event: '*', 
-            schema: 'public', 
-            table: 'system_data' 
-          }, 
-          payload => {
-            console.log('Change received!', payload);
-            if (payload.new && payload.new.id === 1) {
-              loadFromSupabase();
-            }
-          }
-        )
-        .subscribe();
-        
-      // Suscribirse a cambios en las tablas de datos
-      ['metas', 'indicadores', 'avances', 'reportes'].forEach(table => {
-        supabase
-          .channel(`${table}_changes`)
-          .on('postgres_changes', 
-            { 
-              event: '*', 
-              schema: 'public', 
-              table: table 
-            }, 
-            payload => {
-              console.log(`Change in ${table}:`, payload);
-              loadAppData(); // Recargar datos cuando hay cambios
-            }
-          )
-          .subscribe();
-      });
     }
 
     // --- Lógica de Navegación (SPA) ---
@@ -2232,6 +2233,11 @@
         
         setTimeout(updateContentHeight, 50);
         initializeMovableElements();
+        
+        // Cargar datos cuando se muestre la sección de indicadores
+        if (sectionId === 'indicadores') {
+          cargarDatosEncuestas();
+        }
     }
     
     function navigateToCardLink(link) {
@@ -3137,7 +3143,7 @@
         mainContentWrapper.style.marginLeft = '0';
         document.getElementById('mainContent').style.minHeight = 'auto';
         
-        saveToSupabase();
+        saveToLocalStorage();
       }
     }
 
@@ -3160,9 +3166,7 @@
             card.classList.remove('restricted');
         });
         
-        loadFromSupabase();
-        loadAppData();
-        subscribeToChanges();
+        loadFromLocalStorage();
 
       } else {
           alert("Credenciales incorrectas. Inténtalo de nuevo.");
@@ -3202,9 +3206,13 @@
             document.body.classList.add('touch-device');
         }
         
-        // Cargar datos iniciales de Supabase
-        loadFromSupabase();
-        loadAppData();
+        const savedData = localStorage.getItem('wasteManagementSystem');
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            if (data.content) {
+                // Datos guardados disponibles
+            }
+        }
     });
 
   </script>
