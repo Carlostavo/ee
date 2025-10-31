@@ -895,109 +895,125 @@
       margin-bottom: 1.5rem;
     }
     
-    /* Estilos para indicadores de datos */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    
-    .stat-card {
+    /* Estilos para la nueva sección de Indicadores */
+    .dashboard-card {
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
       box-shadow: var(--box-shadow);
+      margin-bottom: 1.5rem;
+      height: 100%;
+    }
+    
+    .stat-card {
       text-align: center;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      background: white;
+      box-shadow: var(--box-shadow);
       transition: var(--transition);
     }
     
     .stat-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
     
     .stat-value {
       font-size: 2.5rem;
       font-weight: 700;
+      margin: 10px 0;
       color: var(--primary-color);
-      margin: 0.5rem 0;
     }
     
     .stat-label {
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: var(--secondary-color);
       font-weight: 500;
     }
     
     .stat-icon {
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: var(--primary-color);
       margin-bottom: 1rem;
     }
     
-    /* Estilos para gráficos */
     .chart-placeholder {
-      background: #f8f9fa;
-      border-radius: 8px;
+      height: 300px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: var(--border-radius);
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 300px;
       color: var(--secondary-color);
       font-weight: 500;
     }
     
-    /* Estilos para tablas de datos */
-    .data-table-container {
+    .data-refresh {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
       background: white;
       border-radius: var(--border-radius);
-      overflow: hidden;
       box-shadow: var(--box-shadow);
-      margin-bottom: 2rem;
+    }
+    
+    .last-updated {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+    }
+    
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
     
     .table-responsive {
-      max-height: 500px;
-      overflow-y: auto;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
     }
     
-    /* Estilos para filtros */
     .filter-section {
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
       box-shadow: var(--box-shadow);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
     
-    .filter-title {
-      font-size: 1.1rem;
+    .real-time-badge {
+      background: linear-gradient(135deg, var(--success-color), #43a047);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
       font-weight: 600;
-      margin-bottom: 1rem;
-      color: var(--secondary-color);
+      display: inline-flex;
+      align-items: center;
     }
     
-    /* Estilos para estado de carga */
-    .loading-state {
-      text-align: center;
-      padding: 3rem;
-      color: var(--secondary-color);
+    .real-time-badge i {
+      margin-right: 5px;
+      animation: pulse 2s infinite;
     }
     
-    .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid var(--primary-color);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 1rem;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
     }
   </style>
 </head>
@@ -1359,40 +1375,87 @@
         </div>
       </div>
 
-      <!-- Sección de Indicadores con Datos de Supabase -->
+      <!-- Sección de Indicadores NUEVA - Conectada a Supabase -->
       <div id="section-indicadores" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #34495e 0%, #5d6d7e 100%);">
-          <h1 class="hero-title editable-text">Indicadores de Desempeño (KPIs)</h1>
+          <h1 class="hero-title editable-text">Dashboard de Indicadores Ambientales</h1>
           <p class="hero-subtitle editable-text">
-            Análisis en tiempo real de datos sobre comportamiento proambiental y autosustentabilidad.
+            Análisis en tiempo real de datos de comportamiento proambiental y autosustentabilidad
           </p>
+        </div>
+        
+        <!-- Panel de control en tiempo real -->
+        <div class="data-refresh">
+          <div>
+            <span class="real-time-badge">
+              <i class="fas fa-sync-alt"></i> Datos en Tiempo Real
+            </span>
+            <span class="last-updated ms-3" id="lastUpdated">Última actualización: --</span>
+          </div>
+          <div>
+            <button class="btn btn-sm btn-outline-primary" onclick="refreshData()">
+              <i class="fas fa-redo-alt"></i> Actualizar
+            </button>
+          </div>
+        </div>
+        
+        <!-- Estadísticas principales -->
+        <div class="row mb-4">
+          <div class="col-md-3 mb-3">
+            <div class="stat-card">
+              <i class="fas fa-users stat-icon"></i>
+              <div class="stat-value" id="totalEncuestas">--</div>
+              <div class="stat-label">Total Encuestas</div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="stat-card">
+              <i class="fas fa-chart-pie stat-icon"></i>
+              <div class="stat-value" id="conocimientoDesechos">--%</div>
+              <div class="stat-label">Conocen Desechos Sólidos</div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="stat-card">
+              <i class="fas fa-recycle stat-icon"></i>
+              <div class="stat-value" id="separacionDesechos">--%</div>
+              <div class="stat-label">Separan Desechos</div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <div class="stat-card">
+              <i class="fas fa-leaf stat-icon"></i>
+              <div class="stat-value" id="preocupacionAmbiental">--%</div>
+              <div class="stat-label">Preocupados por Ambiente</div>
+            </div>
+          </div>
         </div>
         
         <!-- Filtros -->
         <div class="filter-section">
-          <div class="filter-title">Filtros</div>
+          <h5 class="mb-3">Filtros de Datos</h5>
           <div class="row">
             <div class="col-md-3 mb-3">
-              <label for="filtroSexo" class="form-label">Sexo</label>
-              <select class="form-select" id="filtroSexo" onchange="filtrarDatos()">
+              <label class="form-label">Sexo</label>
+              <select class="form-select" id="filterSexo" onchange="applyFilters()">
                 <option value="">Todos</option>
                 <option value="Masculino">Masculino</option>
                 <option value="Femenino">Femenino</option>
               </select>
             </div>
             <div class="col-md-3 mb-3">
-              <label for="filtroEdad" class="form-label">Grupo de Edad</label>
-              <select class="form-select" id="filtroEdad" onchange="filtrarDatos()">
+              <label class="form-label">Grupo de Edad</label>
+              <select class="form-select" id="filterEdad" onchange="applyFilters()">
                 <option value="">Todos</option>
-                <option value="18-25">18-25</option>
-                <option value="26-35">26-35</option>
-                <option value="36-50">36-50</option>
-                <option value="51+">51+</option>
+                <option value="18-25">18-25 años</option>
+                <option value="26-40">26-40 años</option>
+                <option value="41-60">41-60 años</option>
+                <option value="61+">61+ años</option>
               </select>
             </div>
             <div class="col-md-3 mb-3">
-              <label for="filtroEducacion" class="form-label">Educación</label>
-              <select class="form-select" id="filtroEducacion" onchange="filtrarDatos()">
+              <label class="form-label">Educación</label>
+              <select class="form-select" id="filterEducacion" onchange="applyFilters()">
                 <option value="">Todos</option>
                 <option value="Primaria">Primaria</option>
                 <option value="Secundaria">Secundaria</option>
@@ -1400,8 +1463,8 @@
               </select>
             </div>
             <div class="col-md-3 mb-3">
-              <label for="filtroIngreso" class="form-label">Ingreso Mensual</label>
-              <select class="form-select" id="filtroIngreso" onchange="filtrarDatos()">
+              <label class="form-label">Ingreso Mensual</label>
+              <select class="form-select" id="filterIngreso" onchange="applyFilters()">
                 <option value="">Todos</option>
                 <option value="Menos de $500">Menos de $500</option>
                 <option value="$500-$1000">$500-$1000</option>
@@ -1411,69 +1474,83 @@
           </div>
         </div>
         
-        <!-- Estadísticas principales -->
-        <div class="stats-grid" id="estadisticasPrincipales">
-          <div class="loading-state">
-            <div class="loading-spinner"></div>
-            <p>Cargando estadísticas...</p>
-          </div>
-        </div>
-        
-        <!-- Gráficos -->
-        <div class="row mt-4">
-          <div class="col-md-6">
-            <div class="chart-container">
-              <h5>Conocimiento sobre Desechos Sólidos</h5>
-              <div id="graficoConocimiento" class="chart-placeholder">
-                Cargando gráfico...
+        <!-- Gráficos y visualizaciones -->
+        <div class="row mb-4">
+          <div class="col-md-6 mb-4">
+            <div class="dashboard-card">
+              <h5 class="mb-3">Conocimiento sobre Desechos Sólidos</h5>
+              <div class="chart-placeholder" id="chartConocimiento">
+                Cargando datos...
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="chart-container">
-              <h5>Prácticas de Reciclaje por Grupo</h5>
-              <div id="graficoReciclaje" class="chart-placeholder">
-                Cargando gráfico...
+          <div class="col-md-6 mb-4">
+            <div class="dashboard-card">
+              <h5 class="mb-3">Prácticas de Separación y Reciclaje</h5>
+              <div class="chart-placeholder" id="chartPracticas">
+                Cargando datos...
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mb-4">
+          <div class="col-md-6 mb-4">
+            <div class="dashboard-card">
+              <h5 class="mb-3">Preocupación Ambiental</h5>
+              <div class="chart-placeholder" id="chartPreocupacion">
+                Cargando datos...
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="dashboard-card">
+              <h5 class="mb-3">Disposición a Participar</h5>
+              <div class="chart-placeholder" id="chartParticipacion">
+                Cargando datos...
               </div>
             </div>
           </div>
         </div>
         
         <!-- Tabla de datos -->
-        <div class="data-table-container mt-4">
-          <div class="p-3 border-bottom">
-            <h5 class="mb-0">Datos de Encuestas Comportamiento Proambiental</h5>
+        <div class="dashboard-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Datos de Encuestas Recientes</h5>
+            <div>
+              <button class="btn btn-sm btn-outline-primary" onclick="exportToCSV()">
+                <i class="fas fa-download"></i> Exportar CSV
+              </button>
+            </div>
           </div>
           <div class="table-responsive">
-            <table class="table table-striped table-hover mb-0" id="tablaDatos">
+            <table class="table table-striped table-hover">
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Fecha</th>
-                  <th>Nombre</th>
+                  <th>Encuestado</th>
                   <th>Sexo</th>
                   <th>Edad</th>
-                  <th>Educación</th>
                   <th>Conoce Desechos</th>
-                  <th>Separa Residuos</th>
-                  <th>Acciones</th>
+                  <th>Separa Desechos</th>
+                  <th>Preocupación</th>
                 </tr>
               </thead>
-              <tbody id="tablaDatosBody">
-                <tr>
-                  <td colspan="9" class="text-center py-4">
-                    <div class="loading-spinner"></div>
-                    <p class="mt-2">Cargando datos...</p>
-                  </td>
-                </tr>
+              <tbody id="tablaDatos">
+                <!-- Los datos se cargarán aquí dinámicamente -->
               </tbody>
             </table>
           </div>
-          <div class="p-3 border-top d-flex justify-content-between align-items-center">
-            <div id="infoPaginacion">Mostrando 0 de 0 registros</div>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="text-muted" id="paginationInfo">Mostrando 0 de 0 registros</div>
             <div>
-              <button class="btn btn-sm btn-outline-primary me-2" id="btnAnterior" onclick="cambiarPagina(-1)" disabled>Anterior</button>
-              <button class="btn btn-sm btn-outline-primary" id="btnSiguiente" onclick="cambiarPagina(1)" disabled>Siguiente</button>
+              <button class="btn btn-sm btn-outline-secondary" id="prevPage" onclick="changePage(-1)" disabled>
+                <i class="fas fa-chevron-left"></i> Anterior
+              </button>
+              <button class="btn btn-sm btn-outline-secondary ms-2" id="nextPage" onclick="changePage(1)" disabled>
+                Siguiente <i class="fas fa-chevron-right"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -1801,15 +1878,15 @@
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     
     // Variables para gestión de datos
-    let datosEncuestas = [];
-    let datosFiltrados = [];
-    let paginaActual = 1;
-    const registrosPorPagina = 10;
+    let encuestasData = [];
+    let filteredData = [];
+    let currentPage = 1;
+    const pageSize = 10;
 
     // --- Funciones para Supabase ---
-    async function cargarDatosEncuestas() {
+    async function loadDataFromSupabase() {
       try {
-        mostrarEstadoCarga(true);
+        showLoadingState(true);
         
         const { data, error } = await supabase
           .from('cuestionario_comportamiento_proambiental_autosustentabilidad')
@@ -1817,263 +1894,292 @@
           .order('fecha_registro', { ascending: false });
         
         if (error) {
-          console.error('Error al cargar datos:', error);
-          mostrarError('Error al cargar los datos de las encuestas');
-          return;
+          throw error;
         }
         
-        datosEncuestas = data || [];
-        datosFiltrados = [...datosEncuestas];
+        encuestasData = data || [];
+        filteredData = [...encuestasData];
         
-        actualizarEstadisticas();
-        actualizarTablaDatos();
-        mostrarEstadoCarga(false);
+        updateLastUpdated();
+        updateStatistics();
+        updateTable();
+        updateCharts();
         
+        showLoadingState(false);
       } catch (error) {
-        console.error('Error inesperado:', error);
-        mostrarError('Error inesperado al cargar los datos');
-        mostrarEstadoCarga(false);
+        console.error('Error cargando datos de Supabase:', error);
+        showLoadingState(false);
+        alert('Error al cargar los datos. Verifique la conexión.');
       }
     }
     
-    function filtrarDatos() {
-      const filtroSexo = document.getElementById('filtroSexo').value;
-      const filtroEdad = document.getElementById('filtroEdad').value;
-      const filtroEducacion = document.getElementById('filtroEducacion').value;
-      const filtroIngreso = document.getElementById('filtroIngreso').value;
+    function updateLastUpdated() {
+      const now = new Date();
+      document.getElementById('lastUpdated').textContent = 
+        `Última actualización: ${now.toLocaleTimeString()}`;
+    }
+    
+    function updateStatistics() {
+      if (encuestasData.length === 0) return;
       
-      datosFiltrados = datosEncuestas.filter(encuesta => {
-        // Filtro por sexo
-        if (filtroSexo && encuesta.sexo !== filtroSexo) return false;
+      // Total de encuestas
+      document.getElementById('totalEncuestas').textContent = encuestasData.length;
+      
+      // Porcentaje que conoce desechos sólidos
+      const conoceDesechos = encuestasData.filter(item => 
+        item.conoce_desechos_solidos === 'Sí').length;
+      const porcentajeConoce = Math.round((conoceDesechos / encuestasData.length) * 100);
+      document.getElementById('conocimientoDesechos').textContent = `${porcentajeConoce}%`;
+      
+      // Porcentaje que separa desechos
+      const separaDesechos = encuestasData.filter(item => 
+        item.separar_desechos_por_origen === 'Sí').length;
+      const porcentajeSepara = Math.round((separaDesechos / encuestasData.length) * 100);
+      document.getElementById('separacionDesechos').textContent = `${porcentajeSepara}%`;
+      
+      // Porcentaje preocupado por el ambiente
+      const preocupados = encuestasData.filter(item => 
+        item.preocupa_exceso_desechos === 'Sí').length;
+      const porcentajePreocupados = Math.round((preocupados / encuestasData.length) * 100);
+      document.getElementById('preocupacionAmbiental').textContent = `${porcentajePreocupados}%`;
+    }
+    
+    function updateTable() {
+      const tableBody = document.getElementById('tablaDatos');
+      const startIndex = (currentPage - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const pageData = filteredData.slice(startIndex, endIndex);
+      
+      tableBody.innerHTML = '';
+      
+      if (pageData.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="8" class="text-center py-4">No hay datos disponibles</td>
+          </tr>
+        `;
+        return;
+      }
+      
+      pageData.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.id || '--'}</td>
+          <td>${item.fecha ? new Date(item.fecha).toLocaleDateString() : '--'}</td>
+          <td>${item.nombre_encuestado || '--'}</td>
+          <td>${item.sexo || '--'}</td>
+          <td>${item.edad || '--'}</td>
+          <td>${item.conoce_desechos_solidos || '--'}</td>
+          <td>${item.separar_desechos_por_origen || '--'}</td>
+          <td>${item.preocupa_exceso_desechos || '--'}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+      
+      // Actualizar información de paginación
+      const totalPages = Math.ceil(filteredData.length / pageSize);
+      document.getElementById('paginationInfo').textContent = 
+        `Mostrando ${startIndex + 1}-${Math.min(endIndex, filteredData.length)} de ${filteredData.length} registros`;
+      
+      // Habilitar/deshabilitar botones de paginación
+      document.getElementById('prevPage').disabled = currentPage <= 1;
+      document.getElementById('nextPage').disabled = currentPage >= totalPages;
+    }
+    
+    function updateCharts() {
+      // Aquí se implementarían gráficos reales con una biblioteca como Chart.js
+      // Por ahora, mostramos información básica
+      
+      const chartConocimiento = document.getElementById('chartConocimiento');
+      const chartPracticas = document.getElementById('chartPracticas');
+      const chartPreocupacion = document.getElementById('chartPreocupacion');
+      const chartParticipacion = document.getElementById('chartParticipacion');
+      
+      if (encuestasData.length > 0) {
+        // Datos para el gráfico de conocimiento
+        const conoceSi = encuestasData.filter(item => item.conoce_desechos_solidos === 'Sí').length;
+        const conoceNo = encuestasData.filter(item => item.conoce_desechos_solidos === 'No').length;
+        const conoceNs = encuestasData.length - conoceSi - conoceNo;
         
-        // Filtro por grupo de edad
-        if (filtroEdad) {
-          const edad = encuesta.edad;
-          if (filtroEdad === '18-25' && (edad < 18 || edad > 25)) return false;
-          if (filtroEdad === '26-35' && (edad < 26 || edad > 35)) return false;
-          if (filtroEdad === '36-50' && (edad < 36 || edad > 50)) return false;
-          if (filtroEdad === '51+' && edad < 51) return false;
+        chartConocimiento.innerHTML = `
+          <div class="text-center">
+            <div class="mb-3">
+              <span class="badge bg-success me-2">Sí: ${conoceSi} (${Math.round(conoceSi/encuestasData.length*100)}%)</span>
+              <span class="badge bg-danger me-2">No: ${conoceNo} (${Math.round(conoceNo/encuestasData.length*100)}%)</span>
+              <span class="badge bg-secondary">NS/NR: ${conoceNs} (${Math.round(conoceNs/encuestasData.length*100)}%)</span>
+            </div>
+            <div class="progress" style="height: 30px;">
+              <div class="progress-bar bg-success" style="width: ${conoceSi/encuestasData.length*100}%"></div>
+              <div class="progress-bar bg-danger" style="width: ${conoceNo/encuestasData.length*100}%"></div>
+              <div class="progress-bar bg-secondary" style="width: ${conoceNs/encuestasData.length*100}%"></div>
+            </div>
+          </div>
+        `;
+        
+        // Datos para el gráfico de prácticas
+        const separaSi = encuestasData.filter(item => item.separar_desechos_por_origen === 'Sí').length;
+        const separaNo = encuestasData.filter(item => item.separar_desechos_por_origen === 'No').length;
+        const separaNs = encuestasData.length - separaSi - separaNo;
+        
+        chartPracticas.innerHTML = `
+          <div class="text-center">
+            <div class="mb-3">
+              <span class="badge bg-success me-2">Sí: ${separaSi} (${Math.round(separaSi/encuestasData.length*100)}%)</span>
+              <span class="badge bg-danger me-2">No: ${separaNo} (${Math.round(separaNo/encuestasData.length*100)}%)</span>
+              <span class="badge bg-secondary">NS/NR: ${separaNs} (${Math.round(separaNs/encuestasData.length*100)}%)</span>
+            </div>
+            <div class="progress" style="height: 30px;">
+              <div class="progress-bar bg-success" style="width: ${separaSi/encuestasData.length*100}%"></div>
+              <div class="progress-bar bg-danger" style="width: ${separaNo/encuestasData.length*100}%"></div>
+              <div class="progress-bar bg-secondary" style="width: ${separaNs/encuestasData.length*100}%"></div>
+            </div>
+          </div>
+        `;
+        
+        // Datos para el gráfico de preocupación
+        const preocupaSi = encuestasData.filter(item => item.preocupa_exceso_desechos === 'Sí').length;
+        const preocupaNo = encuestasData.filter(item => item.preocupa_exceso_desechos === 'No').length;
+        const preocupaNs = encuestasData.length - preocupaSi - preocupaNo;
+        
+        chartPreocupacion.innerHTML = `
+          <div class="text-center">
+            <div class="mb-3">
+              <span class="badge bg-success me-2">Sí: ${preocupaSi} (${Math.round(preocupaSi/encuestasData.length*100)}%)</span>
+              <span class="badge bg-danger me-2">No: ${preocupaNo} (${Math.round(preocupaNo/encuestasData.length*100)}%)</span>
+              <span class="badge bg-secondary">NS/NR: ${preocupaNs} (${Math.round(preocupaNs/encuestasData.length*100)}%)</span>
+            </div>
+            <div class="progress" style="height: 30px;">
+              <div class="progress-bar bg-success" style="width: ${preocupaSi/encuestasData.length*100}%"></div>
+              <div class="progress-bar bg-danger" style="width: ${preocupaNo/encuestasData.length*100}%"></div>
+              <div class="progress-bar bg-secondary" style="width: ${preocupaNs/encuestasData.length*100}%"></div>
+            </div>
+          </div>
+        `;
+        
+        // Datos para el gráfico de participación
+        const participaSi = encuestasData.filter(item => item.participaria_talleres_buenas_practicas === 'Sí').length;
+        const participaNo = encuestasData.filter(item => item.participaria_talleres_buenas_practicas === 'No').length;
+        const participaNs = encuestasData.length - participaSi - participaNo;
+        
+        chartParticipacion.innerHTML = `
+          <div class="text-center">
+            <div class="mb-3">
+              <span class="badge bg-success me-2">Sí: ${participaSi} (${Math.round(participaSi/encuestasData.length*100)}%)</span>
+              <span class="badge bg-danger me-2">No: ${participaNo} (${Math.round(participaNo/encuestasData.length*100)}%)</span>
+              <span class="badge bg-secondary">NS/NR: ${participaNs} (${Math.round(participaNs/encuestasData.length*100)}%)</span>
+            </div>
+            <div class="progress" style="height: 30px;">
+              <div class="progress-bar bg-success" style="width: ${participaSi/encuestasData.length*100}%"></div>
+              <div class="progress-bar bg-danger" style="width: ${participaNo/encuestasData.length*100}%"></div>
+              <div class="progress-bar bg-secondary" style="width: ${participaNs/encuestasData.length*100}%"></div>
+            </div>
+          </div>
+        `;
+      } else {
+        chartConocimiento.innerHTML = 'No hay datos disponibles';
+        chartPracticas.innerHTML = 'No hay datos disponibles';
+        chartPreocupacion.innerHTML = 'No hay datos disponibles';
+        chartParticipacion.innerHTML = 'No hay datos disponibles';
+      }
+    }
+    
+    function applyFilters() {
+      const sexoFilter = document.getElementById('filterSexo').value;
+      const edadFilter = document.getElementById('filterEdad').value;
+      const educacionFilter = document.getElementById('filterEducacion').value;
+      const ingresoFilter = document.getElementById('filterIngreso').value;
+      
+      filteredData = encuestasData.filter(item => {
+        // Filtro por sexo
+        if (sexoFilter && item.sexo !== sexoFilter) return false;
+        
+        // Filtro por edad
+        if (edadFilter && item.edad) {
+          const edad = parseInt(item.edad);
+          if (edadFilter === '18-25' && (edad < 18 || edad > 25)) return false;
+          if (edadFilter === '26-40' && (edad < 26 || edad > 40)) return false;
+          if (edadFilter === '41-60' && (edad < 41 || edad > 60)) return false;
+          if (edadFilter === '61+' && edad < 61) return false;
         }
         
         // Filtro por educación
-        if (filtroEducacion && encuesta.educacion_jefe_hogar !== filtroEducacion) return false;
+        if (educacionFilter && item.educacion_jefe_hogar !== educacionFilter) return false;
         
         // Filtro por ingreso
-        if (filtroIngreso && encuesta.ingreso_mensual_jefe_hogar !== filtroIngreso) return false;
+        if (ingresoFilter && item.ingreso_mensual_jefe_hogar !== ingresoFilter) return false;
         
         return true;
       });
       
-      paginaActual = 1;
-      actualizarEstadisticas();
-      actualizarTablaDatos();
+      currentPage = 1;
+      updateTable();
+      updateStatistics();
+      updateCharts();
     }
     
-    function actualizarEstadisticas() {
-      const totalEncuestas = datosFiltrados.length;
-      const conoceDesechos = datosFiltrados.filter(e => e.conoce_desechos_solidos === 'Sí').length;
-      const separaResiduos = datosFiltrados.filter(e => e.separar_desechos_por_origen === 'Sí').length;
-      const preocupaExceso = datosFiltrados.filter(e => e.preocupa_exceso_desechos === 'Sí').length;
-      const participariaTalleres = datosFiltrados.filter(e => e.participaria_talleres_buenas_practicas === 'Sí').length;
+    function changePage(direction) {
+      const totalPages = Math.ceil(filteredData.length / pageSize);
+      currentPage += direction;
       
-      const porcentajeConocimiento = totalEncuestas > 0 ? Math.round((conoceDesechos / totalEncuestas) * 100) : 0;
-      const porcentajeSeparacion = totalEncuestas > 0 ? Math.round((separaResiduos / totalEncuestas) * 100) : 0;
-      const porcentajePreocupacion = totalEncuestas > 0 ? Math.round((preocupaExceso / totalEncuestas) * 100) : 0;
-      const porcentajeParticipacion = totalEncuestas > 0 ? Math.round((participariaTalleres / totalEncuestas) * 100) : 0;
+      if (currentPage < 1) currentPage = 1;
+      if (currentPage > totalPages) currentPage = totalPages;
       
-      const estadisticasHTML = `
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-users"></i>
-          </div>
-          <div class="stat-value">${totalEncuestas}</div>
-          <div class="stat-label">Total Encuestados</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-brain"></i>
-          </div>
-          <div class="stat-value">${porcentajeConocimiento}%</div>
-          <div class="stat-label">Conoce Desechos Sólidos</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-recycle"></i>
-          </div>
-          <div class="stat-value">${porcentajeSeparacion}%</div>
-          <div class="stat-label">Separa Residuos</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-exclamation-triangle"></i>
-          </div>
-          <div class="stat-value">${porcentajePreocupacion}%</div>
-          <div class="stat-label">Preocupados por Exceso</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-icon">
-            <i class="fas fa-hands-helping"></i>
-          </div>
-          <div class="stat-value">${porcentajeParticipacion}%</div>
-          <div class="stat-label">Participaría en Talleres</div>
-        </div>
-      `;
-      
-      document.getElementById('estadisticasPrincipales').innerHTML = estadisticasHTML;
-      
-      // Actualizar gráficos (simulados)
-      actualizarGraficos();
+      updateTable();
     }
     
-    function actualizarGraficos() {
-      // Simulación de gráficos - en una implementación real usaríamos una librería como Chart.js
-      document.getElementById('graficoConocimiento').innerHTML = `
-        <div class="text-center p-4">
-          <h6 class="mb-3">Nivel de Conocimiento sobre Desechos Sólidos</h6>
-          <div class="progress mb-2" style="height: 20px;">
-            <div class="progress-bar bg-success" style="width: ${datosFiltrados.filter(e => e.conoce_desechos_solidos === 'Sí').length / datosFiltrados.length * 100}%">Sí</div>
-          </div>
-          <div class="progress mb-2" style="height: 20px;">
-            <div class="progress-bar bg-warning" style="width: ${datosFiltrados.filter(e => e.conoce_desechos_solidos === 'No').length / datosFiltrados.length * 100}%">No</div>
-          </div>
-          <div class="progress" style="height: 20px;">
-            <div class="progress-bar bg-secondary" style="width: ${datosFiltrados.filter(e => !e.conoce_desechos_solidos || e.conoce_desechos_solidos === 'No sabe').length / datosFiltrados.length * 100}%">No sabe</div>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('graficoReciclaje').innerHTML = `
-        <div class="text-center p-4">
-          <h6 class="mb-3">Prácticas de Reciclaje por Grupo</h6>
-          <div class="d-flex justify-content-around mb-3">
-            <div>
-              <div class="fw-bold">${datosFiltrados.filter(e => e.separar_desechos_por_origen === 'Sí').length}</div>
-              <div class="small">Separan</div>
-            </div>
-            <div>
-              <div class="fw-bold">${datosFiltrados.filter(e => e.separar_desechos_por_origen === 'No').length}</div>
-              <div class="small">No Separan</div>
-            </div>
-          </div>
-          <div class="d-flex justify-content-around">
-            <div>
-              <div class="fw-bold">${datosFiltrados.filter(e => e.practica_separacion_reciclaje_ingreso === 'Sí').length}</div>
-              <div class="small">Practican</div>
-            </div>
-            <div>
-              <div class="fw-bold">${datosFiltrados.filter(e => e.desechos_hogar_reutilizados === 'Sí').length}</div>
-              <div class="small">Reutilizan</div>
-            </div>
-          </div>
-        </div>
-      `;
+    function refreshData() {
+      loadDataFromSupabase();
     }
     
-    function actualizarTablaDatos() {
-      const inicio = (paginaActual - 1) * registrosPorPagina;
-      const fin = inicio + registrosPorPagina;
-      const datosPagina = datosFiltrados.slice(inicio, fin);
-      
-      let tablaHTML = '';
-      
-      if (datosPagina.length === 0) {
-        tablaHTML = `
-          <tr>
-            <td colspan="9" class="text-center py-4">
-              <i class="fas fa-inbox fa-2x text-muted mb-2"></i>
-              <p class="mb-0">No se encontraron registros</p>
-            </td>
-          </tr>
-        `;
-      } else {
-        datosPagina.forEach(encuesta => {
-          tablaHTML += `
-            <tr>
-              <td>${encuesta.id}</td>
-              <td>${formatearFecha(encuesta.fecha_registro)}</td>
-              <td>${encuesta.nombre_encuestado || 'N/A'}</td>
-              <td>${encuesta.sexo || 'N/A'}</td>
-              <td>${encuesta.edad || 'N/A'}</td>
-              <td>${encuesta.educacion_jefe_hogar || 'N/A'}</td>
-              <td><span class="badge ${encuesta.conoce_desechos_solidos === 'Sí' ? 'bg-success' : 'bg-secondary'}">${encuesta.conoce_desechos_solidos || 'N/A'}</span></td>
-              <td><span class="badge ${encuesta.separar_desechos_por_origen === 'Sí' ? 'bg-success' : 'bg-secondary'}">${encuesta.separar_desechos_por_origen || 'N/A'}</span></td>
-              <td>
-                <button class="btn btn-sm btn-outline-primary" onclick="verDetalles(${encuesta.id})">
-                  <i class="fas fa-eye"></i>
-                </button>
-              </td>
-            </tr>
-          `;
-        });
+    function exportToCSV() {
+      if (filteredData.length === 0) {
+        alert('No hay datos para exportar');
+        return;
       }
       
-      document.getElementById('tablaDatosBody').innerHTML = tablaHTML;
+      // Crear contenido CSV
+      const headers = ['ID', 'Fecha', 'Nombre', 'Sexo', 'Edad', 'Conoce Desechos', 'Separa Desechos', 'Preocupación'];
+      const csvContent = [
+        headers.join(','),
+        ...filteredData.map(item => [
+          item.id || '',
+          item.fecha || '',
+          `"${item.nombre_encuestado || ''}"`,
+          item.sexo || '',
+          item.edad || '',
+          item.conoce_desechos_solidos || '',
+          item.separar_desechos_por_origen || '',
+          item.preocupa_exceso_desechos || ''
+        ].join(','))
+      ].join('\n');
       
-      // Actualizar información de paginación
-      const totalRegistros = datosFiltrados.length;
-      const totalPaginas = Math.ceil(totalRegistros / registrosPorPagina);
-      
-      document.getElementById('infoPaginacion').textContent = 
-        `Mostrando ${inicio + 1} - ${Math.min(fin, totalRegistros)} de ${totalRegistros} registros`;
-      
-      document.getElementById('btnAnterior').disabled = paginaActual <= 1;
-      document.getElementById('btnSiguiente').disabled = paginaActual >= totalPaginas;
+      // Crear y descargar archivo
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `encuestas_ambientales_${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
     
-    function cambiarPagina(direccion) {
-      const totalPaginas = Math.ceil(datosFiltrados.length / registrosPorPagina);
-      paginaActual += direccion;
-      
-      if (paginaActual < 1) paginaActual = 1;
-      if (paginaActual > totalPaginas) paginaActual = totalPaginas;
-      
-      actualizarTablaDatos();
-    }
-    
-    function formatearFecha(fechaString) {
-      if (!fechaString) return 'N/A';
-      
-      const fecha = new Date(fechaString);
-      return fecha.toLocaleDateString('es-ES');
-    }
-    
-    function verDetalles(id) {
-      const encuesta = datosFiltrados.find(e => e.id === id);
-      if (!encuesta) return;
-      
-      // En una implementación real, mostraríamos un modal con todos los detalles
-      alert(`Detalles de la encuesta ${id}\n\nNombre: ${encuesta.nombre_encuestado || 'N/A'}\nEdad: ${encuesta.edad || 'N/A'}\nSexo: ${encuesta.sexo || 'N/A'}\nConoce desechos: ${encuesta.conoce_desechos_solidos || 'N/A'}`);
-    }
-    
-    function mostrarEstadoCarga(cargando) {
-      if (cargando) {
-        document.getElementById('estadisticasPrincipales').innerHTML = `
-          <div class="loading-state">
-            <div class="loading-spinner"></div>
-            <p>Cargando estadísticas...</p>
-          </div>
-        `;
-        
-        document.getElementById('graficoConocimiento').innerHTML = `
-          <div class="loading-state">
-            <div class="loading-spinner"></div>
-            <p>Cargando gráfico...</p>
-          </div>
-        `;
-        
-        document.getElementById('graficoReciclaje').innerHTML = `
-          <div class="loading-state">
-            <div class="loading-spinner"></div>
-            <p>Cargando gráfico...</p>
-          </div>
-        `;
-      }
-    }
-    
-    function mostrarError(mensaje) {
-      // En una implementación real, mostraríamos un toast o alerta más elegante
-      console.error(mensaje);
-      alert(mensaje);
+    function showLoadingState(show) {
+      const buttons = document.querySelectorAll('#section-indicadores button');
+      buttons.forEach(button => {
+        if (show) {
+          button.disabled = true;
+          if (button.textContent.includes('Actualizar')) {
+            button.innerHTML = '<div class="loading-spinner"></div> Actualizando...';
+          }
+        } else {
+          button.disabled = false;
+          if (button.textContent.includes('Actualizando')) {
+            button.innerHTML = '<i class="fas fa-redo-alt"></i> Actualizar';
+          }
+        }
+      });
     }
 
     // --- Sistema de Historial de Acciones ---
@@ -2234,9 +2340,9 @@
         setTimeout(updateContentHeight, 50);
         initializeMovableElements();
         
-        // Cargar datos cuando se muestre la sección de indicadores
+        // Cargar datos de Supabase cuando se muestra la sección de indicadores
         if (sectionId === 'indicadores') {
-          cargarDatosEncuestas();
+          loadDataFromSupabase();
         }
     }
     
