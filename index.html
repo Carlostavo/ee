@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
   <style>
     /* Variables de diseño optimizadas para estilos más claros y suaves */
     :root {
@@ -1073,6 +1074,330 @@
     .data-status i {
       font-size: 1.2rem;
     }
+
+    /* ESTILOS ESPECÍFICOS PARA LA SECCIÓN DE FORMULARIOS */
+    .inspiration-section {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: var(--border-radius);
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      text-align: center;
+      box-shadow: var(--box-shadow);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .inspiration-quote {
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 1.6;
+      color: var(--secondary-color);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    
+    .inspiration-author {
+      font-size: 1rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .form-description {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--dark-color);
+      margin-bottom: 2rem;
+      text-align: center;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .form-card-modern {
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      height: 100%;
+      position: relative;
+      background: white;
+    }
+    
+    .form-card-modern:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+    
+    .form-card-header {
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .form-card-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    }
+    
+    .form-card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+    
+    .form-card-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: var(--dark-color);
+    }
+    
+    .form-card-description {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--secondary-color);
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-card-body {
+      padding: 1.5rem;
+    }
+    
+    .form-card-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+    }
+    
+    .form-card-features li {
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .form-card-features li i {
+      color: var(--success-color);
+      margin-right: 0.75rem;
+      font-size: 0.9rem;
+    }
+    
+    .form-card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+    
+    .form-card-badge {
+      background: var(--primary-color);
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .form-card-button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .form-card-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(46, 139, 87, 0.3);
+      color: white;
+    }
+    
+    .form-card-stats {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .form-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+    }
+    
+    .form-stat i {
+      color: var(--primary-color);
+    }
+    
+    .form-section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1rem;
+      color: var(--dark-color);
+      position: relative;
+    }
+    
+    .form-section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      border-radius: 2px;
+    }
+    
+    .form-section-subtitle {
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--secondary-color);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ESTILOS PARA LA SECCIÓN DE INDICADORES MEJORADA */
+    .dashboard-card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .dashboard-header {
+      background: #059669;
+      color: white;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      border-radius: 10px;
+    }
+    
+    .dashboard-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .summary-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    
+    .summary-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0.5rem 0;
+      color: var(--dark-color);
+    }
+    
+    .summary-label {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+    }
+    
+    .chart-container-main {
+      background: white;
+      border-radius: 14px;
+      padding: 2rem;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+      margin-bottom: 2rem;
+    }
+    
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .chart-title-main {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--dark-color);
+    }
+    
+    .chart-subtitle {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+    }
+    
+    .filter-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .filter-select {
+      flex: 1;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      padding: 0.75rem;
+      font-size: 0.9rem;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: flex-end;
+    }
+    
+    .btn-primary-dashboard {
+      background: #059669;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary-dashboard:hover {
+      background: #047857;
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary-dashboard {
+      background: #f3f4f6;
+      color: #374151;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-secondary-dashboard:hover {
+      background: #e5e7eb;
+    }
   </style>
 </head>
 <body>
@@ -1433,156 +1758,100 @@
         </div>
       </div>
 
-      <!-- Sección de Indicadores Avanzados con Supabase -->
+      <!-- Sección de Indicadores Avanzados con Supabase - MEJORADA -->
       <div id="section-indicadores" class="section-content">
-        <div class="hero-section" style="background: linear-gradient(135deg, #34495e 0%, #5d6d7e 100%);">
-          <h1 class="hero-title editable-text">Indicadores de Desempeño (KPIs)</h1>
-          <p class="hero-subtitle editable-text">
-            Visualice los datos en tiempo real sobre la generación, recolección y destino final de los residuos sólidos.
-          </p>
+        <div class="dashboard-header">
+          <div class="d-flex align-items-center gap-4">
+            <i class="fas fa-chart-line fa-2x"></i>
+            <div>
+              <h1 class="text-xl font-semibold">Dashboard Proambiental</h1>
+              <p class="text-sm">Indicadores — comportamiento proambiental y autosustentabilidad</p>
+            </div>
+          </div>
+          <div class="text-sm mt-2">Tabla: <span class="font-medium">cuestionario_comportamiento_proambiental_autosustentabilidad</span></div>
         </div>
         
-        <!-- Estado de conexión a la base de datos -->
-        <div id="dataStatus" class="data-status connected">
-          <i class="fas fa-check-circle"></i>
-          <span>Conectado a la base de datos - Datos en tiempo real</span>
-        </div>
-        
-        <!-- Filtros y controles -->
-        <div class="filter-section">
-          <div class="row">
-            <div class="col-md-4">
-              <label for="dateFilter" class="form-label">Filtrar por fecha</label>
-              <input type="date" class="form-control" id="dateFilter">
-            </div>
-            <div class="col-md-4">
-              <label for="groupFilter" class="form-label">Filtrar por grupo</label>
-              <select class="form-select" id="groupFilter">
-                <option value="">Todos los grupos</option>
-                <option value="Urbano">Urbano</option>
-                <option value="Rural">Rural</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">&nbsp;</label>
-              <div class="data-actions">
-                <button class="refresh-btn" onclick="loadSurveyData()">
-                  <i class="fas fa-sync-alt me-1"></i> Actualizar
-                </button>
-                <button class="export-btn" onclick="exportData()">
-                  <i class="fas fa-download me-1"></i> Exportar
-                </button>
+        <!-- Panel de controles -->
+        <div class="dashboard-controls">
+          <div class="dashboard-card">
+            <label class="block text-sm text-slate-600 mb-2">Indicador</label>
+            <select id="selectIndicador" class="filter-select">
+              <!-- opciones se definen en JS -->
+            </select>
+            <p class="text-xs muted mt-2">Elige la métrica que quieres visualizar.</p>
+          </div>
+
+          <div class="dashboard-card">
+            <label class="block text-sm text-slate-600 mb-2">Tipo de gráfico</label>
+            <select id="selectTipoGrafico" class="filter-select">
+              <option value="bar">Barras</option>
+              <option value="pie">Pastel</option>
+              <option value="doughnut">Doughnut</option>
+              <option value="line">Línea</option>
+              <option value="radar">Radar</option>
+              <option value="polarArea">Polar Area</option>
+              <option value="scatter">Scatter</option>
+              <option value="bubble">Bubble</option>
+              <option value="mixed">Mixed (barras + línea)</option>
+            </select>
+            <p class="text-xs muted mt-2">Puedes experimentar con diferentes tipos para ver cuál comunica mejor el dato.</p>
+          </div>
+
+          <div class="dashboard-card">
+            <div>
+              <label class="block text-sm text-slate-600 mb-2">Filtros rápidos</label>
+              <div class="filter-group">
+                <select id="filtroSexo" class="filter-select">
+                  <option value="todos">Sexo: Todos</option>
+                  <option value="masculino">Masculino</option>
+                  <option value="femenino">Femenino</option>
+                </select>
+                <select id="filtroGrupo" class="filter-select">
+                  <option value="todos">Grupo: Todos</option>
+                </select>
               </div>
+              <p class="text-xs muted mt-2">Aplica filtro por sexo o por grupo (si tienes grupos definidos en datos).</p>
+            </div>
+
+            <div class="action-buttons mt-3">
+              <button id="btnActualizar" class="btn-primary-dashboard">Actualizar</button>
+              <button id="btnExportarImagen" class="btn-secondary-dashboard">Exportar imagen</button>
             </div>
           </div>
         </div>
-        
-        <!-- Estadísticas principales -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <div class="stat-value" id="totalEncuestas">0</div>
-            <div class="stat-label">Total Encuestas</div>
+
+        <!-- Tarjetas de resumen -->
+        <div class="summary-cards">
+          <div class="summary-card">
+            <div class="text-sm muted">Total encuestas</div>
+            <div id="totalEncuestas" class="summary-value">—</div>
           </div>
-          
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-chart-pie"></i>
-            </div>
-            <div class="stat-value" id="conocimientoDesechos">0%</div>
-            <div class="stat-label">Conocen Desechos Sólidos</div>
+          <div class="summary-card">
+            <div class="text-sm muted">Promedio edad</div>
+            <div id="promedioEdad" class="summary-value">—</div>
           </div>
-          
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-recycle"></i>
-            </div>
-            <div class="stat-value" id="practicaReciclaje">0%</div>
-            <div class="stat-label">Practican Reciclaje</div>
+          <div class="summary-card">
+            <div class="text-sm muted">Separación en hogar (%)</div>
+            <div id="porcentajeSepara" class="summary-value">—</div>
           </div>
-          
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-leaf"></i>
-            </div>
-            <div class="stat-value" id="preocupacionAmbiental">0%</div>
-            <div class="stat-label">Preocupación Ambiental</div>
+          <div class="summary-card">
+            <div class="text-sm muted">Participaría en talleres (%)</div>
+            <div id="porcentajeTalleres" class="summary-value">—</div>
           </div>
         </div>
-        
-        <!-- Gráficos y visualizaciones -->
-        <div class="row">
-          <div class="col-md-6">
-            <div class="chart-wrapper">
-              <div class="chart-title">Distribución por Sexo</div>
-              <div class="chart-placeholder" id="sexChart">
-                <div class="loading-spinner">
-                  <div class="spinner"></div>
-                </div>
-              </div>
+
+        <!-- Gráfico principal -->
+        <div class="chart-container-main">
+          <div class="chart-header">
+            <div>
+              <h2 id="tituloPrincipal" class="chart-title-main">Indicador</h2>
+              <p id="subtituloPrincipal" class="chart-subtitle">Selecciona un indicador y tipo de gráfico, luego haz clic en <strong>Actualizar</strong>.</p>
             </div>
+            <div class="text-sm muted">Datos cargados desde Supabase</div>
           </div>
-          
-          <div class="col-md-6">
-            <div class="chart-wrapper">
-              <div class="chart-title">Distribución por Edad</div>
-              <div class="chart-placeholder" id="ageChart">
-                <div class="loading-spinner">
-                  <div class="spinner"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-12">
-            <div class="chart-wrapper">
-              <div class="chart-title">Conocimiento y Prácticas Ambientales</div>
-              <div class="chart-placeholder" id="knowledgeChart">
-                <div class="loading-spinner">
-                  <div class="spinner"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Tabla de datos -->
-        <div class="data-table-container">
-          <div class="table-responsive">
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Fecha</th>
-                  <th>Encuestador</th>
-                  <th>Encuestado</th>
-                  <th>Sexo</th>
-                  <th>Edad</th>
-                  <th>Grupo</th>
-                  <th>Conoce Desechos</th>
-                  <th>Practica Reciclaje</th>
-                </tr>
-              </thead>
-              <tbody id="surveyTableBody">
-                <tr>
-                  <td colspan="9" class="text-center">
-                    <div class="loading-spinner">
-                      <div class="spinner"></div>
-                      <span class="ms-2">Cargando datos...</span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        
-        <div class="last-update" id="lastUpdate">
-          Última actualización: <span id="updateTime">--:--:--</span>
+
+          <canvas id="chartCanvas" style="max-height:520px;"></canvas>
+          <div id="mensajeSinDatos" class="text-center muted mt-4 d-none">No hay datos que mostrar para este filtro.</div>
         </div>
       </div>
 
@@ -1803,7 +2072,7 @@
         </div>
       </div>
 
-      <!-- Sección de Formularios simplificada -->
+      <!-- Sección de Formularios mejorada -->
       <div id="section-formularios" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
           <h1 class="hero-title editable-text">Encuestas y Recolección de Datos en Campo</h1>
@@ -1812,34 +2081,96 @@
           </p>
         </div>
         
+        <!-- Sección de inspiración -->
+        <div class="inspiration-section">
+          <div class="inspiration-quote">
+            "La recolección de datos es el primer paso hacia la sabiduría, el primer paso hacia el progreso ambiental."
+          </div>
+          <div class="inspiration-author">- Anónimo</div>
+        </div>
+        
+        <!-- Descripción de la sección -->
+        <div class="form-description">
+          Nuestros formularios están diseñados para capturar información valiosa sobre las prácticas ambientales de la comunidad. 
+          Cada encuesta proporciona datos cruciales que nos ayudan a medir el impacto de nuestras iniciativas y a diseñar estrategias 
+          más efectivas para la gestión sostenible de residuos.
+        </div>
+        
+        <!-- Tarjetas de formularios modernas -->
         <div class="row mt-4">
-          <div class="col-md-6 mb-4">
-            <div class="card text-white" style="background: linear-gradient(135deg, #2980b9, #2471a3);" data-card-link="https://tally.so/r/nGA7LO"> 
-              <div class="card-body">
-                <i class="fas fa-clipboard-check card-icon"></i>
-                <h5 class="card-title editable-text text-white">ENCUESTA COMPORTAMIENTO PROAMBIENTAL</h5>
-                <p class="card-text editable-text text-white">
-                    Formulario para medir la actitud ciudadana hacia el reciclaje y la autosustentabilidad.
+          <div class="col-lg-6 mb-4">
+            <div class="form-card-modern" data-card-link="https://tally.so/r/nGA7LO">
+              <div class="form-card-header">
+                <i class="fas fa-clipboard-check form-card-icon"></i>
+                <h3 class="form-card-title editable-text">ENCUESTA COMPORTAMIENTO PROAMBIENTAL</h3>
+                <p class="form-card-description editable-text">
+                  Formulario integral para medir la actitud ciudadana hacia el reciclaje y la autosustentabilidad. 
+                  Esta encuesta evalúa conocimientos, prácticas y disposición hacia la gestión responsable de residuos.
                 </p>
-                <div class="mt-3">
-                  <span class="badge bg-light text-dark me-2 editable-text">47 preguntas</span>
-                  <span class="badge bg-light text-dark editable-text">10 min aprox.</span>
+              </div>
+              <div class="form-card-body">
+                <ul class="form-card-features">
+                  <li><i class="fas fa-check-circle"></i> Evaluación de conocimientos sobre residuos sólidos</li>
+                  <li><i class="fas fa-check-circle"></i> Medición de prácticas de reciclaje</li>
+                  <li><i class="fas fa-check-circle"></i> Análisis de disposición hacia políticas ambientales</li>
+                  <li><i class="fas fa-check-circle"></i> Identificación de barreras para la participación</li>
+                </ul>
+                
+                <div class="form-card-stats">
+                  <div class="form-stat">
+                    <i class="fas fa-question-circle"></i>
+                    <span>47 preguntas</span>
+                  </div>
+                  <div class="form-stat">
+                    <i class="fas fa-users"></i>
+                    <span>Diseñado para ciudadanos</span>
+                  </div>
+                </div>
+                
+                <div class="form-card-actions">
+                  <span class="form-card-badge">Completo</span>
+                  <button class="form-card-button">
+                    <i class="fas fa-external-link-alt"></i> Acceder al Formulario
+                  </button>
                 </div>
               </div>
             </div>
           </div>
           
-          <div class="col-md-6 mb-4">
-            <div class="card text-white" style="background: linear-gradient(135deg, #27ae60, #229954);" data-card-link="https://tally.so/r/3N1M0O"> 
-              <div class="card-body">
-                <i class="fas fa-weight card-icon"></i>
-                <h5 class="card-title editable-text text-white">MEDICIÓN DE DESECHOS SÓLIDOS (Daule)</h5>
-                <p class="card-text editable-text text-white">
-                    Encuesta técnica para la medición y caracterización de los desechos sólidos en la comunidad.
+          <div class="col-lg-6 mb-4">
+            <div class="form-card-modern" data-card-link="https://tally.so/r/3N1M0O">
+              <div class="form-card-header">
+                <i class="fas fa-weight form-card-icon"></i>
+                <h3 class="form-card-title editable-text">MEDICIÓN DE DESECHOS SÓLIDOS (Daule)</h3>
+                <p class="form-card-description editable-text">
+                  Encuesta técnica especializada para la medición y caracterización de los desechos sólidos 
+                  en el cantón Daule. Recopila datos específicos sobre tipos, volúmenes y manejo de residuos.
                 </p>
-                <div class="mt-3">
-                  <span class="badge bg-light text-dark me-2 editable-text">18 preguntas</span>
-                  <span class="badge bg-light text-dark editable-text">2 min aprox.</span>
+              </div>
+              <div class="form-card-body">
+                <ul class="form-card-features">
+                  <li><i class="fas fa-check-circle"></i> Caracterización de tipos de residuos</li>
+                  <li><i class="fas fa-check-circle"></i> Medición de volúmenes y frecuencias</li>
+                  <li><i class="fas fa-check-circle"></i> Evaluación de sistemas de recolección</li>
+                  <li><i class="fas fa-check-circle"></i> Análisis de destinos finales</li>
+                </ul>
+                
+                <div class="form-card-stats">
+                  <div class="form-stat">
+                    <i class="fas fa-question-circle"></i>
+                    <span>18 preguntas</span>
+                  </div>
+                  <div class="form-stat">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Específico para Daule</span>
+                  </div>
+                </div>
+                
+                <div class="form-card-actions">
+                  <span class="form-card-badge">Técnico</span>
+                  <button class="form-card-button">
+                    <i class="fas fa-external-link-alt"></i> Acceder al Formulario
+                  </button>
                 </div>
               </div>
             </div>
@@ -3312,6 +3643,362 @@
             }
         }
     });
+
+    // =================================================================
+    // CÓDIGO PARA EL DASHBOARD DE INDICADORES MEJORADO
+    // =================================================================
+
+    /**************************************************************************
+     * CONFIGURACIÓN SUPABASE (ya con tus credenciales proporcionadas)
+     * Nota: Ya diste la URL y la ANON KEY — si decides cambiarlas, actualiza aquí.
+     **************************************************************************/
+    const SUPABASE_URL_DASHBOARD = "https://dutapywxsiuxboqsjqvf.supabase.co";
+    const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1dGFweXd4c2l1eGJvcXNqcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MTk1MTUsImV4cCI6MjA2OTI5NTUxNX0.SBIDeV_WAWlyLs-ROD1ibXtqqY5bbbh0gouY8gRB9Y4";
+
+    const supabaseDashboard = window.supabase.createClient(SUPABASE_URL_DASHBOARD, SUPABASE_ANON);
+    const TABLE_NAME_DASHBOARD = "cuestionario_comportamiento_proambiental_autosustentabilidad";
+
+    /**************************************************************************
+     * INDICADORES configurables: cada entrada tiene:
+     *  - id: clave interna
+     *  - title: título visible
+     *  - type: 'likert' | 'categorical' | 'numeric' (define cómo procesar)
+     *  - fields: columnas relacionadas (array)
+     **************************************************************************/
+    const INDICADORES = [
+      { id: "sexo", title: "Distribución por sexo", type: "categorical", fields: ["sexo"] },
+      { id: "promedio_edad", title: "Promedio de edad", type: "numeric", fields: ["edad"] },
+      { id: "educacion_jefe", title: "Nivel de educación del jefe del hogar", type: "categorical", fields: ["educacion_jefe_hogar"] },
+      { id: "separa_desechos", title: "¿Practica separación de residuos en su hogar?", type: "categorical", fields: ["practica_separacion_reciclaje_ingreso"] },
+      { id: "conocimiento_desechos", title: "Conocimiento sobre desechos sólidos (Likert)", type: "likert", fields: ["conoce_desechos_solidos"] },
+      { id: "dispuesto_talleres", title: "Disposición a participar en talleres (Likert)", type: "likert", fields: ["participaria_talleres_buenas_practicas"] },
+      { id: "dispuesto_emprender", title: "Dispuesto a participar en emprendimientos (Likert)", type: "likert", fields: ["dispuesto_participar_emprendimiento_desechos"] },
+      { id: "emprendimiento_economico", title: "Percepción: emprendimientos aportan a la economía (Likert)", type: "likert", fields: ["emprendimientos_reutilizacion_aportan_economia"] },
+      { id: "impacto_medio", title: "Considera que los desechos contaminan el ambiente (Likert)", type: "likert", fields: ["desechos_contaminan_ambiente"] }
+    ];
+
+    /**************************************************************************
+     * UTILIDADES: manejo de Likert, conteos, transformación para Chart.js
+     **************************************************************************/
+    const LIKERT_LEVELS = [
+      "Totalmente en desacuerdo",
+      "En desacuerdo",
+      "Indiferente",
+      "De acuerdo",
+      "Totalmente de acuerdo"
+    ];
+
+    // map para normalizar respuestas (minimizar errores por mayúsculas/minúsculas/acentos)
+    function normalizeStr(s) {
+      if (s === null || s === undefined) return null;
+      return String(s).trim();
+    }
+
+    // cuenta valores categóricos y devuelve labels/values ordenados
+    function contarCategorico(values) {
+      const counts = {};
+      values.forEach(v => {
+        const x = normalizeStr(v) ?? "No declarado";
+        counts[x] = (counts[x] || 0) + 1;
+      });
+      // ordenar por mayor a menor
+      const entries = Object.entries(counts).sort((a,b)=> b[1]-a[1]);
+      return { labels: entries.map(e => e[0]), values: entries.map(e => e[1]) };
+    }
+
+    // cuenta Likert, devolviendo en orden LIKERT_LEVELS
+    function contarLikert(values) {
+      const lowerMap = LIKERT_LEVELS.map(l => l.toLowerCase());
+      const counts = LIKERT_LEVELS.map(() => 0);
+      values.forEach(v => {
+        const s = normalizeStr(v);
+        if (!s) return;
+        const idx = lowerMap.indexOf(s.toLowerCase());
+        if (idx !== -1) counts[idx] += 1;
+        else {
+          // si la respuesta no coincide exactamente, intentar coincidencia parcial (e.g., "de acuerdo")
+          const found = lowerMap.findIndex(l => s.toLowerCase().includes(l.split(' ')[0]));
+          if (found !== -1) counts[found] += 1;
+        }
+      });
+      return { labels: LIKERT_LEVELS.slice(), values: counts };
+    }
+
+    // preparar datos para scatter/bubble: convertir índices a puntos
+    function countsToScatter(values) {
+      // values: [v0, v1, ...] -> [{x:0, y:v0}, ...]
+      return values.map((v,i) => ({ x: i + 1, y: v }));
+    }
+    function countsToBubble(values) {
+      // size proporcional al valor
+      const max = Math.max(...values, 1);
+      return values.map((v,i) => ({ x: i + 1, y: v, r: Math.max(3, (v / max) * 20) }));
+    }
+
+    /**************************************************************************
+     * RENDER: Chart.js instancia única (se destruye y recrea cuando cambian)
+     **************************************************************************/
+    let chart = null;
+
+    function destroyChart() {
+      if (chart) {
+        try { chart.destroy(); } catch(e) {}
+        chart = null;
+      }
+    }
+
+    function renderChart(type, labels, dataValues, title) {
+      const ctx = document.getElementById("chartCanvas").getContext("2d");
+      destroyChart();
+
+      // ajustes para tipos especiales
+      let config = null;
+      if (type === "scatter") {
+        config = {
+          type: 'scatter',
+          data: { datasets: [{ label: title, data: countsToScatter(dataValues), backgroundColor: "#2a9d8f" }] },
+          options: { scales: { x: { title: { display: true, text: 'Índice' } }, y: { beginAtZero: true } } }
+        };
+      } else if (type === "bubble") {
+        config = {
+          type: 'bubble',
+          data: { datasets: [{ label: title, data: countsToBubble(dataValues), backgroundColor: "#2a9d8f" }] },
+          options: { scales: { x: { title: { display: true, text: 'Índice' } }, y: { beginAtZero: true } } }
+        };
+      } else if (type === "mixed") {
+        // mixed: barras para totales + línea superpuesta
+        config = {
+          data: {
+            labels,
+            datasets: [
+              { type: 'bar', label: 'Conteo', data: dataValues, backgroundColor: "#2a9d8f" },
+              { type: 'line', label: 'Tendencia', data: dataValues.map((v,i)=> i>0? (dataValues[i]+dataValues[i-1])/2 : dataValues[i]), borderColor: "#e76f51", tension: 0.3, fill: false, yAxisID: 'y' }
+            ]
+          },
+          options: { responsive: true, scales: { y: { beginAtZero: true } } }
+        };
+      } else {
+        // tipos: bar, pie, doughnut, line, radar, polarArea
+        const dataset = {
+          label: title,
+          data: dataValues,
+          backgroundColor: [
+            "#2a9d8f","#e76f51","#457b9d","#f4a261","#8ab17d","#c084fc","#60a5fa","#f472b6","#9ca3af"
+          ].slice(0, labels.length),
+          borderColor: "#ffffff",
+          borderWidth: 0.6
+        };
+        config = {
+          type,
+          data: { labels, datasets: [dataset] },
+          options: { responsive: true, scales: type === 'bar' ? { y: { beginAtZero: true } } : {} }
+        };
+      }
+
+      chart = new Chart(ctx, config);
+    }
+
+    /**************************************************************************
+     * FUNCIONES PRINCIPALES: fetch, procesar y mostrar
+     **************************************************************************/
+    async function fetchDatos() {
+      // Traer todos los registros (puedes añadir .order() o filtros aquí)
+      const { data, error } = await supabaseDashboard
+        .from(TABLE_NAME_DASHBOARD)
+        .select("*");
+
+      if (error) {
+        console.error("Error Supabase:", error);
+        return { data: [], error };
+      }
+      return { data, error: null };
+    }
+
+    // actualizar resúmenes superiores (totales, promedios)
+    function actualizarResumenes(data) {
+      const total = data.length;
+      document.getElementById("totalEncuestas").innerText = total;
+
+      const edades = data.map(d => Number(d.edad)).filter(n => !isNaN(n));
+      const promedio = edades.length ? (edades.reduce((a,b)=>a+b,0)/edades.length).toFixed(1) : "—";
+      document.getElementById("promedioEdad").innerText = promedio === "—" ? "—" : `${promedio} años`;
+
+      // porcentaje que indica separación en hogar (consideramos respuestas que contienen 'si' o 'de acuerdo' como positivo)
+      const separa = data.map(d => normalizeStr(d.practica_separacion_reciclaje_ingreso)).filter(Boolean);
+      const separaPos = separa.filter(s => /si|sí|de acuerdo|totalmente de acuerdo|deacuerdo/i.test(s)).length;
+      const porcSepara = separa.length ? Math.round((separaPos / separa.length) * 100) : "—";
+      document.getElementById("porcentajeSepara").innerText = porcSepara === "—" ? "—" : `${porcSepara}%`;
+
+      // porcentaje que participaría en talleres
+      const talleres = data.map(d => normalizeStr(d.participaria_talleres_buenas_practicas)).filter(Boolean);
+      const talleresPos = talleres.filter(s => /si|sí|de acuerdo|totalmente de acuerdo/i.test(s)).length;
+      const porcTaller = talleres.length ? Math.round((talleresPos / talleres.length) * 100) : "—";
+      document.getElementById("porcentajeTalleres").innerText = porcTaller === "—" ? "—" : `${porcTaller}%`;
+    }
+
+    // genera el dataset y renderiza según la selección
+    async function generarIndicador(tipoIndicadorId, tipoGrafico, filtros = {}) {
+      const { data, error } = await fetchDatos();
+      if (error) {
+        document.getElementById("mensajeSinDatos").classList.remove("d-none");
+        return;
+      }
+
+      // aplicar filtros simples (sexo y grupo)
+      let filtered = data.slice();
+      if (filtros.sexo && filtros.sexo !== "todos") {
+        filtered = filtered.filter(r => (r.sexo || "").toLowerCase() === filtros.sexo.toLowerCase());
+      }
+      if (filtros.grupo && filtros.grupo !== "todos") {
+        filtered = filtered.filter(r => (r.grupo || "").toLowerCase() === filtros.grupo.toLowerCase());
+      }
+
+      actualizarResumenes(filtered);
+
+      // encontrar indicador
+      const indicador = INDICADORES.find(i => i.id === tipoIndicadorId);
+      if (!indicador) {
+        console.warn("Indicador no encontrado:", tipoIndicadorId);
+        return;
+      }
+
+      let labels = [], values = [];
+
+      if (indicador.type === "categorical") {
+        // tomamos la primera columna listada
+        const col = indicador.fields[0];
+        const arr = filtered.map(r => r[col]);
+        const res = contarCategorico(arr);
+        labels = res.labels;
+        values = res.values;
+      } else if (indicador.type === "numeric") {
+        const col = indicador.fields[0];
+        const nums = filtered.map(r => Number(r[col])).filter(n => !isNaN(n));
+        if (!nums.length) {
+          labels = ["No hay datos"];
+          values = [0];
+        } else {
+          // ejemplo: mostrar histograma simple por rangos (0-10,11-25,26-50,51-90)
+          const ranges = [
+            { label: "0-10", min: 0, max: 10, count: 0 },
+            { label: "11-25", min: 11, max: 25, count: 0 },
+            { label: "26-50", min: 26, max: 50, count: 0 },
+            { label: "51-90", min: 51, max: 90, count: 0 }
+          ];
+          nums.forEach(n => {
+            const r = ranges.find(rr => n >= rr.min && n <= rr.max);
+            if (r) r.count++;
+          });
+          labels = ranges.map(r => r.label);
+          values = ranges.map(r => r.count);
+        }
+      } else if (indicador.type === "likert") {
+        // campo principal
+        const col = indicador.fields[0];
+        const arr = filtered.map(r => r[col]);
+        const res = contarLikert(arr);
+        labels = res.labels;
+        values = res.values;
+      }
+
+      // si no hay valores válidos
+      const totalValues = values.reduce((a,b)=>a+b,0);
+      if (totalValues === 0) {
+        document.getElementById("mensajeSinDatos").classList.remove("d-none");
+        destroyChart();
+      } else {
+        document.getElementById("mensajeSinDatos").classList.add("d-none");
+        // título
+        document.getElementById("tituloPrincipal").innerText = indicador.title;
+        document.getElementById("subtituloPrincipal").innerText = `Tipo: ${tipoGrafico} — ${filtered.length} respuestas (filtros aplicados)`;
+        renderChart(tipoGrafico, labels, values, indicador.title);
+      }
+    }
+
+    /**************************************************************************
+     * UI: rellenar selector de indicadores, grupos (si existen), y listeners
+     **************************************************************************/
+    function initUI() {
+      const sel = document.getElementById("selectIndicador");
+      INDICADORES.forEach(i => {
+        const opt = document.createElement("option");
+        opt.value = i.id;
+        opt.textContent = i.title;
+        sel.appendChild(opt);
+      });
+
+      // intentar rellenar filtro grupo (consultando datos y extrayendo grupos)
+      // Se hace en la primera carga de datos (función loadInitialData).
+
+      // listeners
+      document.getElementById("btnActualizar").addEventListener("click", async () => {
+        const indicador = document.getElementById("selectIndicador").value;
+        const tipoGrafico = document.getElementById("selectTipoGrafico").value;
+        const sexo = document.getElementById("filtroSexo").value;
+        const grupo = document.getElementById("filtroGrupo").value;
+        await generarIndicador(indicador, tipoGrafico, { sexo, grupo });
+      });
+
+      document.getElementById("btnExportarImagen").addEventListener("click", () => {
+        if (!chart) return alert("No hay gráfico para exportar.");
+        const link = document.createElement("a");
+        link.href = document.getElementById("chartCanvas").toDataURL("image/png", 1);
+        link.download = `indicador_${Date.now()}.png`;
+        link.click();
+      });
+
+      // cambio de tipo de gráfico también puede actualizar al instante (opcional)
+      document.getElementById("selectTipoGrafico").addEventListener("change", () => {
+        // solo re-render si ya hay datos (mejor usar botón Actualizar)
+      });
+    }
+
+    // cargar datos iniciales y popular dropdown de grupos
+    async function loadInitialData() {
+      const { data, error } = await fetchDatos();
+      if (error) {
+        document.getElementById("mensajeSinDatos").classList.remove("d-none");
+        return;
+      }
+
+      // popular filtro grupo si existen valores
+      const grupos = Array.from(new Set(data.map(d => normalizeStr(d.grupo)).filter(Boolean)));
+      const selGrupo = document.getElementById("filtroGrupo");
+      // limpiar opciones extra (solo si tenemos valores)
+      if (grupos.length) {
+        // agregar opciones después de 'todos'
+        grupos.forEach(g => {
+          const opt = document.createElement("option");
+          opt.value = g;
+          opt.textContent = g;
+          selGrupo.appendChild(opt);
+        });
+      }
+
+      // actualizar resumenes iniciales y mostrar indicador por defecto
+      actualizarResumenes(data);
+      // mostrar primer indicador por defecto con tipo 'bar'
+      const primerIndicador = INDICADORES[0].id;
+      document.getElementById("selectIndicador").value = primerIndicador;
+      await generarIndicador(primerIndicador, document.getElementById("selectTipoGrafico").value, { sexo: "todos", grupo: "todos" });
+    }
+
+    /**************************************************************************
+     * Inicialización
+     **************************************************************************/
+    (async function main() {
+      initUI();
+      await loadInitialData();
+
+      // (Opcional) Actualización automática cada N segundos:
+      // setInterval(async () => {
+      //   const indicador = document.getElementById("selectIndicador").value;
+      //   const tipoGrafico = document.getElementById("selectTipoGrafico").value;
+      //   const sexo = document.getElementById("filtroSexo").value;
+      //   const grupo = document.getElementById("filtroGrupo").value;
+      //   await generarIndicador(indicador, tipoGrafico, { sexo, grupo });
+      // }, 60000); // cada minuto
+    })();
 
   </script>
 </body>
