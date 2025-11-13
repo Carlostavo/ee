@@ -1519,6 +1519,27 @@
         align-items: stretch;
       }
     }
+
+    /* Separación entre dashboards */
+    .dashboard-separator {
+      margin: 3rem 0;
+      border-top: 2px solid #e9ecef;
+      position: relative;
+    }
+    
+    .dashboard-separator::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 20px;
+      background: var(--light-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
@@ -1882,104 +1903,109 @@
       <!-- Sección de Indicadores con Dashboard Proambiental -->
       <div id="section-indicadores" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #34495e 0%, #5d6d7e 100%);">
-          <h1 class="hero-title editable-text">Dashboard Proambiental</h1>
+          <h1 class="hero-title editable-text">Indicadores de Gestión de Residuos</h1>
           <p class="hero-subtitle editable-text">
-            Indicadores de comportamiento proambiental y autosustentabilidad
+            Análisis integral de datos para la toma de decisiones informadas
           </p>
         </div>
         
-        <!-- Panel de controles -->
-        <div class="dashboard-controls">
-          <div class="dashboard-card">
-            <label for="selectIndicador">Indicador</label>
-            <select id="selectIndicador" class="form-select">
-              <!-- opciones se definen en JS -->
-            </select>
-            <p class="text-muted small mt-2">Elige la métrica que quieres visualizar.</p>
-          </div>
+        <!-- Dashboard Proambiental -->
+        <div class="dashboard-card mt-4">
+          <h2 class="section-title">Indicadores de Comportamiento Proambiental</h2>
+          
+          <!-- Panel de controles -->
+          <div class="dashboard-controls">
+            <div class="dashboard-card">
+              <label for="selectIndicador">Indicador</label>
+              <select id="selectIndicador" class="form-select">
+                <!-- opciones se definen en JS -->
+              </select>
+              <p class="text-muted small mt-2">Elige la métrica que quieres visualizar.</p>
+            </div>
 
-          <div class="dashboard-card">
-            <label for="selectTipoGrafico">Tipo de gráfico</label>
-            <select id="selectTipoGrafico" class="form-select">
-              <option value="bar">Barras</option>
-              <option value="pie">Pastel</option>
-              <option value="doughnut">Doughnut</option>
-              <option value="line">Línea</option>
-              <option value="radar">Radar</option>
-              <option value="polarArea">Polar Area</option>
-              <option value="scatter">Scatter</option>
-              <option value="bubble">Bubble</option>
-              <option value="mixed">Mixed (barras + línea)</option>
-            </select>
-            <p class="text-muted small mt-2">Puedes experimentar con diferentes tipos para ver cuál comunica mejor el dato.</p>
-          </div>
+            <div class="dashboard-card">
+              <label for="selectTipoGrafico">Tipo de gráfico</label>
+              <select id="selectTipoGrafico" class="form-select">
+                <option value="bar">Barras</option>
+                <option value="pie">Pastel</option>
+                <option value="doughnut">Doughnut</option>
+                <option value="line">Línea</option>
+                <option value="radar">Radar</option>
+                <option value="polarArea">Polar Area</option>
+                <option value="scatter">Scatter</option>
+                <option value="bubble">Bubble</option>
+                <option value="mixed">Mixed (barras + línea)</option>
+              </select>
+              <p class="text-muted small mt-2">Puedes experimentar con diferentes tipos para ver cuál comunica mejor el dato.</p>
+            </div>
 
-          <div class="dashboard-card">
-            <div>
-              <label for="filtroSexo">Filtros rápidos</label>
-              <div class="d-flex gap-2">
-                <select id="filtroSexo" class="form-select">
-                  <option value="todos">Sexo: Todos</option>
-                  <option value="masculino">Masculino</option>
-                  <option value="femenino">Femenino</option>
-                </select>
-                <select id="filtroGrupo" class="form-select">
-                  <option value="todos">Grupo: Todos</option>
-                </select>
+            <div class="dashboard-card">
+              <div>
+                <label for="filtroSexo">Filtros rápidos</label>
+                <div class="d-flex gap-2">
+                  <select id="filtroSexo" class="form-select">
+                    <option value="todos">Sexo: Todos</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="femenino">Femenino</option>
+                  </select>
+                  <select id="filtroGrupo" class="form-select">
+                    <option value="todos">Grupo: Todos</option>
+                  </select>
+                </div>
+                <p class="text-muted small mt-2">Aplica filtro por sexo o por grupo (si tienes grupos definidos en datos).</p>
               </div>
-              <p class="text-muted small mt-2">Aplica filtro por sexo o por grupo (si tienes grupos definidos en datos).</p>
+
+              <div class="mt-3 d-flex gap-2">
+                <button id="btnActualizar" class="btn btn-primary ms-auto">Actualizar</button>
+                <button id="btnExportarImagen" class="btn btn-secondary">Exportar imagen</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjetas de resumen -->
+          <div class="dashboard-summary">
+            <div class="dashboard-summary-card">
+              <div class="label">Total encuestas</div>
+              <div id="totalEncuestas" class="value">—</div>
+            </div>
+            <div class="dashboard-summary-card">
+              <div class="label">Promedio edad</div>
+              <div id="promedioEdad" class="value">—</div>
+            </div>
+            <div class="dashboard-summary-card">
+              <div class="label">Separación en hogar (%)</div>
+              <div id="porcentajeSepara" class="value">—</div>
+            </div>
+            <div class="dashboard-summary-card">
+              <div class="label">Participaría en talleres (%)</div>
+              <div id="porcentajeTalleres" class="value">—</div>
+            </div>
+          </div>
+
+          <!-- Gráfico principal -->
+          <div class="dashboard-chart">
+            <div class="dashboard-chart-header">
+              <div>
+                <h2 id="tituloPrincipal" class="dashboard-chart-title">Indicador</h2>
+                <p id="subtituloPrincipal" class="dashboard-chart-subtitle">Selecciona un indicador y tipo de gráfico, luego haz clic en <strong>Actualizar</strong>.</p>
+              </div>
+              <div class="dashboard-chart-info">Datos cargados desde Supabase</div>
             </div>
 
-            <div class="mt-3 d-flex gap-2">
-              <button id="btnActualizar" class="btn btn-primary ms-auto">Actualizar</button>
-              <button id="btnExportarImagen" class="btn btn-secondary">Exportar imagen</button>
+            <div class="dashboard-chart-container">
+              <canvas id="chartCanvas"></canvas>
             </div>
+            <div id="mensajeSinDatos" class="dashboard-no-data d-none">No hay datos que mostrar para este filtro.</div>
           </div>
-        </div>
-
-        <!-- Tarjetas de resumen -->
-        <div class="dashboard-summary">
-          <div class="dashboard-summary-card">
-            <div class="label">Total encuestas</div>
-            <div id="totalEncuestas" class="value">—</div>
-          </div>
-          <div class="dashboard-summary-card">
-            <div class="label">Promedio edad</div>
-            <div id="promedioEdad" class="value">—</div>
-          </div>
-          <div class="dashboard-summary-card">
-            <div class="label">Separación en hogar (%)</div>
-            <div id="porcentajeSepara" class="value">—</div>
-          </div>
-          <div class="dashboard-summary-card">
-            <div class="label">Participaría en talleres (%)</div>
-            <div id="porcentajeTalleres" class="value">—</div>
-          </div>
-        </div>
-
-        <!-- Gráfico principal -->
-        <div class="dashboard-chart">
-          <div class="dashboard-chart-header">
-            <div>
-              <h2 id="tituloPrincipal" class="dashboard-chart-title">Indicador</h2>
-              <p id="subtituloPrincipal" class="dashboard-chart-subtitle">Selecciona un indicador y tipo de gráfico, luego haz clic en <strong>Actualizar</strong>.</p>
-            </div>
-            <div class="dashboard-chart-info">Datos cargados desde Supabase</div>
-          </div>
-
-          <div class="dashboard-chart-container">
-            <canvas id="chartCanvas"></canvas>
-          </div>
-          <div id="mensajeSinDatos" class="dashboard-no-data d-none">No hay datos que mostrar para este filtro.</div>
-        </div>
-
-        <!-- Footer -->
-        <div class="dashboard-footer">
-          © 2025 Proyecto Proambiental — Hecho con Supabase & Chart.js
         </div>
         
+        <!-- Separador entre dashboards -->
+        <div class="dashboard-separator"></div>
+        
         <!-- Dashboard de Indicadores de Desechos - Daule -->
-        <div class="indicadores-daule mt-5">
+        <div class="indicadores-daule">
+          <h2 class="section-title">Indicadores de Desechos - Daule</h2>
+          
           <div class="card">
             <div class="controls" id="controls">
               <label>
@@ -2027,7 +2053,7 @@
                 <div id="kpiTotal" style="font-size:20px;font-weight:700">0</div>
               </div>
               <div class="kpi">
-                <div style="font-size:12px;color:var(--muted)">Categorías con >0 kg</div>
+                <div style="font-size:12px;color:var(--muted)">Promedio por categoría</div>
                 <div id="kpiCount" style="font-size:20px;font-weight:700">0</div>
               </div>
               <div class="kpi">
@@ -2052,8 +2078,6 @@
               </div>
             </div>
           </div>
-
-          <footer>Fuente: Supabase — tabla <code>caracterizacion_desechos_daule</code></footer>
         </div>
       </div>
 
@@ -2283,14 +2307,6 @@
           </p>
         </div>
         
-        <!-- Sección de inspiración -->
-        <div class="inspiration-section">
-          <div class="inspiration-quote">
-            "La recolección de datos es el primer paso hacia la sabiduría, el primer paso hacia el progreso ambiental."
-          </div>
-          <div class="inspiration-author">- Anónimo</div>
-        </div>
-        
         <!-- Descripción de la sección -->
         <div class="form-description">
           Nuestros formularios están diseñados para capturar información valiosa sobre las prácticas ambientales de la comunidad. 
@@ -2301,7 +2317,7 @@
         <!-- Tarjetas de formularios modernas -->
         <div class="row mt-4">
           <div class="col-lg-6 mb-4">
-            <div class="form-card-modern" data-card-link="https://tally.so/r/nGA7LO">
+            <div class="form-card-modern" data-card-link="https://tally.so/r/nrNo9M">
               <div class="form-card-header">
                 <i class="fas fa-clipboard-check form-card-icon"></i>
                 <h3 class="form-card-title editable-text">ENCUESTA COMPORTAMIENTO PROAMBIENTAL</h3>
@@ -2331,7 +2347,7 @@
                 
                 <div class="form-card-actions">
                   <span class="form-card-badge">Completo</span>
-                  <button class="form-card-button">
+                  <button class="form-card-button" onclick="window.open('https://tally.so/r/nrNo9M', '_blank')">
                     <i class="fas fa-external-link-alt"></i> Acceder al Formulario
                   </button>
                 </div>
@@ -2340,7 +2356,7 @@
           </div>
           
           <div class="col-lg-6 mb-4">
-            <div class="form-card-modern" data-card-link="https://tally.so/r/3N1M0O">
+            <div class="form-card-modern" data-card-link="https://tally.so/r/3jd0da">
               <div class="form-card-header">
                 <i class="fas fa-weight form-card-icon"></i>
                 <h3 class="form-card-title editable-text">MEDICIÓN DE DESECHOS SÓLIDOS (Daule)</h3>
@@ -2370,7 +2386,7 @@
                 
                 <div class="form-card-actions">
                   <span class="form-card-badge">Técnico</span>
-                  <button class="form-card-button">
+                  <button class="form-card-button" onclick="window.open('https://tally.so/r/3jd0da', '_blank')">
                     <i class="fas fa-external-link-alt"></i> Acceder al Formulario
                   </button>
                 </div>
@@ -4077,6 +4093,9 @@
         function renderResumen(labels, values, totalSum, lastDate){
           tbody.innerHTML = '';
           const friendlyLabels = labels.map(l=> l.replace(/_/g,' ').replace('kg','').toUpperCase());
+          const nonZeroValues = values.filter(v => v > 0);
+          const average = nonZeroValues.length > 0 ? (totalSum / nonZeroValues.length).toFixed(2) : 0;
+          
           friendlyLabels.forEach((lab,i)=>{
             const v = values[i];
             if(v <= 0) return;
@@ -4086,7 +4105,7 @@
             tbody.appendChild(tr);
           });
           kpiTotal.textContent = totalSum.toFixed(2);
-          kpiCount.textContent = friendlyLabels.filter((_,i)=> values[i]>0).length;
+          kpiCount.textContent = average;
           kpiLast.textContent = lastDate ? new Date(lastDate).toLocaleString() : '-';
         }
 
