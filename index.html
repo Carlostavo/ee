@@ -1271,8 +1271,8 @@
       margin-right: auto;
     }
 
-    /* ESTILOS PARA LA SECCIÓN DE INDICADORES DE DESECHOS */
-    .indicadores-card {
+    /* ESTILOS PARA EL DASHBOARD PROAMBIENTAL */
+    .dashboard-card {
       background: white;
       border-radius: var(--border-radius);
       padding: 1.5rem;
@@ -1280,60 +1280,218 @@
       margin-bottom: 2rem;
     }
     
-    .indicadores-controls {
+    .dashboard-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .dashboard-controls label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--secondary-color);
+    }
+    
+    .dashboard-controls select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background: white;
+      font-size: 0.9rem;
+    }
+    
+    .dashboard-controls .btn-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-end;
+    }
+    
+    .dashboard-controls .btn-group button {
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .dashboard-controls .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .dashboard-controls .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+    
+    .dashboard-controls .btn-secondary {
+      background: #f8f9fa;
+      color: var(--dark-color);
+      border: 1px solid #e2e8f0;
+    }
+    
+    .dashboard-controls .btn-secondary:hover {
+      background: #e9ecef;
+    }
+    
+    .dashboard-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .dashboard-summary-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      text-align: center;
+    }
+    
+    .dashboard-summary-card .value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0.5rem 0;
+      color: var(--primary-color);
+    }
+    
+    .dashboard-summary-card .label {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+    }
+    
+    .dashboard-chart {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
+    }
+    
+    .dashboard-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .dashboard-chart-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--dark-color);
+      margin: 0;
+    }
+    
+    .dashboard-chart-subtitle {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+      margin: 0.25rem 0 0 0;
+    }
+    
+    .dashboard-chart-info {
+      font-size: 0.8rem;
+      color: var(--secondary-color);
+    }
+    
+    .dashboard-chart-container {
+      height: 400px;
+      position: relative;
+    }
+    
+    .dashboard-no-data {
+      text-align: center;
+      padding: 2rem;
+      color: var(--secondary-color);
+    }
+    
+    .dashboard-footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--secondary-color);
+      margin-top: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard-controls {
+        grid-template-columns: 1fr;
+      }
+      
+      .dashboard-controls .btn-group {
+        flex-direction: column;
+      }
+      
+      .dashboard-summary {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .dashboard-chart-container {
+        height: 300px;
+      }
+    }
+
+    /* ESTILOS PARA EL DASHBOARD DE INDICADORES DE DESECHOS */
+    .indicadores-daule {
+      --green:#0f766e;
+      --bg1:#e6fff7;
+      --card:#ffffff;
+      --muted:#6b7280;
+    }
+    
+    .indicadores-daule .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
+    }
+    
+    .indicadores-daule .controls {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
       align-items: center;
       margin-bottom: 16px;
-      width: 100%;
     }
     
-    .indicadores-controls label {
-      margin-bottom: 0;
-    }
-    
-    .indicadores-controls select, 
-    .indicadores-controls input, 
-    .indicadores-controls button {
+    .indicadores-daule select, 
+    .indicadores-daule input, 
+    .indicadores-daule button {
       padding: 10px 12px;
       border-radius: 8px;
       border: 1px solid #e6eef0;
       background: white;
-      font-size: 0.9rem;
     }
     
-    .indicadores-controls button {
-      background: var(--primary-color);
+    .indicadores-daule button {
+      background: var(--green);
       color: white;
       border: none;
       cursor: pointer;
-      transition: var(--transition);
     }
     
-    .indicadores-controls button:hover {
-      background: var(--primary-dark);
+    .indicadores-daule .chart-wrap {
+      margin-top: 12px;
     }
     
-    .indicadores-controls .btn-export {
-      background: #ffffff;
-      color: var(--primary-color);
-      border: 1px solid var(--primary-color);
+    .indicadores-daule footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin: 18px 0;
     }
     
-    .indicadores-controls .btn-export:hover {
-      background: var(--primary-color);
-      color: white;
-    }
-    
-    .indicadores-kpis {
+    .indicadores-daule .kpis {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
       margin-bottom: 12px;
     }
     
-    .indicadores-kpi {
+    .indicadores-daule .kpi {
       flex: 1;
       min-width: 160px;
       background: linear-gradient(180deg, #fff, #f7fffb);
@@ -1342,56 +1500,23 @@
       border: 1px solid #eef7f4;
     }
     
-    .indicadores-kpi div:first-child {
-      font-size: 12px;
-      color: var(--secondary-color);
-    }
-    
-    .indicadores-kpi div:last-child {
-      font-size: 20px;
-      font-weight: 700;
-    }
-    
-    .indicadores-chart-wrap {
-      margin-top: 12px;
-      height: 300px;
-    }
-    
-    .indicadores-table {
+    .indicadores-daule table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 12px;
     }
     
-    .indicadores-table th, 
-    .indicadores-table td {
+    .indicadores-daule th, 
+    .indicadores-daule td {
       padding: 8px;
       text-align: left;
       border-bottom: 1px solid #eef2f6;
     }
     
-    .indicadores-table th {
-      background-color: var(--primary-color);
-      color: white;
-    }
-    
-    @media (max-width: 768px) {
-      .indicadores-controls {
+    @media (max-width: 720px) {
+      .indicadores-daule .controls {
         flex-direction: column;
         align-items: stretch;
-      }
-      
-      .indicadores-controls > * {
-        width: 100%;
-      }
-      
-      .indicadores-controls .btn-group {
-        width: 100%;
-        margin-top: 10px;
-      }
-      
-      .indicadores-kpis {
-        flex-direction: column;
       }
     }
   </style>
@@ -1754,234 +1879,181 @@
         </div>
       </div>
 
-      <!-- Sección de Indicadores Avanzados con Supabase -->
+      <!-- Sección de Indicadores con Dashboard Proambiental -->
       <div id="section-indicadores" class="section-content">
         <div class="hero-section" style="background: linear-gradient(135deg, #34495e 0%, #5d6d7e 100%);">
-          <h1 class="hero-title editable-text">Indicadores de Desempeño (KPIs)</h1>
+          <h1 class="hero-title editable-text">Dashboard Proambiental</h1>
           <p class="hero-subtitle editable-text">
-            Visualice los datos en tiempo real sobre la generación, recolección y destino final de los residuos sólidos.
+            Indicadores de comportamiento proambiental y autosustentabilidad
           </p>
         </div>
         
-        <!-- Estado de conexión a la base de datos -->
-        <div id="dataStatus" class="data-status connected">
-          <i class="fas fa-check-circle"></i>
-          <span>Conectado a la base de datos - Datos en tiempo real</span>
+        <!-- Panel de controles -->
+        <div class="dashboard-controls">
+          <div class="dashboard-card">
+            <label for="selectIndicador">Indicador</label>
+            <select id="selectIndicador" class="form-select">
+              <!-- opciones se definen en JS -->
+            </select>
+            <p class="text-muted small mt-2">Elige la métrica que quieres visualizar.</p>
+          </div>
+
+          <div class="dashboard-card">
+            <label for="selectTipoGrafico">Tipo de gráfico</label>
+            <select id="selectTipoGrafico" class="form-select">
+              <option value="bar">Barras</option>
+              <option value="pie">Pastel</option>
+              <option value="doughnut">Doughnut</option>
+              <option value="line">Línea</option>
+              <option value="radar">Radar</option>
+              <option value="polarArea">Polar Area</option>
+              <option value="scatter">Scatter</option>
+              <option value="bubble">Bubble</option>
+              <option value="mixed">Mixed (barras + línea)</option>
+            </select>
+            <p class="text-muted small mt-2">Puedes experimentar con diferentes tipos para ver cuál comunica mejor el dato.</p>
+          </div>
+
+          <div class="dashboard-card">
+            <div>
+              <label for="filtroSexo">Filtros rápidos</label>
+              <div class="d-flex gap-2">
+                <select id="filtroSexo" class="form-select">
+                  <option value="todos">Sexo: Todos</option>
+                  <option value="masculino">Masculino</option>
+                  <option value="femenino">Femenino</option>
+                </select>
+                <select id="filtroGrupo" class="form-select">
+                  <option value="todos">Grupo: Todos</option>
+                </select>
+              </div>
+              <p class="text-muted small mt-2">Aplica filtro por sexo o por grupo (si tienes grupos definidos en datos).</p>
+            </div>
+
+            <div class="mt-3 d-flex gap-2">
+              <button id="btnActualizar" class="btn btn-primary ms-auto">Actualizar</button>
+              <button id="btnExportarImagen" class="btn btn-secondary">Exportar imagen</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjetas de resumen -->
+        <div class="dashboard-summary">
+          <div class="dashboard-summary-card">
+            <div class="label">Total encuestas</div>
+            <div id="totalEncuestas" class="value">—</div>
+          </div>
+          <div class="dashboard-summary-card">
+            <div class="label">Promedio edad</div>
+            <div id="promedioEdad" class="value">—</div>
+          </div>
+          <div class="dashboard-summary-card">
+            <div class="label">Separación en hogar (%)</div>
+            <div id="porcentajeSepara" class="value">—</div>
+          </div>
+          <div class="dashboard-summary-card">
+            <div class="label">Participaría en talleres (%)</div>
+            <div id="porcentajeTalleres" class="value">—</div>
+          </div>
+        </div>
+
+        <!-- Gráfico principal -->
+        <div class="dashboard-chart">
+          <div class="dashboard-chart-header">
+            <div>
+              <h2 id="tituloPrincipal" class="dashboard-chart-title">Indicador</h2>
+              <p id="subtituloPrincipal" class="dashboard-chart-subtitle">Selecciona un indicador y tipo de gráfico, luego haz clic en <strong>Actualizar</strong>.</p>
+            </div>
+            <div class="dashboard-chart-info">Datos cargados desde Supabase</div>
+          </div>
+
+          <div class="dashboard-chart-container">
+            <canvas id="chartCanvas"></canvas>
+          </div>
+          <div id="mensajeSinDatos" class="dashboard-no-data d-none">No hay datos que mostrar para este filtro.</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="dashboard-footer">
+          © 2025 Proyecto Proambiental — Hecho con Supabase & Chart.js
         </div>
         
-        <!-- Filtros y controles -->
-        <div class="filter-section">
-          <div class="row">
-            <div class="col-md-4">
-              <label for="dateFilter" class="form-label">Filtrar por fecha</label>
-              <input type="date" class="form-control" id="dateFilter">
+        <!-- Dashboard de Indicadores de Desechos - Daule -->
+        <div class="indicadores-daule mt-5">
+          <div class="card">
+            <div class="controls" id="controls">
+              <label>
+                Lugar<br/>
+                <select id="selectLugar"><option value="">Todos</option></select>
+              </label>
+
+              <label>
+                Grupo<br/>
+                <select id="selectGrupo"><option value="">Todos</option></select>
+              </label>
+
+              <label>
+                Fecha (desde)<br/>
+                <input id="fechaDesde" type="date" />
+              </label>
+
+              <label>
+                Fecha (hasta)<br/>
+                <input id="fechaHasta" type="date" />
+              </label>
+
+              <label>
+                Tipo gráfico<br/>
+                <select id="selectTipo">
+                  <option value="bar">Barras</option>
+                  <option value="pie">Pastel</option>
+                  <option value="doughnut">Dona</option>
+                  <option value="line">Línea (tendencia)</option>
+                  <option value="radar">Radar</option>
+                  <option value="polarArea">Polar</option>
+                </select>
+              </label>
+
+              <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+                <button id="btnActualizarDesechos">Actualizar</button>
+                <button id="btnExport" style="background:#ffffff;color:var(--green);border:1px solid var(--green)">Exportar PNG</button>
+              </div>
             </div>
-            <div class="col-md-4">
-              <label for="groupFilter" class="form-label">Filtrar por grupo</label>
-              <select class="form-select" id="groupFilter">
-                <option value="">Todos los grupos</option>
-                <option value="Urbano">Urbano</option>
-                <option value="Rural">Rural</option>
-              </select>
+
+            <!-- KPIs -->
+            <div class="kpis" id="kpis">
+              <div class="kpi">
+                <div style="font-size:12px;color:var(--muted)">Total (kg)</div>
+                <div id="kpiTotal" style="font-size:20px;font-weight:700">0</div>
+              </div>
+              <div class="kpi">
+                <div style="font-size:12px;color:var(--muted)">Categorías con >0 kg</div>
+                <div id="kpiCount" style="font-size:20px;font-weight:700">0</div>
+              </div>
+              <div class="kpi">
+                <div style="font-size:12px;color:var(--muted)">Última fecha registrada</div>
+                <div id="kpiLast" style="font-size:20px;font-weight:700">-</div>
+              </div>
             </div>
-            <div class="col-md-4">
-              <label class="form-label">&nbsp;</label>
-              <div class="data-actions">
-                <button class="refresh-btn" onclick="loadSurveyData()">
-                  <i class="fas fa-sync-alt me-1"></i> Actualizar
-                </button>
-                <button class="export-btn" onclick="exportData()">
-                  <i class="fas fa-download me-1"></i> Exportar
-                </button>
+
+            <!-- Gráfico -->
+            <div class="chart-wrap">
+              <canvas id="mainChart" height="300"></canvas>
+            </div>
+
+            <!-- Tabla resumen -->
+            <div style="margin-top:18px">
+              <h3 style="margin:0 0 8px 0;color:#0f766e">Tabla resumen (filtrada)</h3>
+              <div class="card" style="padding:12px">
+                <table id="tableResumen">
+                  <thead><tr><th>Tipo de desecho</th><th style="text-align:right">Kg</th><th style="text-align:right">% del total</th></tr></thead>
+                  <tbody></tbody>
+                </table>
               </div>
             </div>
           </div>
-        </div>
-        
-        <!-- Estadísticas principales -->
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <div class="stat-value" id="totalEncuestas">0</div>
-            <div class="stat-label">Total Encuestas</div>
-          </div>
-          
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-chart-pie"></i>
-            </div>
-            <div class="stat-value" id="conocimientoDesechos">0%</div>
-            <div class="stat-label">Conocen Desechos Sólidos</div>
-          </div>
-          
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-recycle"></i>
-            </div>
-            <div class="stat-value" id="practicaReciclaje">0%</div>
-            <div class="stat-label">Practican Reciclaje</div>
-          </div>
-          
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-leaf"></i>
-            </div>
-            <div class="stat-value" id="preocupacionAmbiental">0%</div>
-            <div class="stat-label">Preocupación Ambiental</div>
-          </div>
-        </div>
-        
-        <!-- Gráficos y visualizaciones -->
-        <div class="row">
-          <div class="col-md-6">
-            <div class="chart-wrapper">
-              <div class="chart-title">Distribución por Sexo</div>
-              <div class="chart-placeholder" id="sexChart">
-                <div class="loading-spinner">
-                  <div class="spinner"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-md-6">
-            <div class="chart-wrapper">
-              <div class="chart-title">Distribución por Edad</div>
-              <div class="chart-placeholder" id="ageChart">
-                <div class="loading-spinner">
-                  <div class="spinner"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-12">
-            <div class="chart-wrapper">
-              <div class="chart-title">Conocimiento y Prácticas Ambientales</div>
-              <div class="chart-placeholder" id="knowledgeChart">
-                <div class="loading-spinner">
-                  <div class="spinner"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Tabla de datos -->
-        <div class="data-table-container">
-          <div class="table-responsive">
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Fecha</th>
-                  <th>Encuestador</th>
-                  <th>Encuestado</th>
-                  <th>Sexo</th>
-                  <th>Edad</th>
-                  <th>Grupo</th>
-                  <th>Conoce Desechos</th>
-                  <th>Practica Reciclaje</th>
-                </tr>
-              </thead>
-              <tbody id="surveyTableBody">
-                <tr>
-                  <td colspan="9" class="text-center">
-                    <div class="loading-spinner">
-                      <div class="spinner"></div>
-                      <span class="ms-2">Cargando datos...</span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        
-        <div class="last-update" id="lastUpdate">
-          Última actualización: <span id="updateTime">--:--:--</span>
-        </div>
-        
-        <!-- SECCIÓN DE INDICADORES DE DESECHOS INTEGRADA -->
-        <div class="indicadores-card mt-5">
-          <h3 class="section-title">Indicadores de Desechos - Daule</h3>
-          <p class="text-muted mb-4">Filtros interactivos y gráficos dinámicos</p>
-          
-          <!-- Controles -->
-          <div class="indicadores-controls" id="indicadoresControls">
-            <label>
-              Lugar<br/>
-              <select id="selectLugar"><option value="">Todos</option></select>
-            </label>
 
-            <label>
-              Grupo<br/>
-              <select id="selectGrupo"><option value="">Todos</option></select>
-            </label>
-
-            <label>
-              Fecha (desde)<br/>
-              <input id="fechaDesde" type="date" />
-            </label>
-
-            <label>
-              Fecha (hasta)<br/>
-              <input id="fechaHasta" type="date" />
-            </label>
-
-            <label>
-              Tipo gráfico<br/>
-              <select id="selectTipo">
-                <option value="bar">Barras</option>
-                <option value="pie">Pastel</option>
-                <option value="doughnut">Dona</option>
-                <option value="line">Línea (tendencia)</option>
-                <option value="radar">Radar</option>
-                <option value="polarArea">Polar</option>
-              </select>
-            </label>
-
-            <div class="btn-group">
-              <button id="btnActualizar" class="btn btn-primary">Actualizar</button>
-              <button id="btnExport" class="btn btn-export">Exportar PNG</button>
-            </div>
-          </div>
-
-          <!-- KPIs -->
-          <div class="indicadores-kpis" id="indicadoresKpis">
-            <div class="indicadores-kpi">
-              <div>Total (kg)</div>
-              <div id="kpiTotal">0</div>
-            </div>
-            <div class="indicadores-kpi">
-              <div>Categorías con >0 kg</div>
-              <div id="kpiCount">0</div>
-            </div>
-            <div class="indicadores-kpi">
-              <div>Última fecha registrada</div>
-              <div id="kpiLast">-</div>
-            </div>
-          </div>
-
-          <!-- Gráfico -->
-          <div class="indicadores-chart-wrap">
-            <canvas id="mainChart"></canvas>
-          </div>
-
-          <!-- Tabla resumen -->
-          <div style="margin-top:18px">
-            <h4 style="margin:0 0 8px 0;color:var(--primary-color)">Tabla resumen (filtrada)</h4>
-            <div class="card" style="padding:12px">
-              <table class="indicadores-table" id="tableResumen">
-                <thead><tr><th>Tipo de desecho</th><th style="text-align:right">Kg</th><th style="text-align:right">% del total</th></tr></thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
+          <footer>Fuente: Supabase — tabla <code>caracterizacion_desechos_daule</code></footer>
         </div>
       </div>
 
@@ -2379,390 +2451,6 @@
     // Detectar dispositivo táctil
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    // Configuración de Supabase
-    const SUPABASE_URL = 'https://dutapywxsiuxboqsjqvf.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1dGFweXd4c2l1eGJvcXNqcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MTk1MTUsImV4cCI6MjA2OTI5NTUxNX0.SBIDeV_WAWlyLs-ROD1ibXtqqY5bbbh0gouY8gRB9Y4';
-    
-    // Inicializar Supabase
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    
-    // Variables para datos de encuestas
-    let surveyData = [];
-    let filteredData = [];
-
-    // --- Funciones para Supabase ---
-    async function loadSurveyData() {
-      try {
-        // Mostrar estado de carga
-        document.getElementById('dataStatus').className = 'data-status connected';
-        document.getElementById('dataStatus').innerHTML = '<i class="fas fa-sync-alt fa-spin"></i><span>Cargando datos...</span>';
-        
-        // Obtener datos de la tabla de encuestas
-        const { data, error } = await supabaseClient
-          .from('cuestionario_comportamiento_proambiental_autosustentabilidad')
-          .select('*')
-          .order('fecha_registro', { ascending: false });
-        
-        if (error) {
-          throw error;
-        }
-        
-        surveyData = data || [];
-        filteredData = [...surveyData];
-        
-        // Actualizar la interfaz con los datos
-        updateDashboardStats();
-        updateSurveyTable();
-        updateCharts();
-        
-        // Actualizar hora de última actualización
-        const now = new Date();
-        document.getElementById('updateTime').textContent = now.toLocaleTimeString();
-        
-        // Mostrar estado de éxito
-        document.getElementById('dataStatus').className = 'data-status connected';
-        document.getElementById('dataStatus').innerHTML = '<i class="fas fa-check-circle"></i><span>Datos cargados correctamente</span>';
-        
-      } catch (error) {
-        console.error('Error al cargar datos:', error);
-        
-        // Mostrar estado de error
-        document.getElementById('dataStatus').className = 'data-status error';
-        document.getElementById('dataStatus').innerHTML = '<i class="fas fa-exclamation-triangle"></i><span>Error al cargar datos: ' + error.message + '</span>';
-      }
-    }
-    
-    function updateDashboardStats() {
-      if (filteredData.length === 0) {
-        document.getElementById('totalEncuestas').textContent = '0';
-        document.getElementById('conocimientoDesechos').textContent = '0%';
-        document.getElementById('practicaReciclaje').textContent = '0%';
-        document.getElementById('preocupacionAmbiental').textContent = '0%';
-        return;
-      }
-      
-      // Total de encuestas
-      document.getElementById('totalEncuestas').textContent = filteredData.length;
-      
-      // Porcentaje que conoce sobre desechos sólidos
-      const conoceDesechos = filteredData.filter(item => 
-        item.conoce_desechos_solidos && item.conoce_desechos_solidos.toLowerCase().includes('sí')
-      ).length;
-      const conocimientoPorcentaje = Math.round((conoceDesechos / filteredData.length) * 100);
-      document.getElementById('conocimientoDesechos').textContent = conocimientoPorcentaje + '%';
-      
-      // Porcentaje que practica reciclaje
-      const practicaReciclaje = filteredData.filter(item => 
-        item.practica_separacion_reciclaje_ingreso && item.practica_separacion_reciclaje_ingreso.toLowerCase().includes('sí')
-      ).length;
-      const reciclajePorcentaje = Math.round((practicaReciclaje / filteredData.length) * 100);
-      document.getElementById('practicaReciclaje').textContent = reciclajePorcentaje + '%';
-      
-      // Porcentaje con preocupación ambiental
-      const preocupacionAmbiental = filteredData.filter(item => 
-        item.preocupa_exceso_desechos && item.preocupa_exceso_desechos.toLowerCase().includes('sí')
-      ).length;
-      const preocupacionPorcentaje = Math.round((preocupacionAmbiental / filteredData.length) * 100);
-      document.getElementById('preocupacionAmbiental').textContent = preocupacionPorcentaje + '%';
-    }
-    
-    function updateSurveyTable() {
-      const tableBody = document.getElementById('surveyTableBody');
-      
-      if (filteredData.length === 0) {
-        tableBody.innerHTML = `
-          <tr>
-            <td colspan="9" class="text-center">No se encontraron datos que coincidan con los filtros</td>
-          </tr>
-        `;
-        return;
-      }
-      
-      let tableHTML = '';
-      
-      // Mostrar solo las primeras 50 filas para rendimiento
-      const displayData = filteredData.slice(0, 50);
-      
-      displayData.forEach(item => {
-        const fecha = item.fecha ? new Date(item.fecha).toLocaleDateString() : 'N/A';
-        const conoceDesechos = item.conoce_desechos_solidos || 'No especificado';
-        const practicaReciclaje = item.practica_separacion_reciclaje_ingreso || 'No especificado';
-        
-        tableHTML += `
-          <tr>
-            <td>${item.id || 'N/A'}</td>
-            <td>${fecha}</td>
-            <td>${item.nombre_encuestador || 'N/A'}</td>
-            <td>${item.nombre_encuestado || 'N/A'}</td>
-            <td>${item.sexo || 'N/A'}</td>
-            <td>${item.edad || 'N/A'}</td>
-            <td>${item.grupo || 'N/A'}</td>
-            <td>${conoceDesechos}</td>
-            <td>${practicaReciclaje}</td>
-          </tr>
-        `;
-      });
-      
-      tableBody.innerHTML = tableHTML;
-    }
-    
-    function updateCharts() {
-      // En una implementación real, aquí se integrarían bibliotecas como Chart.js
-      // Por ahora, mostraremos datos simulados basados en los datos reales
-      
-      // Distribución por sexo
-      const sexData = {
-        'Masculino': filteredData.filter(item => item.sexo && item.sexo.toLowerCase().includes('masc')).length,
-        'Femenino': filteredData.filter(item => item.sexo && item.sexo.toLowerCase().includes('fem')).length,
-        'No especificado': filteredData.filter(item => !item.sexo || item.sexo.trim() === '').length
-      };
-      
-      document.getElementById('sexChart').innerHTML = `
-        <div style="padding: 20px; text-align: center;">
-          <h4>Distribución por Sexo</h4>
-          <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
-            ${Object.entries(sexData).map(([key, value]) => `
-              <div style="text-align: center;">
-                <div style="width: 80px; height: 80px; border-radius: 50%; background: ${getRandomColor()}; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                  <span style="color: white; font-weight: bold;">${value}</span>
-                </div>
-                <div style="margin-top: 10px;">${key}</div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `;
-      
-      // Distribución por edad
-      const ageRanges = {
-        '18-25': filteredData.filter(item => item.edad >= 18 && item.edad <= 25).length,
-        '26-35': filteredData.filter(item => item.edad >= 26 && item.edad <= 35).length,
-        '36-45': filteredData.filter(item => item.edad >= 36 && item.edad <= 45).length,
-        '46-55': filteredData.filter(item => item.edad >= 46 && item.edad <= 55).length,
-        '56+': filteredData.filter(item => item.edad >= 56).length
-      };
-      
-      document.getElementById('ageChart').innerHTML = `
-        <div style="padding: 20px;">
-          <h4 style="text-align: center;">Distribución por Edad</h4>
-          <div style="margin-top: 20px;">
-            ${Object.entries(ageRanges).map(([range, count]) => `
-              <div style="margin-bottom: 10px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                  <span>${range} años</span>
-                  <span>${count}</span>
-                </div>
-                <div style="height: 10px; background: #e9ecef; border-radius: 5px; overflow: hidden;">
-                  <div style="height: 100%; background: ${getRandomColor()}; width: ${(count / Math.max(...Object.values(ageRanges))) * 100}%;"></div>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `;
-      
-      // Conocimiento y prácticas ambientales
-      const knowledgeData = {
-        'Conoce desechos': filteredData.filter(item => 
-          item.conoce_desechos_solidos && item.conoce_desechos_solidos.toLowerCase().includes('sí')
-        ).length,
-        'Separa desechos': filteredData.filter(item => 
-          item.separar_desechos_por_origen && item.separar_desechos_por_origen.toLowerCase().includes('sí')
-        ).length,
-        'Practica reciclaje': filteredData.filter(item => 
-          item.practica_separacion_reciclaje_ingreso && item.practica_separacion_reciclaje_ingreso.toLowerCase().includes('sí')
-        ).length,
-        'Preocupación ambiental': filteredData.filter(item => 
-          item.preocupa_exceso_desechos && item.preocupa_exceso_desechos.toLowerCase().includes('sí')
-        ).length
-      };
-      
-      document.getElementById('knowledgeChart').innerHTML = `
-        <div style="padding: 20px;">
-          <h4 style="text-align: center;">Conocimiento y Prácticas Ambientales</h4>
-          <div style="margin-top: 20px;">
-            ${Object.entries(knowledgeData).map(([label, count]) => {
-              const percentage = Math.round((count / filteredData.length) * 100);
-              return `
-                <div style="margin-bottom: 15px;">
-                  <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                    <span>${label}</span>
-                    <span>${percentage}% (${count})</span>
-                  </div>
-                  <div style="height: 15px; background: #e9ecef; border-radius: 7px; overflow: hidden;">
-                    <div style="height: 100%; background: ${getRandomColor()}; width: ${percentage}%;"></div>
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        </div>
-      `;
-    }
-    
-    function getRandomColor() {
-      const colors = [
-        '#2e8b57', '#4a6572', '#5d9cec', '#4caf50', '#ffb74d', 
-        '#e57373', '#4fc3f7', '#9c27b0', '#ff9800', '#795548'
-      ];
-      return colors[Math.floor(Math.random() * colors.length)];
-    }
-    
-    function exportData() {
-      // En una implementación real, esto generaría un archivo CSV o Excel
-      alert('Función de exportación activada. En una implementación completa, esto descargaría un archivo con los datos filtrados.');
-    }
-    
-    // Configurar event listeners para filtros
-    document.addEventListener('DOMContentLoaded', function() {
-      const dateFilter = document.getElementById('dateFilter');
-      const groupFilter = document.getElementById('groupFilter');
-      
-      if (dateFilter) {
-        dateFilter.addEventListener('change', applyFilters);
-      }
-      
-      if (groupFilter) {
-        groupFilter.addEventListener('change', applyFilters);
-      }
-    });
-    
-    function applyFilters() {
-      const dateFilter = document.getElementById('dateFilter').value;
-      const groupFilter = document.getElementById('groupFilter').value;
-      
-      filteredData = surveyData.filter(item => {
-        let matches = true;
-        
-        // Filtrar por fecha
-        if (dateFilter && item.fecha) {
-          const itemDate = new Date(item.fecha).toISOString().split('T')[0];
-          matches = matches && itemDate === dateFilter;
-        }
-        
-        // Filtrar por grupo
-        if (groupFilter && item.grupo) {
-          matches = matches && item.grupo === groupFilter;
-        }
-        
-        return matches;
-      });
-      
-      updateDashboardStats();
-      updateSurveyTable();
-      updateCharts();
-    }
-
-    // --- Sistema de Historial de Acciones ---
-    function saveAction(action) {
-      if (currentHistoryIndex < actionHistory.length - 1) {
-        actionHistory = actionHistory.slice(0, currentHistoryIndex + 1);
-      }
-      
-      actionHistory.push(action);
-      currentHistoryIndex = actionHistory.length - 1;
-      
-      if (actionHistory.length > MAX_HISTORY_SIZE) {
-        actionHistory.shift();
-        currentHistoryIndex--;
-      }
-      
-      saveToLocalStorage();
-    }
-    
-    function undoAction() {
-      if (currentHistoryIndex >= 0) {
-        const action = actionHistory[currentHistoryIndex];
-        if (action && action.undo) {
-          action.undo();
-          currentHistoryIndex--;
-          saveToLocalStorage();
-        }
-      }
-    }
-    
-    function redoAction() {
-      if (currentHistoryIndex < actionHistory.length - 1) {
-        currentHistoryIndex++;
-        const action = actionHistory[currentHistoryIndex];
-        if (action && action.redo) {
-          action.redo();
-          saveToLocalStorage();
-        }
-      }
-    }
-
-    // --- Sistema de Navegación ---
-    function addToNavigationHistory(sectionId) {
-      if (currentNavigationIndex < navigationHistory.length - 1) {
-        navigationHistory = navigationHistory.slice(0, currentNavigationIndex + 1);
-      }
-      
-      navigationHistory.push(sectionId);
-      currentNavigationIndex = navigationHistory.length - 1;
-      
-      if (navigationHistory.length > 20) {
-        navigationHistory.shift();
-        currentNavigationIndex--;
-      }
-    }
-    
-    function navigateBack() {
-      if (currentNavigationIndex > 0) {
-        currentNavigationIndex--;
-        const sectionId = navigationHistory[currentNavigationIndex];
-        showSection(sectionId, false);
-      }
-    }
-    
-    function navigateForward() {
-      if (currentNavigationIndex < navigationHistory.length - 1) {
-        currentNavigationIndex++;
-        const sectionId = navigationHistory[currentNavigationIndex];
-        showSection(sectionId, false);
-      }
-    }
-
-    // --- Sistema de localStorage ---
-    function saveToLocalStorage() {
-      if (!isLoggedIn) return;
-      
-      const saveData = {
-        content: document.getElementById('mainContent').innerHTML,
-        actionHistory: actionHistory,
-        currentHistoryIndex: currentHistoryIndex,
-        navigationHistory: navigationHistory,
-        currentNavigationIndex: currentNavigationIndex
-      };
-      
-      localStorage.setItem('wasteManagementSystem', JSON.stringify(saveData));
-    }
-    
-    function loadFromLocalStorage() {
-      const savedData = localStorage.getItem('wasteManagementSystem');
-      if (savedData) {
-        const data = JSON.parse(savedData);
-        
-        if (data.content) {
-          document.getElementById('mainContent').innerHTML = data.content;
-        }
-        
-        if (data.actionHistory) {
-          actionHistory = data.actionHistory;
-          currentHistoryIndex = data.currentHistoryIndex || -1;
-        }
-        
-        if (data.navigationHistory) {
-          navigationHistory = data.navigationHistory;
-          currentNavigationIndex = data.currentNavigationIndex || -1;
-        }
-        
-        initializeMovableElements();
-        // Actualizar altura después de cargar
-        setTimeout(updateContentHeight, 100);
-      }
-    }
-
     // --- Lógica de Navegación (SPA) ---
     function showSection(sectionId, addToHistory = true) {
         if (RESTRICTED_SECTIONS.includes(sectionId) && !isLoggedIn) {
@@ -2810,9 +2498,10 @@
         
         // Cargar datos de Supabase cuando se muestre la sección de indicadores
         if (sectionId === 'indicadores') {
-          loadSurveyData();
-          // Inicializar también los indicadores de desechos
-          inicializarIndicadoresDesechos();
+          // Inicializar el dashboard proambiental
+          initDashboardProambiental();
+          // Inicializar el dashboard de desechos de Daule
+          initDashboardDesechosDaule();
         }
         
         setTimeout(updateContentHeight, 50);
@@ -3794,189 +3483,652 @@
         }
     });
 
-    // --- CÓDIGO PARA INDICADORES DE DESECHOS ---
-    (async function(){
-      // ---------- CONFIGURACIÓN ----------
-      const SUPABASE_URL = "https://dutapywxsiuxboqsjqvf.supabase.co";
-      const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1dGFweXd4c2l1eGJvcXNqcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MTk1MTUsImV4cCI6MjA2OTI5NTUxNX0.SBIDeV_WAWlyLs-ROD1ibXtqqY5bbbh0gouY8gRB9Y4";
-      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-      // ---------- SELECTORES ----------
-      const selectLugar = document.getElementById('selectLugar');
-      const selectGrupo = document.getElementById('selectGrupo');
-      const selectTipo = document.getElementById('selectTipo');
-      const fechaDesde = document.getElementById('fechaDesde');
-      const fechaHasta = document.getElementById('fechaHasta');
-      const btnActualizar = document.getElementById('btnActualizar');
-      const btnExport = document.getElementById('btnExport');
-
-      // KPIs y tabla
-      const kpiTotal = document.getElementById('kpiTotal');
-      const kpiCount = document.getElementById('kpiCount');
-      const kpiLast = document.getElementById('kpiLast');
-      const tbody = document.querySelector('#tableResumen tbody');
-
-      // Chart.js instancia
-      const ctx = document.getElementById('mainChart').getContext('2d');
-      let chart;
-
-      // Cargar lista de filtros (lugares, grupos, fechas) desde la BD
-      async function inicializarFiltros(){
-        const q = await supabase.from('caracterizacion_desechos_daule').select('lugar, grupo, fecha_registro');
-        if(q.error){ console.error(q.error); return; }
-        const rows = q.data || [];
-
-        const lugares = [...new Set(rows.map(r=>r.lugar).filter(Boolean))].sort();
-        const grupos = [...new Set(rows.map(r=>r.grupo).filter(Boolean))].sort();
-        const fechas = [...new Set(rows.map(r=> r.fecha_registro ? new Date(r.fecha_registro).toISOString().slice(0,10) : null).filter(Boolean))].sort();
-
-        lugares.forEach(v=> selectLugar.appendChild(Object.assign(document.createElement('option'),{value:v,textContent:v})));
-        grupos.forEach(v=> selectGrupo.appendChild(Object.assign(document.createElement('option'),{value:v,textContent:v})));
-        fechas.forEach(v=> selectFechaOption(v));
-        // helper: put latest fecha as default 'hasta'
-        if(fechas.length) fechaHasta.value = fechas[fechas.length-1];
+    // --- Sistema de Historial de Acciones ---
+    function saveAction(action) {
+      if (currentHistoryIndex < actionHistory.length - 1) {
+        actionHistory = actionHistory.slice(0, currentHistoryIndex + 1);
       }
-
-      function selectFechaOption(valor){
-        const el = document.getElementById('filtroFechaHidden');
-        // not used; keep for potential extension
-        const opt = document.createElement('option');
-        opt.value = valor; opt.textContent = valor;
+      
+      actionHistory.push(action);
+      currentHistoryIndex = actionHistory.length - 1;
+      
+      if (actionHistory.length > MAX_HISTORY_SIZE) {
+        actionHistory.shift();
+        currentHistoryIndex--;
       }
-
-      // Construir query según filtros y traer datos
-      async function obtenerFiltrados(){
-        let q = supabase.from('caracterizacion_desechos_daule').select('*');
-        if(selectLugar.value) q = q.eq('lugar', selectLugar.value);
-        if(selectGrupo.value) q = q.eq('grupo', selectGrupo.value);
-        // Manejo de fechas: si ambas definidas, filtramos por rango fecha_registro entre desde y hasta (inclusive)
-        if(fechaDesde.value && fechaHasta.value){
-          const desde = new Date(fechaDesde.value).toISOString();
-          // add 1 day to include the whole 'hasta' day
-          const hastaDate = new Date(fechaHasta.value);
-          hastaDate.setDate(hastaDate.getDate() + 1);
-          const hasta = hastaDate.toISOString();
-          q = q.gte('fecha_registro', desde).lt('fecha_registro', hasta);
-        } else if(fechaDesde.value){
-          q = q.gte('fecha_registro', new Date(fechaDesde.value).toISOString());
-        } else if(fechaHasta.value){
-          const hastaDate = new Date(fechaHasta.value);
-          hastaDate.setDate(hastaDate.getDate() + 1);
-          q = q.lt('fecha_registro', hastaDate.toISOString());
+      
+      saveToLocalStorage();
+    }
+    
+    function undoAction() {
+      if (currentHistoryIndex >= 0) {
+        const action = actionHistory[currentHistoryIndex];
+        if (action && action.undo) {
+          action.undo();
+          currentHistoryIndex--;
+          saveToLocalStorage();
         }
-        const r = await q;
-        if(r.error){ console.error(r.error); return []; }
-        return r.data || [];
+      }
+    }
+    
+    function redoAction() {
+      if (currentHistoryIndex < actionHistory.length - 1) {
+        currentHistoryIndex++;
+        const action = actionHistory[currentHistoryIndex];
+        if (action && action.redo) {
+          action.redo();
+          saveToLocalStorage();
+        }
+      }
+    }
+
+    // --- Sistema de Navegación ---
+    function addToNavigationHistory(sectionId) {
+      if (currentNavigationIndex < navigationHistory.length - 1) {
+        navigationHistory = navigationHistory.slice(0, currentNavigationIndex + 1);
+      }
+      
+      navigationHistory.push(sectionId);
+      currentNavigationIndex = navigationHistory.length - 1;
+      
+      if (navigationHistory.length > 20) {
+        navigationHistory.shift();
+        currentNavigationIndex--;
+      }
+    }
+    
+    function navigateBack() {
+      if (currentNavigationIndex > 0) {
+        currentNavigationIndex--;
+        const sectionId = navigationHistory[currentNavigationIndex];
+        showSection(sectionId, false);
+      }
+    }
+    
+    function navigateForward() {
+      if (currentNavigationIndex < navigationHistory.length - 1) {
+        currentNavigationIndex++;
+        const sectionId = navigationHistory[currentNavigationIndex];
+        showSection(sectionId, false);
+      }
+    }
+
+    // --- Sistema de localStorage ---
+    function saveToLocalStorage() {
+      if (!isLoggedIn) return;
+      
+      const saveData = {
+        content: document.getElementById('mainContent').innerHTML,
+        actionHistory: actionHistory,
+        currentHistoryIndex: currentHistoryIndex,
+        navigationHistory: navigationHistory,
+        currentNavigationIndex: currentNavigationIndex
+      };
+      
+      localStorage.setItem('wasteManagementSystem', JSON.stringify(saveData));
+    }
+    
+    function loadFromLocalStorage() {
+      const savedData = localStorage.getItem('wasteManagementSystem');
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        
+        if (data.content) {
+          document.getElementById('mainContent').innerHTML = data.content;
+        }
+        
+        if (data.actionHistory) {
+          actionHistory = data.actionHistory;
+          currentHistoryIndex = data.currentHistoryIndex || -1;
+        }
+        
+        if (data.navigationHistory) {
+          navigationHistory = data.navigationHistory;
+          currentNavigationIndex = data.currentNavigationIndex || -1;
+        }
+        
+        initializeMovableElements();
+        // Actualizar altura después de cargar
+        setTimeout(updateContentHeight, 100);
+      }
+    }
+
+    // --- DASHBOARD PROAMBIENTAL ---
+    function initDashboardProambiental() {
+      /**************************************************************************
+       * CONFIGURACIÓN SUPABASE (ya con tus credenciales proporcionadas)
+       * Nota: Ya diste la URL y la ANON KEY — si decides cambiarlas, actualiza aquí.
+       **************************************************************************/
+      const SUPABASE_URL = "https://dutapywxsiuxboqsjqvf.supabase.co";
+      const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1dGFweXd4c2l1eGJvcXNqcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MTk1MTUsImV4cCI6MjA2OTI5NTUxNX0.SBIDeV_WAWlyLs-ROD1ibXtqqY5bbbh0gouY8gRB9Y4";
+
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+      const TABLE_NAME = "cuestionario_comportamiento_proambiental_autosustentabilidad";
+
+      /**************************************************************************
+       * INDICADORES configurables: cada entrada tiene:
+       *  - id: clave interna
+       *  - title: título visible
+       *  - type: 'likert' | 'categorical' | 'numeric' (define cómo procesar)
+       *  - fields: columnas relacionadas (array)
+       **************************************************************************/
+      const INDICADORES = [
+        { id: "sexo", title: "Distribución por sexo", type: "categorical", fields: ["sexo"] },
+        { id: "promedio_edad", title: "Promedio de edad", type: "numeric", fields: ["edad"] },
+        { id: "educacion_jefe", title: "Nivel de educación del jefe del hogar", type: "categorical", fields: ["educacion_jefe_hogar"] },
+        { id: "separa_desechos", title: "¿Practica separación de residuos en su hogar?", type: "categorical", fields: ["practica_separacion_reciclaje_ingreso"] },
+        { id: "conocimiento_desechos", title: "Conocimiento sobre desechos sólidos (Likert)", type: "likert", fields: ["conoce_desechos_solidos"] },
+        { id: "dispuesto_talleres", title: "Disposición a participar en talleres (Likert)", type: "likert", fields: ["participaria_talleres_buenas_practicas"] },
+        { id: "dispuesto_emprender", title: "Dispuesto a participar en emprendimientos (Likert)", type: "likert", fields: ["dispuesto_participar_emprendimiento_desechos"] },
+        { id: "emprendimiento_economico", title: "Percepción: emprendimientos aportan a la economía (Likert)", type: "likert", fields: ["emprendimientos_reutilizacion_aportan_economia"] },
+        { id: "impacto_medio", title: "Considera que los desechos contaminan el ambiente (Likert)", type: "likert", fields: ["desechos_contaminan_ambiente"] }
+      ];
+
+      /**************************************************************************
+       * UTILIDADES: manejo de Likert, conteos, transformación para Chart.js
+       **************************************************************************/
+      const LIKERT_LEVELS = [
+        "Totalmente en desacuerdo",
+        "En desacuerdo",
+        "Indiferente",
+        "De acuerdo",
+        "Totalmente de acuerdo"
+      ];
+
+      // map para normalizar respuestas (minimizar errores por mayúsculas/minúsculas/acentos)
+      function normalizeStr(s) {
+        if (s === null || s === undefined) return null;
+        return String(s).trim();
       }
 
-      // Procesa filas y calcula totales por columna *_kg
-      function resumenPorCategorias(rows){
-        if(!rows || rows.length===0) return {labels:[],values:[],totalesObj:{},totalSum:0,lastDate:null};
-        const totales = {};
-        rows.forEach(row=>{
-          Object.entries(row).forEach(([k,v])=>{
-            if(k.endsWith('_kg')){
-              const val = parseFloat(v) || 0;
-              totales[k] = (totales[k] || 0) + val;
-            }
-          })
+      // cuenta valores categóricos y devuelve labels/values ordenados
+      function contarCategorico(values) {
+        const counts = {};
+        values.forEach(v => {
+          const x = normalizeStr(v) ?? "No declarado";
+          counts[x] = (counts[x] || 0) + 1;
         });
-        const labels = Object.keys(totales).sort(); // orden alfabético por clave
-        const values = labels.map(l=> totales[l]);
-        const totalSum = values.reduce((a,b)=>a+b,0);
-        // fecha última en el conjunto
-        const lastDate = rows.map(r=> r.fecha_registro ? new Date(r.fecha_registro) : null).filter(Boolean).sort((a,b)=>b-a)[0] || null;
-        return {labels,values,totalesObj:totales,totalSum,lastDate};
+        // ordenar por mayor a menor
+        const entries = Object.entries(counts).sort((a,b)=> b[1]-a[1]);
+        return { labels: entries.map(e => e[0]), values: entries.map(e => e[1]) };
       }
 
-      // Render chart con Chart.js
-      function renderChart(tipo, labels, values){
-        const friendlyLabels = labels.map(l=> l.replace(/_/g,' ').replace('kg','').toUpperCase());
-        // colores consistentes (HSL)
-        const colors = friendlyLabels.map((_,i)=> `hsl(${(i*47)%360} 70% 55%)`);
-        if(chart) chart.destroy();
-        chart = new Chart(ctx, {
-          type: tipo === 'line' ? 'line' : tipo,
-          data: {
-            labels: friendlyLabels,
-            datasets: [{
-              label: 'Kg',
-              data: values,
-              backgroundColor: colors,
-              borderColor: 'rgba(0,0,0,0.06)',
-              borderWidth: 1
-            }]
-          },
-          options: {
-            responsive:true,
-            plugins:{
-              legend:{position:'bottom'},
-              title:{display:true,text:'Distribución de desechos (kg)'}
-            },
-            scales: tipo==='bar' || tipo==='line' ? { y:{beginAtZero:true}} : {}
+      // cuenta Likert, devolviendo en orden LIKERT_LEVELS
+      function contarLikert(values) {
+        const lowerMap = LIKERT_LEVELS.map(l => l.toLowerCase());
+        const counts = LIKERT_LEVELS.map(() => 0);
+        values.forEach(v => {
+          const s = normalizeStr(v);
+          if (!s) return;
+          const idx = lowerMap.indexOf(s.toLowerCase());
+          if (idx !== -1) counts[idx] += 1;
+          else {
+            // si la respuesta no coincide exactamente, intentar coincidencia parcial (e.g., "de acuerdo")
+            const found = lowerMap.findIndex(l => s.toLowerCase().includes(l.split(' ')[0]));
+            if (found !== -1) counts[found] += 1;
           }
         });
+        return { labels: LIKERT_LEVELS.slice(), values: counts };
       }
 
-      // Rellenar tabla resumen y KPIs
-      function renderResumen(labels, values, totalSum, lastDate){
-        tbody.innerHTML = '';
-        const friendlyLabels = labels.map(l=> l.replace(/_/g,' ').replace('kg','').toUpperCase());
-        friendlyLabels.forEach((lab,i)=>{
-          const v = values[i];
-          if(v <= 0) return;
-          const tr = document.createElement('tr');
-          const pct = totalSum>0 ? ((v/totalSum)*100).toFixed(2)+'%' : '0.00%';
-          tr.innerHTML = `<td>${lab}</td><td style="text-align:right">${v.toFixed(2)}</td><td style="text-align:right">${pct}</td>`;
-          tbody.appendChild(tr);
-        });
-        kpiTotal.textContent = totalSum.toFixed(2);
-        kpiCount.textContent = friendlyLabels.filter((_,i)=> values[i]>0).length;
-        kpiLast.textContent = lastDate ? new Date(lastDate).toLocaleString() : '-';
+      // preparar datos para scatter/bubble: convertir índices a puntos
+      function countsToScatter(values) {
+        // values: [v0, v1, ...] -> [{x:0, y:v0}, ...]
+        return values.map((v,i) => ({ x: i + 1, y: v }));
+      }
+      function countsToBubble(values) {
+        // size proporcional al valor
+        const max = Math.max(...values, 1);
+        return values.map((v,i) => ({ x: i + 1, y: v, r: Math.max(3, (v / max) * 20) }));
       }
 
-      // Acción principal: obtener datos, procesar y renderizar
-      async function actualizar(){
-        btnActualizar.disabled = true;
-        btnActualizar.textContent = 'Cargando...';
-        try{
-          const rows = await obtenerFiltrados();
-          const {labels,values,totalesObj,totalSum,lastDate} = resumenPorCategorias(rows);
-          renderChart(selectTipo.value, labels, values);
-          renderResumen(labels, values, totalSum, lastDate);
-        }catch(err){
-          console.error(err);
-          alert('Error al actualizar. Revisa la consola.');
-        }finally{
-          btnActualizar.disabled = false;
-          btnActualizar.textContent = 'Actualizar';
+      /**************************************************************************
+       * RENDER: Chart.js instancia única (se destruye y recrea cuando cambian)
+       **************************************************************************/
+      let chart = null;
+
+      function destroyChart() {
+        if (chart) {
+          try { chart.destroy(); } catch(e) {}
+          chart = null;
         }
       }
 
-      // Exportar PNG
-      btnExport.addEventListener('click', ()=>{
-        if(!chart){ alert('Gráfico no disponible'); return; }
-        const a = document.createElement('a');
-        a.href = chart.toBase64Image();
-        a.download = 'grafico-indicadores.png';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      });
+      function renderChart(type, labels, dataValues, title) {
+        const ctx = document.getElementById("chartCanvas").getContext("2d");
+        destroyChart();
 
-      // Listeners
-      btnActualizar.addEventListener('click', actualizar);
+        // ajustes para tipos especiales
+        let config = null;
+        if (type === "scatter") {
+          config = {
+            type: 'scatter',
+            data: { datasets: [{ label: title, data: countsToScatter(dataValues), backgroundColor: "#2a9d8f" }] },
+            options: { scales: { x: { title: { display: true, text: 'Índice' } }, y: { beginAtZero: true } } }
+          };
+        } else if (type === "bubble") {
+          config = {
+            type: 'bubble',
+            data: { datasets: [{ label: title, data: countsToBubble(dataValues), backgroundColor: "#2a9d8f" }] },
+            options: { scales: { x: { title: { display: true, text: 'Índice' } }, y: { beginAtZero: true } } }
+          };
+        } else if (type === "mixed") {
+          // mixed: barras para totales + línea superpuesta
+          config = {
+            data: {
+              labels,
+              datasets: [
+                { type: 'bar', label: 'Conteo', data: dataValues, backgroundColor: "#2a9d8f" },
+                { type: 'line', label: 'Tendencia', data: dataValues.map((v,i)=> i>0? (dataValues[i]+dataValues[i-1])/2 : dataValues[i]), borderColor: "#e76f51", tension: 0.3, fill: false, yAxisID: 'y' }
+              ]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: true } } }
+          };
+        } else {
+          // tipos: bar, pie, doughnut, line, radar, polarArea
+          const dataset = {
+            label: title,
+            data: dataValues,
+            backgroundColor: [
+              "#2a9d8f","#e76f51","#457b9d","#f4a261","#8ab17d","#c084fc","#60a5fa","#f472b6","#9ca3af"
+            ].slice(0, labels.length),
+            borderColor: "#ffffff",
+            borderWidth: 0.6
+          };
+          config = {
+            type,
+            data: { labels, datasets: [dataset] },
+            options: { responsive: true, scales: type === 'bar' ? { y: { beginAtZero: true } } : {} }
+          };
+        }
 
-      // Inicialización
-      function inicializarIndicadoresDesechos() {
-        inicializarFiltros();
-        // Render inicial
-        actualizar();
+        chart = new Chart(ctx, config);
       }
 
-      // Hacer la función accesible globalmente
-      window.inicializarIndicadoresDesechos = inicializarIndicadoresDesechos;
-    })();
+      /**************************************************************************
+       * FUNCIONES PRINCIPALES: fetch, procesar y mostrar
+       **************************************************************************/
+      async function fetchDatos() {
+        // Traer todos los registros (puedes añadir .order() o filtros aquí)
+        const { data, error } = await supabase
+          .from(TABLE_NAME)
+          .select("*");
+
+        if (error) {
+          console.error("Error Supabase:", error);
+          return { data: [], error };
+        }
+        return { data, error: null };
+      }
+
+      // actualizar resúmenes superiores (totales, promedios)
+      function actualizarResumenes(data) {
+        const total = data.length;
+        document.getElementById("totalEncuestas").innerText = total;
+
+        const edades = data.map(d => Number(d.edad)).filter(n => !isNaN(n));
+        const promedio = edades.length ? (edades.reduce((a,b)=>a+b,0)/edades.length).toFixed(1) : "—";
+        document.getElementById("promedioEdad").innerText = promedio === "—" ? "—" : `${promedio} años`;
+
+        // porcentaje que indica separación en hogar (consideramos respuestas que contienen 'si' o 'de acuerdo' como positivo)
+        const separa = data.map(d => normalizeStr(d.practica_separacion_reciclaje_ingreso)).filter(Boolean);
+        const separaPos = separa.filter(s => /si|sí|de acuerdo|totalmente de acuerdo|deacuerdo/i.test(s)).length;
+        const porcSepara = separa.length ? Math.round((separaPos / separa.length) * 100) : "—";
+        document.getElementById("porcentajeSepara").innerText = porcSepara === "—" ? "—" : `${porcSepara}%`;
+
+        // porcentaje que participaría en talleres
+        const talleres = data.map(d => normalizeStr(d.participaria_talleres_buenas_practicas)).filter(Boolean);
+        const talleresPos = talleres.filter(s => /si|sí|de acuerdo|totalmente de acuerdo/i.test(s)).length;
+        const porcTaller = talleres.length ? Math.round((talleresPos / talleres.length) * 100) : "—";
+        document.getElementById("porcentajeTalleres").innerText = porcTaller === "—" ? "—" : `${porcTaller}%`;
+      }
+
+      // genera el dataset y renderiza según la selección
+      async function generarIndicador(tipoIndicadorId, tipoGrafico, filtros = {}) {
+        const { data, error } = await fetchDatos();
+        if (error) {
+          document.getElementById("mensajeSinDatos").classList.remove("d-none");
+          return;
+        }
+
+        // aplicar filtros simples (sexo y grupo)
+        let filtered = data.slice();
+        if (filtros.sexo && filtros.sexo !== "todos") {
+          filtered = filtered.filter(r => (r.sexo || "").toLowerCase() === filtros.sexo.toLowerCase());
+        }
+        if (filtros.grupo && filtros.grupo !== "todos") {
+          filtered = filtered.filter(r => (r.grupo || "").toLowerCase() === filtros.grupo.toLowerCase());
+        }
+
+        actualizarResumenes(filtered);
+
+        // encontrar indicador
+        const indicador = INDICADORES.find(i => i.id === tipoIndicadorId);
+        if (!indicador) {
+          console.warn("Indicador no encontrado:", tipoIndicadorId);
+          return;
+        }
+
+        let labels = [], values = [];
+
+        if (indicador.type === "categorical") {
+          // tomamos la primera columna listada
+          const col = indicador.fields[0];
+          const arr = filtered.map(r => r[col]);
+          const res = contarCategorico(arr);
+          labels = res.labels;
+          values = res.values;
+        } else if (indicador.type === "numeric") {
+          const col = indicador.fields[0];
+          const nums = filtered.map(r => Number(r[col])).filter(n => !isNaN(n));
+          if (!nums.length) {
+            labels = ["No hay datos"];
+            values = [0];
+          } else {
+            // ejemplo: mostrar histograma simple por rangos (0-10,11-25,26-50,51-90)
+            const ranges = [
+              { label: "0-10", min: 0, max: 10, count: 0 },
+              { label: "11-25", min: 11, max: 25, count: 0 },
+              { label: "26-50", min: 26, max: 50, count: 0 },
+              { label: "51-90", min: 51, max: 90, count: 0 }
+            ];
+            nums.forEach(n => {
+              const r = ranges.find(rr => n >= rr.min && n <= rr.max);
+              if (r) r.count++;
+            });
+            labels = ranges.map(r => r.label);
+            values = ranges.map(r => r.count);
+          }
+        } else if (indicador.type === "likert") {
+          // campo principal
+          const col = indicador.fields[0];
+          const arr = filtered.map(r => r[col]);
+          const res = contarLikert(arr);
+          labels = res.labels;
+          values = res.values;
+        }
+
+        // si no hay valores válidos
+        const totalValues = values.reduce((a,b)=>a+b,0);
+        if (totalValues === 0) {
+          document.getElementById("mensajeSinDatos").classList.remove("d-none");
+          destroyChart();
+        } else {
+          document.getElementById("mensajeSinDatos").classList.add("d-none");
+          // título
+          document.getElementById("tituloPrincipal").innerText = indicador.title;
+          document.getElementById("subtituloPrincipal").innerText = `Tipo: ${tipoGrafico} — ${filtered.length} respuestas (filtros aplicados)`;
+          renderChart(tipoGrafico, labels, values, indicador.title);
+        }
+      }
+
+      /**************************************************************************
+       * UI: rellenar selector de indicadores, grupos (si existen), y listeners
+       **************************************************************************/
+      function initUI() {
+        const sel = document.getElementById("selectIndicador");
+        INDICADORES.forEach(i => {
+          const opt = document.createElement("option");
+          opt.value = i.id;
+          opt.textContent = i.title;
+          sel.appendChild(opt);
+        });
+
+        // intentar rellenar filtro grupo (consultando datos y extrayendo grupos)
+        // Se hace en la primera carga de datos (función loadInitialData).
+
+        // listeners
+        document.getElementById("btnActualizar").addEventListener("click", async () => {
+          const indicador = document.getElementById("selectIndicador").value;
+          const tipoGrafico = document.getElementById("selectTipoGrafico").value;
+          const sexo = document.getElementById("filtroSexo").value;
+          const grupo = document.getElementById("filtroGrupo").value;
+          await generarIndicador(indicador, tipoGrafico, { sexo, grupo });
+        });
+
+        document.getElementById("btnExportarImagen").addEventListener("click", () => {
+          if (!chart) return alert("No hay gráfico para exportar.");
+          const link = document.createElement("a");
+          link.href = document.getElementById("chartCanvas").toDataURL("image/png", 1);
+          link.download = `indicador_${Date.now()}.png`;
+          link.click();
+        });
+
+        // cambio de tipo de gráfico también puede actualizar al instante (opcional)
+        document.getElementById("selectTipoGrafico").addEventListener("change", () => {
+          // solo re-render si ya hay datos (mejor usar botón Actualizar)
+        });
+      }
+
+      // cargar datos iniciales y popular dropdown de grupos
+      async function loadInitialData() {
+        const { data, error } = await fetchDatos();
+        if (error) {
+          document.getElementById("mensajeSinDatos").classList.remove("d-none");
+          return;
+        }
+
+        // popular filtro grupo si existen valores
+        const grupos = Array.from(new Set(data.map(d => normalizeStr(d.grupo)).filter(Boolean)));
+        const selGrupo = document.getElementById("filtroGrupo");
+        // limpiar opciones extra (solo si tenemos valores)
+        if (grupos.length) {
+          // agregar opciones después de 'todos'
+          grupos.forEach(g => {
+            const opt = document.createElement("option");
+            opt.value = g;
+            opt.textContent = g;
+            selGrupo.appendChild(opt);
+          });
+        }
+
+        // actualizar resumenes iniciales y mostrar indicador por defecto
+        actualizarResumenes(data);
+        // mostrar primer indicador por defecto con tipo 'bar'
+        const primerIndicador = INDICADORES[0].id;
+        document.getElementById("selectIndicador").value = primerIndicador;
+        await generarIndicador(primerIndicador, document.getElementById("selectTipoGrafico").value, { sexo: "todos", grupo: "todos" });
+      }
+
+      /**************************************************************************
+       * Inicialización
+       **************************************************************************/
+      (async function main() {
+        initUI();
+        await loadInitialData();
+
+        // (Opcional) Actualización automática cada N segundos:
+        // setInterval(async () => {
+        //   const indicador = document.getElementById("selectIndicador").value;
+        //   const tipoGrafico = document.getElementById("selectTipoGrafico").value;
+        //   const sexo = document.getElementById("filtroSexo").value;
+        //   const grupo = document.getElementById("filtroGrupo").value;
+        //   await generarIndicador(indicador, tipoGrafico, { sexo, grupo });
+        // }, 60000); // cada minuto
+      })();
+    }
+
+    // --- DASHBOARD DE INDICADORES DE DESECHOS - DAULE ---
+    function initDashboardDesechosDaule() {
+      (async function(){
+        // ---------- CONFIGURACIÓN ----------
+        const SUPABASE_URL = "https://dutapywxsiuxboqsjqvf.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1dGFweXd4c2l1eGJvcXNqcXZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MTk1MTUsImV4cCI6MjA2OTI5NTUxNX0.SBIDeV_WAWlyLs-ROD1ibXtqqY5bbbh0gouY8gRB9Y4";
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // ---------- SELECTORES ----------
+        const selectLugar = document.getElementById('selectLugar');
+        const selectGrupo = document.getElementById('selectGrupo');
+        const selectTipo = document.getElementById('selectTipo');
+        const fechaDesde = document.getElementById('fechaDesde');
+        const fechaHasta = document.getElementById('fechaHasta');
+        const btnActualizar = document.getElementById('btnActualizarDesechos');
+        const btnExport = document.getElementById('btnExport');
+
+        // KPIs y tabla
+        const kpiTotal = document.getElementById('kpiTotal');
+        const kpiCount = document.getElementById('kpiCount');
+        const kpiLast = document.getElementById('kpiLast');
+        const tbody = document.querySelector('#tableResumen tbody');
+
+        // Chart.js instancia
+        const ctx = document.getElementById('mainChart').getContext('2d');
+        let chart;
+
+        // Cargar lista de filtros (lugares, grupos, fechas) desde la BD
+        async function inicializarFiltros(){
+          const q = await supabase.from('caracterizacion_desechos_daule').select('lugar, grupo, fecha_registro');
+          if(q.error){ console.error(q.error); return; }
+          const rows = q.data || [];
+
+          const lugares = [...new Set(rows.map(r=>r.lugar).filter(Boolean))].sort();
+          const grupos = [...new Set(rows.map(r=>r.grupo).filter(Boolean))].sort();
+          const fechas = [...new Set(rows.map(r=> r.fecha_registro ? new Date(r.fecha_registro).toISOString().slice(0,10) : null).filter(Boolean))].sort();
+
+          lugares.forEach(v=> selectLugar.appendChild(Object.assign(document.createElement('option'),{value:v,textContent:v})));
+          grupos.forEach(v=> selectGrupo.appendChild(Object.assign(document.createElement('option'),{value:v,textContent:v})));
+          fechas.forEach(v=> selectFechaOption(v));
+          // helper: put latest fecha as default 'hasta'
+          if(fechas.length) fechaHasta.value = fechas[fechas.length-1];
+        }
+
+        function selectFechaOption(valor){
+          const el = document.getElementById('filtroFechaHidden');
+          // not used; keep for potential extension
+          const opt = document.createElement('option');
+          opt.value = valor; opt.textContent = valor;
+        }
+
+        // Construir query según filtros y traer datos
+        async function obtenerFiltrados(){
+          let q = supabase.from('caracterizacion_desechos_daule').select('*');
+          if(selectLugar.value) q = q.eq('lugar', selectLugar.value);
+          if(selectGrupo.value) q = q.eq('grupo', selectGrupo.value);
+          // Manejo de fechas: si ambas definidas, filtramos por rango fecha_registro entre desde y hasta (inclusive)
+          if(fechaDesde.value && fechaHasta.value){
+            const desde = new Date(fechaDesde.value).toISOString();
+            // add 1 day to include the whole 'hasta' day
+            const hastaDate = new Date(fechaHasta.value);
+            hastaDate.setDate(hastaDate.getDate() + 1);
+            const hasta = hastaDate.toISOString();
+            q = q.gte('fecha_registro', desde).lt('fecha_registro', hasta);
+          } else if(fechaDesde.value){
+            q = q.gte('fecha_registro', new Date(fechaDesde.value).toISOString());
+          } else if(fechaHasta.value){
+            const hastaDate = new Date(fechaHasta.value);
+            hastaDate.setDate(hastaDate.getDate() + 1);
+            q = q.lt('fecha_registro', hastaDate.toISOString());
+          }
+          const r = await q;
+          if(r.error){ console.error(r.error); return []; }
+          return r.data || [];
+        }
+
+        // Procesa filas y calcula totales por columna *_kg
+        function resumenPorCategorias(rows){
+          if(!rows || rows.length===0) return {labels:[],values:[],totalesObj:{},totalSum:0,lastDate:null};
+          const totales = {};
+          rows.forEach(row=>{
+            Object.entries(row).forEach(([k,v])=>{
+              if(k.endsWith('_kg')){
+                const val = parseFloat(v) || 0;
+                totales[k] = (totales[k] || 0) + val;
+              }
+            })
+          });
+          const labels = Object.keys(totales).sort(); // orden alfabético por clave
+          const values = labels.map(l=> totales[l]);
+          const totalSum = values.reduce((a,b)=>a+b,0);
+          // fecha última en el conjunto
+          const lastDate = rows.map(r=> r.fecha_registro ? new Date(r.fecha_registro) : null).filter(Boolean).sort((a,b)=>b-a)[0] || null;
+          return {labels,values,totalesObj:totales,totalSum,lastDate};
+        }
+
+        // Render chart con Chart.js
+        function renderChart(tipo, labels, values){
+          const friendlyLabels = labels.map(l=> l.replace(/_/g,' ').replace('kg','').toUpperCase());
+          // colores consistentes (HSL)
+          const colors = friendlyLabels.map((_,i)=> `hsl(${(i*47)%360} 70% 55%)`);
+          if(chart) chart.destroy();
+          chart = new Chart(ctx, {
+            type: tipo === 'line' ? 'line' : tipo,
+            data: {
+              labels: friendlyLabels,
+              datasets: [{
+                label: 'Kg',
+                data: values,
+                backgroundColor: colors,
+                borderColor: 'rgba(0,0,0,0.06)',
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive:true,
+              plugins:{
+                legend:{position:'bottom'},
+                title:{display:true,text:'Distribución de desechos (kg)'}
+              },
+              scales: tipo==='bar' || tipo==='line' ? { y:{beginAtZero:true}} : {}
+            }
+          });
+        }
+
+        // Rellenar tabla resumen y KPIs
+        function renderResumen(labels, values, totalSum, lastDate){
+          tbody.innerHTML = '';
+          const friendlyLabels = labels.map(l=> l.replace(/_/g,' ').replace('kg','').toUpperCase());
+          friendlyLabels.forEach((lab,i)=>{
+            const v = values[i];
+            if(v <= 0) return;
+            const tr = document.createElement('tr');
+            const pct = totalSum>0 ? ((v/totalSum)*100).toFixed(2)+'%' : '0.00%';
+            tr.innerHTML = `<td>${lab}</td><td style="text-align:right">${v.toFixed(2)}</td><td style="text-align:right">${pct}</td>`;
+            tbody.appendChild(tr);
+          });
+          kpiTotal.textContent = totalSum.toFixed(2);
+          kpiCount.textContent = friendlyLabels.filter((_,i)=> values[i]>0).length;
+          kpiLast.textContent = lastDate ? new Date(lastDate).toLocaleString() : '-';
+        }
+
+        // Acción principal: obtener datos, procesar y renderizar
+        async function actualizar(){
+          btnActualizar.disabled = true;
+          btnActualizar.textContent = 'Cargando...';
+          try{
+            const rows = await obtenerFiltrados();
+            const {labels,values,totalesObj,totalSum,lastDate} = resumenPorCategorias(rows);
+            renderChart(selectTipo.value, labels, values);
+            renderResumen(labels, values, totalSum, lastDate);
+          }catch(err){
+            console.error(err);
+            alert('Error al actualizar. Revisa la consola.');
+          }finally{
+            btnActualizar.disabled = false;
+            btnActualizar.textContent = 'Actualizar';
+          }
+        }
+
+        // Exportar PNG
+        btnExport.addEventListener('click', ()=>{
+          if(!chart){ alert('Gráfico no disponible'); return; }
+          const a = document.createElement('a');
+          a.href = chart.toBase64Image();
+          a.download = 'grafico-indicadores.png';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        });
+
+        // Listeners
+        btnActualizar.addEventListener('click', actualizar);
+
+        // Inicialización
+        await inicializarFiltros();
+        // Render inicial
+        await actualizar();
+
+      })();
+    }
   </script>
 </body>
 </html>
