@@ -44,7 +44,7 @@
     /* Estilos Generales optimizados con colores más claros */
     body { 
       background-color: var(--light-color); 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
       line-height: 1.6;
       color: var(--dark-color);
       padding-top: constant(safe-area-inset-top);
@@ -898,6 +898,185 @@
       margin-bottom: 1.5rem;
     }
     
+    /* Estilos para la sección de Indicadores Avanzados */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      transition: var(--transition);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .stat-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+    
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--dark-color);
+    }
+    
+    .stat-label {
+      font-size: 1rem;
+      color: var(--secondary-color);
+      font-weight: 500;
+    }
+    
+    .chart-wrapper {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
+    }
+    
+    .chart-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--secondary-color);
+    }
+    
+    .chart-placeholder {
+      height: 300px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary-color);
+      font-weight: 500;
+    }
+    
+    .data-table-container {
+      background: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
+    }
+    
+    .table-responsive {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    
+    .filter-section {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
+    }
+    
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .last-update {
+      font-size: 0.85rem;
+      color: var(--secondary-color);
+      text-align: right;
+      margin-top: 1rem;
+    }
+    
+    .data-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+    }
+    
+    .export-btn {
+      background: var(--success-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .export-btn:hover {
+      background: #3d8b40;
+      transform: translateY(-2px);
+    }
+    
+    .refresh-btn {
+      background: var(--info-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .refresh-btn:hover {
+      background: #29b6f6;
+      transform: translateY(-2px);
+    }
+    
+    .data-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: #e8f5e9;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    
+    .data-status.connected {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    
+    .data-status.error {
+      background: #ffebee;
+      color: #c62828;
+    }
+    
+    .data-status i {
+      font-size: 1.2rem;
+    }
+
     /* ESTILOS ESPECÍFICOS PARA LA SECCIÓN DE FORMULARIOS */
     .inspiration-section {
       background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -1364,8 +1543,8 @@
       justify-content: center;
     }
 
-    /* NUEVOS ESTILOS PARA LA SECCIÓN DE INDICADORES PROAMBIENTALES */
-    .indicadores-proambientales {
+    /* ESTILOS PARA EL ANÁLISIS DE COMPORTAMIENTO PROAMBIENTAL */
+    .proambiental-dashboard {
       --primary: #0f766e;
       --primary-light: #14b8a6;
       --primary-dark: #0d5d57;
@@ -1381,10 +1560,9 @@
       --border: #e2e8f0;
       --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
       --radius: 12px;
-      --header-height: 80px;
     }
-    
-    .indicadores-proambientales .card {
+
+    .proambiental-dashboard .card {
       background: var(--card);
       border-radius: var(--radius);
       padding: 24px;
@@ -1394,12 +1572,12 @@
       transition: transform 0.2s, box-shadow 0.2s;
     }
     
-    .indicadores-proambientales .card:hover {
+    .proambiental-dashboard .card:hover {
       transform: translateY(-2px);
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
     
-    .indicadores-proambientales .card-title {
+    .proambiental-dashboard .card-title {
       color: var(--primary);
       font-size: 18px;
       font-weight: 600;
@@ -1411,19 +1589,19 @@
       padding-bottom: 12px;
     }
     
-    .indicadores-proambientales .controls {
+    .proambiental-dashboard .controls {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
       margin-bottom: 20px;
     }
     
-    .indicadores-proambientales .control-group {
+    .proambiental-dashboard .control-group {
       display: flex;
       flex-direction: column;
     }
     
-    .indicadores-proambientales .control-group label {
+    .proambiental-dashboard .control-group label {
       font-size: 14px;
       font-weight: 500;
       margin-bottom: 6px;
@@ -1433,14 +1611,14 @@
       gap: 6px;
     }
     
-    .indicadores-proambientales .filter-info {
+    .proambiental-dashboard .filter-info {
       font-size: 11px;
       color: var(--muted);
       margin-top: 4px;
       font-style: italic;
     }
     
-    .indicadores-proambientales select {
+    .proambiental-dashboard select {
       padding: 12px 14px;
       border-radius: 8px;
       border: 1px solid var(--border);
@@ -1456,13 +1634,13 @@
       padding-right: 40px;
     }
     
-    .indicadores-proambientales select:focus {
+    .proambiental-dashboard select:focus {
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
     }
     
-    .indicadores-proambientales button {
+    .proambiental-dashboard button {
       background: var(--primary);
       color: white;
       border: none;
@@ -1478,35 +1656,35 @@
       font-size: 14px;
     }
     
-    .indicadores-proambientales button:hover {
+    .proambiental-dashboard button:hover {
       background: var(--primary-dark);
       transform: translateY(-1px);
     }
     
-    .indicadores-proambientales button.secondary {
+    .proambiental-dashboard button.secondary {
       background: white;
       color: var(--primary);
       border: 1px solid var(--primary);
     }
     
-    .indicadores-proambientales button.secondary:hover {
+    .proambiental-dashboard button.secondary:hover {
       background: var(--bg1);
     }
     
-    .indicadores-proambientales .action-buttons {
+    .proambiental-dashboard .action-buttons {
       display: flex;
       gap: 8px;
       margin-top: 16px;
     }
     
-    .indicadores-proambientales .summary-cards {
+    .proambiental-dashboard .summary-cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
       margin-bottom: 24px;
     }
     
-    .indicadores-proambientales .summary-card {
+    .proambiental-dashboard .summary-card {
       background: linear-gradient(135deg, #fff, #f7fffb);
       padding: 20px;
       border-radius: 10px;
@@ -1517,11 +1695,11 @@
       flex-direction: column;
     }
     
-    .indicadores-proambientales .summary-card:hover {
+    .proambiental-dashboard .summary-card:hover {
       transform: translateY(-2px);
     }
     
-    .indicadores-proambientales .summary-title {
+    .proambiental-dashboard .summary-title {
       font-size: 13px;
       color: var(--muted);
       margin-bottom: 8px;
@@ -1531,48 +1709,48 @@
       font-weight: 500;
     }
     
-    .indicadores-proambientales .summary-value {
+    .proambiental-dashboard .summary-value {
       font-size: 28px;
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 4px;
     }
     
-    .indicadores-proambientales .summary-subtitle {
+    .proambiental-dashboard .summary-subtitle {
       font-size: 12px;
       display: flex;
       align-items: center;
       gap: 4px;
     }
     
-    .indicadores-proambientales .positive {
+    .proambiental-dashboard .positive {
       color: var(--success);
     }
     
-    .indicadores-proambientales .negative {
+    .proambiental-dashboard .negative {
       color: var(--danger);
     }
     
-    .indicadores-proambientales .chart-container {
+    .proambiental-dashboard .chart-container {
       position: relative;
       height: 500px;
       margin-top: 20px;
     }
     
-    .indicadores-proambientales .chart-container-sm {
+    .proambiental-dashboard .chart-container-sm {
       position: relative;
       height: 350px;
       margin-top: 20px;
     }
     
-    .indicadores-proambientales .tabs {
+    .proambiental-dashboard .tabs {
       display: flex;
       border-bottom: 1px solid var(--border);
       margin-bottom: 16px;
       flex-wrap: wrap;
     }
     
-    .indicadores-proambientales .tab {
+    .proambiental-dashboard .tab {
       padding: 12px 20px;
       cursor: pointer;
       font-weight: 500;
@@ -1581,60 +1759,59 @@
       transition: all 0.2s;
     }
     
-    .indicadores-proambientales .tab.active {
+    .proambiental-dashboard .tab.active {
       color: var(--primary);
       border-bottom: 2px solid var(--primary);
     }
     
-    .indicadores-proambientales .tab-content {
+    .proambiental-dashboard .tab-content {
       display: none;
     }
     
-    .indicadores-proambientales .tab-content.active {
+    .proambiental-dashboard .tab-content.active {
       display: block;
     }
     
-    .indicadores-proambientales table {
+    .proambiental-dashboard table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 12px;
     }
     
-    .indicadores-proambientales th, 
-    .indicadores-proambientales td {
+    .proambiental-dashboard th, .proambiental-dashboard td {
       padding: 14px 12px;
       text-align: left;
       border-bottom: 1px solid var(--border);
     }
     
-    .indicadores-proambientales th {
+    .proambiental-dashboard th {
       font-weight: 600;
       color: var(--muted);
       font-size: 14px;
       background-color: #f8fafc;
     }
     
-    .indicadores-proambientales tr:hover {
+    .proambiental-dashboard tr:hover {
       background-color: #f8fafc;
     }
     
-    .indicadores-proambientales .total-row {
+    .proambiental-dashboard .total-row {
       background-color: #f0f9ff;
       font-weight: 600;
     }
     
-    .indicadores-proambientales .total-row td {
+    .proambiental-dashboard .total-row td {
       border-top: 2px solid var(--primary);
     }
     
-    .indicadores-proambientales .statistics-grid {
+    .proambiental-dashboard .statistics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 16px;
       margin-top: 20px;
     }
     
-    .indicadores-proambientales .stat-card {
+    .proambiental-dashboard .stat-card {
       background: white;
       border-radius: 10px;
       padding: 20px;
@@ -1643,35 +1820,35 @@
       transition: transform 0.2s;
     }
     
-    .indicadores-proambientales .stat-card:hover {
+    .proambiental-dashboard .stat-card:hover {
       transform: translateY(-2px);
     }
     
-    .indicadores-proambientales .stat-card h4 {
+    .proambiental-dashboard .stat-card h4 {
       font-size: 14px;
       color: var(--muted);
       margin-bottom: 8px;
       font-weight: 500;
     }
     
-    .indicadores-proambientales .stat-value {
+    .proambiental-dashboard .stat-value {
       font-size: 20px;
       font-weight: 600;
       color: var(--primary);
     }
     
-    .indicadores-proambientales .stats-section {
+    .proambiental-dashboard .stats-section {
       margin-top: 24px;
     }
     
-    .indicadores-proambientales .stats-grid {
+    .proambiental-dashboard .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
       margin-top: 16px;
     }
     
-    .indicadores-proambientales .stat-item {
+    .proambiental-dashboard .stat-item {
       background: #f8fafc;
       border-radius: 8px;
       padding: 16px;
@@ -1680,33 +1857,24 @@
       transition: transform 0.2s;
     }
     
-    .indicadores-proambientales .stat-item:hover {
+    .proambiental-dashboard .stat-item:hover {
       transform: translateY(-2px);
     }
     
-    .indicadores-proambientales .stat-label {
+    .proambiental-dashboard .stat-label {
       font-size: 12px;
       color: var(--muted);
       margin-bottom: 6px;
       font-weight: 500;
     }
     
-    .indicadores-proambientales .stat-number {
+    .proambiental-dashboard .stat-number {
       font-size: 20px;
       font-weight: 600;
       color: var(--primary);
     }
     
-    .indicadores-proambientales footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      margin: 24px 0;
-      padding: 16px;
-      border-top: 1px solid var(--border);
-    }
-    
-    .indicadores-proambientales .loading {
+    .proambiental-dashboard .loading {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -1715,7 +1883,7 @@
       gap: 12px;
     }
     
-    .indicadores-proambientales .spinner {
+    .proambiental-dashboard .spinner {
       width: 40px;
       height: 40px;
       border: 4px solid rgba(15, 118, 110, 0.2);
@@ -1724,7 +1892,38 @@
       animation: spin 1s linear infinite;
     }
     
-    .indicadores-proambientales .chart-type-selector {
+    .proambiental-dashboard .export-options {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 40px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 8px;
+      z-index: 10;
+      min-width: 150px;
+    }
+    
+    .proambiental-dashboard .export-options.show {
+      display: block;
+    }
+    
+    .proambiental-dashboard .export-option {
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .proambiental-dashboard .export-option:hover {
+      background: var(--bg1);
+    }
+    
+    .proambiental-dashboard .chart-type-selector {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
@@ -1732,7 +1931,7 @@
       align-items: center;
     }
     
-    .indicadores-proambientales .chart-type-btn {
+    .proambiental-dashboard .chart-type-btn {
       background: white;
       border: 1px solid var(--border);
       color: var(--muted);
@@ -1746,25 +1945,25 @@
       gap: 6px;
     }
     
-    .indicadores-proambientales .chart-type-btn.active {
+    .proambiental-dashboard .chart-type-btn.active {
       background: var(--primary);
       color: white;
       border-color: var(--primary);
     }
     
-    .indicadores-proambientales .chart-type-btn:hover:not(.active) {
+    .proambiental-dashboard .chart-type-btn:hover:not(.active) {
       background: var(--bg1);
       border-color: var(--primary-light);
     }
     
-    .indicadores-proambientales .charts-grid {
+    .proambiental-dashboard .charts-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
       gap: 24px;
       margin-top: 20px;
     }
     
-    .indicadores-proambientales .chart-card {
+    .proambiental-dashboard .chart-card {
       background: white;
       border-radius: 10px;
       padding: 20px;
@@ -1772,18 +1971,18 @@
       border: 1px solid var(--border);
     }
     
-    .indicadores-proambientales .chart-card h3 {
+    .proambiental-dashboard .chart-card h3 {
       color: var(--primary);
       margin-bottom: 16px;
       font-size: 16px;
       font-weight: 600;
     }
     
-    .indicadores-proambientales .category-section {
+    .proambiental-dashboard .category-section {
       margin-bottom: 32px;
     }
     
-    .indicadores-proambientales .category-title {
+    .proambiental-dashboard .category-title {
       color: var(--primary);
       font-size: 18px;
       font-weight: 600;
@@ -1792,25 +1991,25 @@
       border-bottom: 1px solid var(--border);
     }
     
-    .indicadores-proambientales .table-responsive {
+    .proambiental-dashboard .table-responsive {
       overflow-x: auto;
     }
     
     /* Estilos específicos para gráficos de preguntas */
-    .indicadores-proambientales .question-charts {
+    .proambiental-dashboard .question-charts {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
       gap: 24px;
       margin-top: 20px;
     }
     
-    .indicadores-proambientales .question-chart-container {
+    .proambiental-dashboard .question-chart-container {
       position: relative;
       height: 400px;
       margin-top: 20px;
     }
     
-    .indicadores-proambientales .question-chart-card {
+    .proambiental-dashboard .question-chart-card {
       background: white;
       border-radius: 10px;
       padding: 20px;
@@ -1818,7 +2017,7 @@
       border: 1px solid var(--border);
     }
     
-    .indicadores-proambientales .question-chart-card h3 {
+    .proambiental-dashboard .question-chart-card h3 {
       color: var(--primary);
       margin-bottom: 16px;
       font-size: 16px;
@@ -1827,14 +2026,14 @@
     }
     
     /* Estilos para mejoras en gráficos */
-    .indicadores-proambientales .chart-actions {
+    .proambiental-dashboard .chart-actions {
       display: flex;
       justify-content: flex-end;
       gap: 8px;
       margin-bottom: 16px;
     }
     
-    .indicadores-proambientales .chart-action-btn {
+    .proambiental-dashboard .chart-action-btn {
       padding: 6px 12px;
       border-radius: 6px;
       background: white;
@@ -1847,51 +2046,63 @@
       gap: 4px;
     }
     
-    .indicadores-proambientales .chart-action-btn:hover {
+    .proambiental-dashboard .chart-action-btn:hover {
       background: var(--bg1);
       border-color: var(--primary-light);
     }
     
-    .indicadores-proambientales .chart-action-btn.active {
+    .proambiental-dashboard .chart-action-btn.active {
       background: var(--primary);
       color: white;
       border-color: var(--primary);
     }
     
+    /* Mejoras para gráficos más nítidos */
+    .proambiental-dashboard canvas {
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
+    }
+    
+    .proambiental-dashboard .chartjs-render-monitor {
+      -webkit-filter: none !important;
+      filter: none !important;
+    }
+    
     @media (max-width: 768px) {
-      .indicadores-proambientales .controls {
+      .proambiental-dashboard .controls {
         grid-template-columns: 1fr;
       }
       
-      .indicadores-proambientales .action-buttons {
+      .proambiental-dashboard .action-buttons {
         justify-content: center;
       }
       
-      .indicadores-proambientales .chart-container {
+      .proambiental-dashboard .chart-container {
         height: 400px;
       }
       
-      .indicadores-proambientales .summary-cards {
+      .proambiental-dashboard .summary-cards {
         grid-template-columns: 1fr;
       }
       
-      .indicadores-proambientales .chart-type-selector {
+      .proambiental-dashboard .chart-type-selector {
         justify-content: center;
       }
       
-      .indicadores-proambientales .charts-grid {
+      .proambiental-dashboard .charts-grid {
         grid-template-columns: 1fr;
       }
       
-      .indicadores-proambientales .question-charts {
+      .proambiental-dashboard .question-charts {
         grid-template-columns: 1fr;
       }
       
-      .indicadores-proambientales .question-chart-container {
+      .proambiental-dashboard .question-chart-container {
         height: 350px;
       }
       
-      .indicadores-proambientales .chart-actions {
+      .proambiental-dashboard .chart-actions {
         justify-content: center;
       }
     }
@@ -2255,763 +2466,765 @@
         </div>
       </div>
 
-      <!-- NUEVA SECCIÓN DE INDICADORES PROAMBIENTALES -->
-      <div id="section-indicadores" class="section-content indicadores-proambientales">
-        <div class="hero-section" style="background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);">
-          <h1 class="hero-title editable-text">Análisis de Comportamiento Proambiental</h1>
+      <!-- Sección de Indicadores con Dashboard Proambiental -->
+      <div id="section-indicadores" class="section-content">
+        <div class="hero-section" style="background: linear-gradient(135deg, #34495e 0%, #5d6d7e 100%);">
+          <h1 class="hero-title editable-text">Indicadores de Gestión de Residuos</h1>
           <p class="hero-subtitle editable-text">
-            Cantón Daule - Panel de Indicadores y Análisis de Datos
+            Análisis integral de datos para la toma de decisiones informadas
           </p>
         </div>
         
-        <!-- Panel de control principal -->
-        <div class="card">
-          <div class="card-title">
-            <i class="fas fa-sliders-h"></i>
-            Filtros de Análisis
+        <!-- Dashboard Proambiental -->
+        <div class="proambiental-dashboard">
+          <div class="card">
+            <div class="card-title">
+              <i class="fas fa-sliders-h"></i>
+              Filtros de Análisis
+            </div>
+            
+            <!-- Controles -->
+            <div class="controls" id="controls">
+              <div class="control-group">
+                <label for="selectEstadoCivil"><i class="fas fa-heart"></i> Estado Civil</label>
+                <select id="selectEstadoCivil">
+                  <option value="">Todos los estados civiles</option>
+                </select>
+                <div class="filter-info" id="estadoCivilInfo">Cargando...</div>
+              </div>
+
+              <div class="control-group">
+                <label for="selectEducacion"><i class="fas fa-graduation-cap"></i> Nivel de Educación</label>
+                <select id="selectEducacion">
+                  <option value="">Todos los niveles</option>
+                </select>
+                <div class="filter-info" id="educacionInfo">Cargando...</div>
+              </div>
+
+              <div class="control-group">
+                <label for="selectSituacionLaboral"><i class="fas fa-briefcase"></i> Situación Laboral</label>
+                <select id="selectSituacionLaboral">
+                  <option value="">Todas las situaciones</option>
+                </select>
+                <div class="filter-info" id="situacionLaboralInfo">Cargando...</div>
+              </div>
+
+              <div class="control-group">
+                <label for="selectIngreso"><i class="fas fa-money-bill-wave"></i> Ingreso Mensual</label>
+                <select id="selectIngreso">
+                  <option value="">Todos los ingresos</option>
+                </select>
+                <div class="filter-info" id="ingresoInfo">Cargando...</div>
+              </div>
+            </div>
           </div>
-          
-          <!-- Controles -->
-          <div class="controls" id="controls">
-            <div class="control-group">
-              <label for="selectEstadoCivil"><i class="fas fa-heart"></i> Estado Civil</label>
-              <select id="selectEstadoCivil">
-                <option value="">Todos los estados civiles</option>
-              </select>
-              <div class="filter-info" id="estadoCivilInfo">Cargando...</div>
-            </div>
 
-            <div class="control-group">
-              <label for="selectEducacion"><i class="fas fa-graduation-cap"></i> Nivel de Educación</label>
-              <select id="selectEducacion">
-                <option value="">Todos los niveles</option>
-              </select>
-              <div class="filter-info" id="educacionInfo">Cargando...</div>
+          <!-- Tarjetas de resumen -->
+          <div class="card">
+            <div class="card-title">
+              <i class="fas fa-chart-line"></i>
+              Resumen General
             </div>
-
-            <div class="control-group">
-              <label for="selectSituacionLaboral"><i class="fas fa-briefcase"></i> Situación Laboral</label>
-              <select id="selectSituacionLaboral">
-                <option value="">Todas las situaciones</option>
-              </select>
-              <div class="filter-info" id="situacionLaboralInfo">Cargando...</div>
-            </div>
-
-            <div class="control-group">
-              <label for="selectIngreso"><i class="fas fa-money-bill-wave"></i> Ingreso Mensual</label>
-              <select id="selectIngreso">
-                <option value="">Todos los ingresos</option>
-              </select>
-              <div class="filter-info" id="ingresoInfo">Cargando...</div>
+            
+            <div class="summary-cards" id="summaryCards">
+              <div class="summary-card">
+                <div class="summary-title">
+                  <i class="fas fa-users"></i> Total de Encuestados
+                </div>
+                <div class="summary-value" id="summaryTotal">0</div>
+                <div class="summary-subtitle">
+                  <span>Muestra representativa del cantón</span>
+                </div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-title">
+                  <i class="fas fa-home"></i> Tipo de Hogar Predominante
+                </div>
+                <div class="summary-value" id="summaryHogar">-</div>
+                <div class="summary-subtitle" id="summaryHogarChange">
+                  <span>% del total</span>
+                </div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-title">
+                  <i class="fas fa-user-graduate"></i> Educación Predominante
+                </div>
+                <div class="summary-value" id="summaryEducacion">-</div>
+                <div class="summary-subtitle" id="summaryEducacionChange">
+                  <span>% del total</span>
+                </div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-title">
+                  <i class="fas fa-briefcase"></i> Situación Laboral Predominante
+                </div>
+                <div class="summary-value" id="summaryLaboral">-</div>
+                <div class="summary-subtitle" id="summaryLaboralChange">
+                  <span>% del total</span>
+                </div>
+              </div>
             </div>
           </div>
+
+          <!-- Gráficos y visualizaciones -->
+          <div class="card">
+            <div class="card-title">
+              <i class="fas fa-chart-bar"></i>
+              Visualización de Datos
+            </div>
+            
+            <div class="chart-actions">
+              <div class="chart-action-btn" data-chart-type="bar">
+                <i class="fas fa-chart-bar"></i> Barras
+              </div>
+              <div class="chart-action-btn active" data-chart-type="pie">
+                <i class="fas fa-chart-pie"></i> Torta
+              </div>
+              <div class="chart-action-btn" data-chart-type="line">
+                <i class="fas fa-chart-line"></i> Líneas
+              </div>
+            </div>
+            
+            <div class="tabs">
+              <div class="tab active" data-tab="demographics">Distribución Demográfica</div>
+              <div class="tab" data-tab="sociocultural">Determinantes Socioculturales</div>
+              <div class="tab" data-tab="afectivos">Determinantes Afectivos</div>
+              <div class="tab" data-tab="cognitivos">Determinantes Cognitivos</div>
+              <div class="tab" data-tab="ambiental">Sustentabilidad Ambiental</div>
+              <div class="tab" data-tab="economica">Sustentabilidad Económica</div>
+              <div class="tab" data-tab="comunitario">Desarrollo Comunitario</div>
+            </div>
+            
+            <div class="tab-content active" id="demographics">
+              <div class="charts-grid">
+                <div class="chart-card">
+                  <h3>Distribución por Estado Civil</h3>
+                  <div class="chart-container-sm">
+                    <canvas id="estadoCivilChart"></canvas>
+                  </div>
+                </div>
+                <div class="chart-card">
+                  <h3>Distribución por Nivel Educativo</h3>
+                  <div class="chart-container-sm">
+                    <canvas id="educacionChart"></canvas>
+                  </div>
+                </div>
+                <div class="chart-card">
+                  <h3>Distribución por Situación Laboral</h3>
+                  <div class="chart-container-sm">
+                    <canvas id="laboralChart"></canvas>
+                  </div>
+                </div>
+                <div class="chart-card">
+                  <h3>Distribución por Ingreso Mensual</h3>
+                  <div class="chart-container-sm">
+                    <canvas id="ingresoChart"></canvas>
+                  </div>
+                </div>
+                <div class="chart-card">
+                  <h3>Distribución por Tipo de Hogar</h3>
+                  <div class="chart-container-sm">
+                    <canvas id="hogarChart"></canvas>
+                  </div>
+                </div>
+                <div class="chart-card">
+                  <h3>Distribución por Grupos de Edad</h3>
+                  <div class="chart-container-sm">
+                    <canvas id="edadChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Determinantes Socioculturales -->
+            <div class="tab-content" id="sociocultural">
+              <div class="question-charts">
+                <div class="question-chart-card">
+                  <h3>¿Conoce usted qué son los desechos sólidos domiciliarios?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="socioculturalChart1"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Cree usted que existe un comportamiento adecuado en el manejo de los desechos sólidos domiciliarios en la comunidad?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="socioculturalChart2"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Se debe separar los desechos sólidos según su tipo ejemplo: (papel - plástico - orgánico - inorgánico)?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="socioculturalChart3"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Es importante la correcta clasificación de los desechos sólidos orgánicos e inorgánicos en el hogar?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="socioculturalChart4"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Cree que el comportamiento de la comunidad influye en deterioro del medio ambiente?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="socioculturalChart5"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Dedica tiempo para reducir, reutilizar y/o reciclar los desechos sólidos que se generan en el hogar?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="socioculturalChart6"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Los desechos sólidos son un gran problema para la comunidad?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="socioculturalChart7"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Determinantes Afectivos -->
+            <div class="tab-content" id="afectivos">
+              <div class="question-charts">
+                <div class="question-chart-card">
+                  <h3>¿Le preocupa el exceso de desechos sólidos domiciliarios?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="afectivosChart1"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Considera que los desechos sólidos domiciliarios intervienen en las consecuencias climáticas?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="afectivosChart2"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Le afecta emocionalmente cuando escucha noticias acerca de los desastres naturales?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="afectivosChart3"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Siente frustración debido a la falta de acciones significativas para abordar la generación de los desechos sólidos?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="afectivosChart4"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Considera importante pensar en el tipo de planeta que dejaremos a las futuras generaciones?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="afectivosChart5"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Determinantes Cognitivos -->
+            <div class="tab-content" id="cognitivos">
+              <div class="question-charts">
+                <div class="question-chart-card">
+                  <h3>¿Es consciente del impacto de los desechos sólidos domiciliarios en el medio ambiente?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="cognitivosChart1"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Investiga frecuentemente acerca de temas medio ambientales?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="cognitivosChart2"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Conoce las consecuencias de la acumulación de los desechos sólidos domiciliarios?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="cognitivosChart3"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Conoce los beneficios de reutilizar un residuo domiciliario?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="cognitivosChart4"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿La falta de información es un obstáculo para la correcta gestión de los residuos sólidos domiciliario?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="cognitivosChart5"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Sustentabilidad Ambiental -->
+            <div class="tab-content" id="ambiental">
+              <div class="question-charts">
+                <div class="question-chart-card">
+                  <h3>¿Los desechos orgánicos generados en el hogar pueden tener otra funcionalidad?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="ambientalChart1"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿La acumulación de desechos afectan a la salud de la población?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="ambientalChart2"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿La reducción, reciclaje y la reutilización de los desechos sólidos puede cuidar al medio ambiente y a la vida silvestre?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="ambientalChart3"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Cree que la transformación de desechos sólidos en nuevos productos puede contribuir significativamente a la reducción de la generación de desechos?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="ambientalChart4"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Necesita más información acerca de educación ambiental?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="ambientalChart5"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Sustentabilidad Económica -->
+            <div class="tab-content" id="economica">
+              <div class="question-charts">
+                <div class="question-chart-card">
+                  <h3>¿En su hogar practica la separación de los desechos para el reciclaje y le representa algún ingreso?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="economicaChart1"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Los desechos sólidos generados en el hogar pueden ser reutilizados para una nueva función o creación de un producto?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="economicaChart2"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Cree que el manejo adecuado de los desechos sólidos domiciliarios podría aportar al desarrollo económico comunitario?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="economicaChart3"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Los emprendimientos en base a la reutilización de los desechos aporta a su economía?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="economicaChart4"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿El manejo adecuado de los desechos sólidos domiciliarios ofrece oportunidades para el emprendimiento?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="economicaChart5"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Desarrollo Comunitario -->
+            <div class="tab-content" id="comunitario">
+              <div class="question-charts">
+                <div class="question-chart-card">
+                  <h3>¿Es posible reducir la generación de residuos sólidos domiciliarios por medio de eventos de concientización?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="comunitarioChart1"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Participaría en talleres de buenas prácticas y capacitaciones para el correcto manejo de los desechos sólidos domiciliarios?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="comunitarioChart2"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿El manejo adecuado de los desechos sólidos domiciliarios puede tener un impacto significativo al medio ambiente?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="comunitarioChart3"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Está dispuesto a participar en un emprendimiento en base al uso de los desechos sólidos?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="comunitarioChart4"></canvas>
+                  </div>
+                </div>
+                <div class="question-chart-card">
+                  <h3>¿Participaría a una feria de emprendimientos comunitarios en base a desechos domiciliarios reutilizados?</h3>
+                  <div class="question-chart-container">
+                    <canvas id="comunitarioChart5"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tablas Resumen -->
+          <div class="card">
+            <div class="card-title">
+              <i class="fas fa-table"></i>
+              Tablas Resumen por Categorías
+            </div>
+            
+            <div class="tabs">
+              <div class="tab active" data-tab="tabla-demografica">Datos Demográficos</div>
+              <div class="tab" data-tab="tabla-sociocultural">Determinantes Socioculturales</div>
+              <div class="tab" data-tab="tabla-afectivos">Determinantes Afectivos</div>
+              <div class="tab" data-tab="tabla-cognitivos">Determinantes Cognitivos</div>
+              <div class="tab" data-tab="tabla-ambiental">Sustentabilidad Ambiental</div>
+              <div class="tab" data-tab="tabla-economica">Sustentabilidad Económica</div>
+              <div class="tab" data-tab="tabla-comunitario">Desarrollo Comunitario</div>
+            </div>
+            
+            <div class="tab-content active" id="tabla-demografica">
+              <div class="category-section">
+                <div class="category-title">Estado Civil</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Estado Civil</th>
+                        <th style="text-align:right">Cantidad</th>
+                        <th style="text-align:right">% del Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaEstadoCivil"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Total</strong></td>
+                        <td style="text-align:right"><strong id="totalEstadoCivil">0</strong></td>
+                        <td style="text-align:right"><strong>100%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="category-section">
+                <div class="category-title">Distribución por Edades</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Grupo de Edad</th>
+                        <th style="text-align:right">Cantidad</th>
+                        <th style="text-align:right">% del Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaEdades"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Total</strong></td>
+                        <td style="text-align:right"><strong id="totalEdades">0</strong></td>
+                        <td style="text-align:right"><strong>100%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="category-section">
+                <div class="category-title">Nivel de Educación</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Nivel Educativo</th>
+                        <th style="text-align:right">Cantidad</th>
+                        <th style="text-align:right">% del Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaEducacion"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Total</strong></td>
+                        <td style="text-align:right"><strong id="totalEducacion">0</strong></td>
+                        <td style="text-align:right"><strong>100%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="category-section">
+                <div class="category-title">Situación Laboral</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Situación Laboral</th>
+                        <th style="text-align:right">Cantidad</th>
+                        <th style="text-align:right">% del Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaLaboral"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Total</strong></td>
+                        <td style="text-align:right"><strong id="totalLaboral">0</strong></td>
+                        <td style="text-align:right"><strong>100%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="category-section">
+                <div class="category-title">Ingreso Mensual</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Nivel de Ingreso</th>
+                        <th style="text-align:right">Cantidad</th>
+                        <th style="text-align:right">% del Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaIngreso"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Total</strong></td>
+                        <td style="text-align:right"><strong id="totalIngreso">0</strong></td>
+                        <td style="text-align:right"><strong>100%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              
+              <div class="category-section">
+                <div class="category-title">Tipo de Hogar</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Tipo de Hogar</th>
+                        <th style="text-align:right">Cantidad</th>
+                        <th style="text-align:right">% del Total</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaHogar"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Total</strong></td>
+                        <td style="text-align:right"><strong id="totalHogar">0</strong></td>
+                        <td style="text-align:right"><strong>100%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+            <div class="tab-content" id="tabla-sociocultural">
+              <div class="category-section">
+                <div class="category-title">Determinantes Socioculturales</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Pregunta</th>
+                        <th style="text-align:center">Totalmente Desacuerdo</th>
+                        <th style="text-align:center">Desacuerdo</th>
+                        <th style="text-align:center">Indiferente</th>
+                        <th style="text-align:center">De Acuerdo</th>
+                        <th style="text-align:center">Totalmente Acuerdo</th>
+                        <th style="text-align:center">Promedio</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaSociocultural"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Promedio General</strong></td>
+                        <td style="text-align:center"><strong id="promedioSocioculturalTD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioSocioculturalD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioSocioculturalI">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioSocioculturalA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioSocioculturalTA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioSociocultural">0%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+            <div class="tab-content" id="tabla-afectivos">
+              <div class="category-section">
+                <div class="category-title">Determinantes Afectivos</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Pregunta</th>
+                        <th style="text-align:center">Totalmente Desacuerdo</th>
+                        <th style="text-align:center">Desacuerdo</th>
+                        <th style="text-align:center">Indiferente</th>
+                        <th style="text-align:center">De Acuerdo</th>
+                        <th style="text-align:center">Totalmente Acuerdo</th>
+                        <th style="text-align:center">Promedio</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaAfectivos"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Promedio General</strong></td>
+                        <td style="text-align:center"><strong id="promedioAfectivosTD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioAfectivosD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioAfectivosI">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioAfectivosA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioAfectivosTA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioAfectivos">0%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+            <div class="tab-content" id="tabla-cognitivos">
+              <div class="category-section">
+                <div class="category-title">Determinantes Cognitivos</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Pregunta</th>
+                        <th style="text-align:center">Totalmente Desacuerdo</th>
+                        <th style="text-align:center">Desacuerdo</th>
+                        <th style="text-align:center">Indiferente</th>
+                        <th style="text-align:center">De Acuerdo</th>
+                        <th style="text-align:center">Totalmente Acuerdo</th>
+                        <th style="text-align:center">Promedio</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaCognitivos"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Promedio General</strong></td>
+                        <td style="text-align:center"><strong id="promedioCognitivosTD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioCognitivosD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioCognitivosI">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioCognitivosA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioCognitivosTA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioCognitivos">0%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+            <div class="tab-content" id="tabla-ambiental">
+              <div class="category-section">
+                <div class="category-title">Sustentabilidad Ambiental</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Pregunta</th>
+                        <th style="text-align:center">Totalmente Desacuerdo</th>
+                        <th style="text-align:center">Desacuerdo</th>
+                        <th style="text-align:center">Indiferente</th>
+                        <th style="text-align:center">De Acuerdo</th>
+                        <th style="text-align:center">Totalmente Acuerdo</th>
+                        <th style="text-align:center">Promedio</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaAmbiental"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Promedio General</strong></td>
+                        <td style="text-align:center"><strong id="promedioAmbientalTD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioAmbientalD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioAmbientalI">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioAmbientalA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioAmbientalTA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioAmbiental">0%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+            <div class="tab-content" id="tabla-economica">
+              <div class="category-section">
+                <div class="category-title">Sustentabilidad Económica</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Pregunta</th>
+                        <th style="text-align:center">Totalmente Desacuerdo</th>
+                        <th style="text-align:center">Desacuerdo</th>
+                        <th style="text-align:center">Indiferente</th>
+                        <th style="text-align:center">De Acuerdo</th>
+                        <th style="text-align:center">Totalmente Acuerdo</th>
+                        <th style="text-align:center">Promedio</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaEconomica"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Promedio General</strong></td>
+                        <td style="text-align:center"><strong id="promedioEconomicaTD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioEconomicaD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioEconomicaI">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioEconomicaA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioEconomicaTA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioEconomica">0%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+            <div class="tab-content" id="tabla-comunitario">
+              <div class="category-section">
+                <div class="category-title">Desarrollo Comunitario</div>
+                <div class="table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Pregunta</th>
+                        <th style="text-align:center">Totalmente Desacuerdo</th>
+                        <th style="text-align:center">Desacuerdo</th>
+                        <th style="text-align:center">Indiferente</th>
+                        <th style="text-align:center">De Acuerdo</th>
+                        <th style="text-align:center">Totalmente Acuerdo</th>
+                        <th style="text-align:center">Promedio</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tablaComunitario"></tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Promedio General</strong></td>
+                        <td style="text-align:center"><strong id="promedioComunitarioTD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioComunitarioD">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioComunitarioI">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioComunitarioA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioComunitarioTA">0%</strong></td>
+                        <td style="text-align:center"><strong id="promedioComunitario">0%</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer>
+            <p>Panel de Análisis de Comportamiento Proambiental - Cantón Daule</p>
+          </footer>
         </div>
-
-        <!-- Tarjetas de resumen -->
-        <div class="card">
-          <div class="card-title">
-            <i class="fas fa-chart-line"></i>
-            Resumen General
-          </div>
-          
-          <div class="summary-cards" id="summaryCards">
-            <div class="summary-card">
-              <div class="summary-title">
-                <i class="fas fa-users"></i> Total de Encuestados
-              </div>
-              <div class="summary-value" id="summaryTotal">0</div>
-              <div class="summary-subtitle">
-                <span>Muestra representativa del cantón</span>
-              </div>
-            </div>
-            <div class="summary-card">
-              <div class="summary-title">
-                <i class="fas fa-home"></i> Tipo de Hogar Predominante
-              </div>
-              <div class="summary-value" id="summaryHogar">-</div>
-              <div class="summary-subtitle" id="summaryHogarChange">
-                <span>% del total</span>
-              </div>
-            </div>
-            <div class="summary-card">
-              <div class="summary-title">
-                <i class="fas fa-user-graduate"></i> Educación Predominante
-              </div>
-              <div class="summary-value" id="summaryEducacion">-</div>
-              <div class="summary-subtitle" id="summaryEducacionChange">
-                <span>% del total</span>
-              </div>
-            </div>
-            <div class="summary-card">
-              <div class="summary-title">
-                <i class="fas fa-briefcase"></i> Situación Laboral Predominante
-              </div>
-              <div class="summary-value" id="summaryLaboral">-</div>
-              <div class="summary-subtitle" id="summaryLaboralChange">
-                <span>% del total</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Gráficos y visualizaciones -->
-        <div class="card">
-          <div class="card-title">
-            <i class="fas fa-chart-bar"></i>
-            Visualización de Datos
-          </div>
-          
-          <div class="chart-actions">
-            <div class="chart-action-btn" data-chart-type="bar">
-              <i class="fas fa-chart-bar"></i> Barras
-            </div>
-            <div class="chart-action-btn active" data-chart-type="pie">
-              <i class="fas fa-chart-pie"></i> Torta
-            </div>
-            <div class="chart-action-btn" data-chart-type="line">
-              <i class="fas fa-chart-line"></i> Líneas
-            </div>
-          </div>
-          
-          <div class="tabs">
-            <div class="tab active" data-tab="demographics">Distribución Demográfica</div>
-            <div class="tab" data-tab="sociocultural">Determinantes Socioculturales</div>
-            <div class="tab" data-tab="afectivos">Determinantes Afectivos</div>
-            <div class="tab" data-tab="cognitivos">Determinantes Cognitivos</div>
-            <div class="tab" data-tab="ambiental">Sustentabilidad Ambiental</div>
-            <div class="tab" data-tab="economica">Sustentabilidad Económica</div>
-            <div class="tab" data-tab="comunitario">Desarrollo Comunitario</div>
-          </div>
-          
-          <div class="tab-content active" id="demographics">
-            <div class="charts-grid">
-              <div class="chart-card">
-                <h3>Distribución por Estado Civil</h3>
-                <div class="chart-container-sm">
-                  <canvas id="estadoCivilChart"></canvas>
-                </div>
-              </div>
-              <div class="chart-card">
-                <h3>Distribución por Nivel Educativo</h3>
-                <div class="chart-container-sm">
-                  <canvas id="educacionChart"></canvas>
-                </div>
-              </div>
-              <div class="chart-card">
-                <h3>Distribución por Situación Laboral</h3>
-                <div class="chart-container-sm">
-                  <canvas id="laboralChart"></canvas>
-                </div>
-              </div>
-              <div class="chart-card">
-                <h3>Distribución por Ingreso Mensual</h3>
-                <div class="chart-container-sm">
-                  <canvas id="ingresoChart"></canvas>
-                </div>
-              </div>
-              <div class="chart-card">
-                <h3>Distribución por Tipo de Hogar</h3>
-                <div class="chart-container-sm">
-                  <canvas id="hogarChart"></canvas>
-                </div>
-              </div>
-              <div class="chart-card">
-                <h3>Distribución por Grupos de Edad</h3>
-                <div class="chart-container-sm">
-                  <canvas id="edadChart"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Determinantes Socioculturales -->
-          <div class="tab-content" id="sociocultural">
-            <div class="question-charts">
-              <div class="question-chart-card">
-                <h3>¿Conoce usted qué son los desechos sólidos domiciliarios?</h3>
-                <div class="question-chart-container">
-                  <canvas id="socioculturalChart1"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Cree usted que existe un comportamiento adecuado en el manejo de los desechos sólidos domiciliarios en la comunidad?</h3>
-                <div class="question-chart-container">
-                  <canvas id="socioculturalChart2"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Se debe separar los desechos sólidos según su tipo ejemplo: (papel - plástico - orgánico - inorgánico)?</h3>
-                <div class="question-chart-container">
-                  <canvas id="socioculturalChart3"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Es importante la correcta clasificación de los desechos sólidos orgánicos e inorgánicos en el hogar?</h3>
-                <div class="question-chart-container">
-                  <canvas id="socioculturalChart4"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Cree que el comportamiento de la comunidad influye en deterioro del medio ambiente?</h3>
-                <div class="question-chart-container">
-                  <canvas id="socioculturalChart5"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Dedica tiempo para reducir, reutilizar y/o reciclar los desechos sólidos que se generan en el hogar?</h3>
-                <div class="question-chart-container">
-                  <canvas id="socioculturalChart6"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Los desechos sólidos son un gran problema para la comunidad?</h3>
-                <div class="question-chart-container">
-                  <canvas id="socioculturalChart7"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Determinantes Afectivos -->
-          <div class="tab-content" id="afectivos">
-            <div class="question-charts">
-              <div class="question-chart-card">
-                <h3>¿Le preocupa el exceso de desechos sólidos domiciliarios?</h3>
-                <div class="question-chart-container">
-                  <canvas id="afectivosChart1"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Considera que los desechos sólidos domiciliarios intervienen en las consecuencias climáticas?</h3>
-                <div class="question-chart-container">
-                  <canvas id="afectivosChart2"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Le afecta emocionalmente cuando escucha noticias acerca de los desastres naturales?</h3>
-                <div class="question-chart-container">
-                  <canvas id="afectivosChart3"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Siente frustración debido a la falta de acciones significativas para abordar la generación de los desechos sólidos?</h3>
-                <div class="question-chart-container">
-                  <canvas id="afectivosChart4"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Considera importante pensar en el tipo de planeta que dejaremos a las futuras generaciones?</h3>
-                <div class="question-chart-container">
-                  <canvas id="afectivosChart5"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Determinantes Cognitivos -->
-          <div class="tab-content" id="cognitivos">
-            <div class="question-charts">
-              <div class="question-chart-card">
-                <h3>¿Es consciente del impacto de los desechos sólidos domiciliarios en el medio ambiente?</h3>
-                <div class="question-chart-container">
-                  <canvas id="cognitivosChart1"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Investiga frecuentemente acerca de temas medio ambientales?</h3>
-                <div class="question-chart-container">
-                  <canvas id="cognitivosChart2"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Conoce las consecuencias de la acumulación de los desechos sólidos domiciliarios?</h3>
-                <div class="question-chart-container">
-                  <canvas id="cognitivosChart3"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Conoce los beneficios de reutilizar un residuo domiciliario?</h3>
-                <div class="question-chart-container">
-                  <canvas id="cognitivosChart4"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿La falta de información es un obstáculo para la correcta gestión de los residuos sólidos domiciliario?</h3>
-                <div class="question-chart-container">
-                  <canvas id="cognitivosChart5"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Sustentabilidad Ambiental -->
-          <div class="tab-content" id="ambiental">
-            <div class="question-charts">
-              <div class="question-chart-card">
-                <h3>¿Los desechos orgánicos generados en el hogar pueden tener otra funcionalidad?</h3>
-                <div class="question-chart-container">
-                  <canvas id="ambientalChart1"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿La acumulación de desechos afectan a la salud de la población?</h3>
-                <div class="question-chart-container">
-                  <canvas id="ambientalChart2"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿La reducción, reciclaje y la reutilización de los desechos sólidos puede cuidar al medio ambiente y a la vida silvestre?</h3>
-                <div class="question-chart-container">
-                  <canvas id="ambientalChart3"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Cree que la transformación de desechos sólidos en nuevos productos puede contribuir significativamente a la reducción de la generación de desechos?</h3>
-                <div class="question-chart-container">
-                  <canvas id="ambientalChart4"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Necesita más información acerca de educación ambiental?</h3>
-                <div class="question-chart-container">
-                  <canvas id="ambientalChart5"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Sustentabilidad Económica -->
-          <div class="tab-content" id="economica">
-            <div class="question-charts">
-              <div class="question-chart-card">
-                <h3>¿En su hogar practica la separación de los desechos para el reciclaje y le representa algún ingreso?</h3>
-                <div class="question-chart-container">
-                  <canvas id="economicaChart1"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Los desechos sólidos generados en el hogar pueden ser reutilizados para una nueva función o creación de un producto?</h3>
-                <div class="question-chart-container">
-                  <canvas id="economicaChart2"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Cree que el manejo adecuado de los desechos sólidos domiciliarios podría aportar al desarrollo económico comunitario?</h3>
-                <div class="question-chart-container">
-                  <canvas id="economicaChart3"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Los emprendimientos en base a la reutilización de los desechos aporta a su economía?</h3>
-                <div class="question-chart-container">
-                  <canvas id="economicaChart4"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿El manejo adecuado de los desechos sólidos domiciliarios ofrece oportunidades para el emprendimiento?</h3>
-                <div class="question-chart-container">
-                  <canvas id="economicaChart5"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Desarrollo Comunitario -->
-          <div class="tab-content" id="comunitario">
-            <div class="question-charts">
-              <div class="question-chart-card">
-                <h3>¿Es posible reducir la generación de residuos sólidos domiciliarios por medio de eventos de concientización?</h3>
-                <div class="question-chart-container">
-                  <canvas id="comunitarioChart1"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Participaría en talleres de buenas prácticas y capacitaciones para el correcto manejo de los desechos sólidos domiciliarios?</h3>
-                <div class="question-chart-container">
-                  <canvas id="comunitarioChart2"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿El manejo adecuado de los desechos sólidos domiciliarios puede tener un impacto significativo al medio ambiente?</h3>
-                <div class="question-chart-container">
-                  <canvas id="comunitarioChart3"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Está dispuesto a participar en un emprendimiento en base al uso de los desechos sólidos?</h3>
-                <div class="question-chart-container">
-                  <canvas id="comunitarioChart4"></canvas>
-                </div>
-              </div>
-              <div class="question-chart-card">
-                <h3>¿Participaría a una feria de emprendimientos comunitarios en base a desechos domiciliarios reutilizados?</h3>
-                <div class="question-chart-container">
-                  <canvas id="comunitarioChart5"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tablas Resumen -->
-        <div class="card">
-          <div class="card-title">
-            <i class="fas fa-table"></i>
-            Tablas Resumen por Categorías
-          </div>
-          
-          <div class="tabs">
-            <div class="tab active" data-tab="tabla-demografica">Datos Demográficos</div>
-            <div class="tab" data-tab="tabla-sociocultural">Determinantes Socioculturales</div>
-            <div class="tab" data-tab="tabla-afectivos">Determinantes Afectivos</div>
-            <div class="tab" data-tab="tabla-cognitivos">Determinantes Cognitivos</div>
-            <div class="tab" data-tab="tabla-ambiental">Sustentabilidad Ambiental</div>
-            <div class="tab" data-tab="tabla-economica">Sustentabilidad Económica</div>
-            <div class="tab" data-tab="tabla-comunitario">Desarrollo Comunitario</div>
-          </div>
-          
-          <div class="tab-content active" id="tabla-demografica">
-            <div class="category-section">
-              <div class="category-title">Estado Civil</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Estado Civil</th>
-                      <th style="text-align:right">Cantidad</th>
-                      <th style="text-align:right">% del Total</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaEstadoCivil"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Total</strong></td>
-                      <td style="text-align:right"><strong id="totalEstadoCivil">0</strong></td>
-                      <td style="text-align:right"><strong>100%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-            
-            <div class="category-section">
-              <div class="category-title">Distribución por Edades</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Grupo de Edad</th>
-                      <th style="text-align:right">Cantidad</th>
-                      <th style="text-align:right">% del Total</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaEdades"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Total</strong></td>
-                      <td style="text-align:right"><strong id="totalEdades">0</strong></td>
-                      <td style="text-align:right"><strong>100%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-            
-            <div class="category-section">
-              <div class="category-title">Nivel de Educación</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Nivel Educativo</th>
-                      <th style="text-align:right">Cantidad</th>
-                      <th style="text-align:right">% del Total</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaEducacion"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Total</strong></td>
-                      <td style="text-align:right"><strong id="totalEducacion">0</strong></td>
-                      <td style="text-align:right"><strong>100%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-            
-            <div class="category-section">
-              <div class="category-title">Situación Laboral</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Situación Laboral</th>
-                      <th style="text-align:right">Cantidad</th>
-                      <th style="text-align:right">% del Total</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaLaboral"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Total</strong></td>
-                      <td style="text-align:right"><strong id="totalLaboral">0</strong></td>
-                      <td style="text-align:right"><strong>100%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-            
-            <div class="category-section">
-              <div class="category-title">Ingreso Mensual</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Nivel de Ingreso</th>
-                      <th style="text-align:right">Cantidad</th>
-                      <th style="text-align:right">% del Total</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaIngreso"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Total</strong></td>
-                      <td style="text-align:right"><strong id="totalIngreso">0</strong></td>
-                      <td style="text-align:right"><strong>100%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-            
-            <div class="category-section">
-              <div class="category-title">Tipo de Hogar</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Tipo de Hogar</th>
-                      <th style="text-align:right">Cantidad</th>
-                      <th style="text-align:right">% del Total</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaHogar"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Total</strong></td>
-                      <td style="text-align:right"><strong id="totalHogar">0</strong></td>
-                      <td style="text-align:right"><strong>100%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tab-content" id="tabla-sociocultural">
-            <div class="category-section">
-              <div class="category-title">Determinantes Socioculturales</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Pregunta</th>
-                      <th style="text-align:center">Totalmente Desacuerdo</th>
-                      <th style="text-align:center">Desacuerdo</th>
-                      <th style="text-align:center">Indiferente</th>
-                      <th style="text-align:center">De Acuerdo</th>
-                      <th style="text-align:center">Totalmente Acuerdo</th>
-                      <th style="text-align:center">Promedio</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaSociocultural"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Promedio General</strong></td>
-                      <td style="text-align:center"><strong id="promedioSocioculturalTD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioSocioculturalD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioSocioculturalI">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioSocioculturalA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioSocioculturalTA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioSociocultural">0%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tab-content" id="tabla-afectivos">
-            <div class="category-section">
-              <div class="category-title">Determinantes Afectivos</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Pregunta</th>
-                      <th style="text-align:center">Totalmente Desacuerdo</th>
-                      <th style="text-align:center">Desacuerdo</th>
-                      <th style="text-align:center">Indiferente</th>
-                      <th style="text-align:center">De Acuerdo</th>
-                      <th style="text-align:center">Totalmente Acuerdo</th>
-                      <th style="text-align:center">Promedio</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaAfectivos"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Promedio General</strong></td>
-                      <td style="text-align:center"><strong id="promedioAfectivosTD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioAfectivosD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioAfectivosI">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioAfectivosA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioAfectivosTA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioAfectivos">0%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tab-content" id="tabla-cognitivos">
-            <div class="category-section">
-              <div class="category-title">Determinantes Cognitivos</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Pregunta</th>
-                      <th style="text-align:center">Totalmente Desacuerdo</th>
-                      <th style="text-align:center">Desacuerdo</th>
-                      <th style="text-align:center">Indiferente</th>
-                      <th style="text-align:center">De Acuerdo</th>
-                      <th style="text-align:center">Totalmente Acuerdo</th>
-                      <th style="text-align:center">Promedio</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaCognitivos"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Promedio General</strong></td>
-                      <td style="text-align:center"><strong id="promedioCognitivosTD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioCognitivosD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioCognitivosI">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioCognitivosA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioCognitivosTA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioCognitivos">0%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tab-content" id="tabla-ambiental">
-            <div class="category-section">
-              <div class="category-title">Sustentabilidad Ambiental</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Pregunta</th>
-                      <th style="text-align:center">Totalmente Desacuerdo</th>
-                      <th style="text-align:center">Desacuerdo</th>
-                      <th style="text-align:center">Indiferente</th>
-                      <th style="text-align:center">De Acuerdo</th>
-                      <th style="text-align:center">Totalmente Acuerdo</th>
-                      <th style="text-align:center">Promedio</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaAmbiental"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Promedio General</strong></td>
-                      <td style="text-align:center"><strong id="promedioAmbientalTD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioAmbientalD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioAmbientalI">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioAmbientalA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioAmbientalTA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioAmbiental">0%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tab-content" id="tabla-economica">
-            <div class="category-section">
-              <div class="category-title">Sustentabilidad Económica</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Pregunta</th>
-                      <th style="text-align:center">Totalmente Desacuerdo</th>
-                      <th style="text-align:center">Desacuerdo</th>
-                      <th style="text-align:center">Indiferente</th>
-                      <th style="text-align:center">De Acuerdo</th>
-                      <th style="text-align:center">Totalmente Acuerdo</th>
-                      <th style="text-align:center">Promedio</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaEconomica"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Promedio General</strong></td>
-                      <td style="text-align:center"><strong id="promedioEconomicaTD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioEconomicaD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioEconomicaI">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioEconomicaA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioEconomicaTA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioEconomica">0%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tab-content" id="tabla-comunitario">
-            <div class="category-section">
-              <div class="category-title">Desarrollo Comunitario</div>
-              <div class="table-responsive">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Pregunta</th>
-                      <th style="text-align:center">Totalmente Desacuerdo</th>
-                      <th style="text-align:center">Desacuerdo</th>
-                      <th style="text-align:center">Indiferente</th>
-                      <th style="text-align:center">De Acuerdo</th>
-                      <th style="text-align:center">Totalmente Acuerdo</th>
-                      <th style="text-align:center">Promedio</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tablaComunitario"></tbody>
-                  <tfoot>
-                    <tr class="total-row">
-                      <td><strong>Promedio General</strong></td>
-                      <td style="text-align:center"><strong id="promedioComunitarioTD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioComunitarioD">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioComunitarioI">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioComunitarioA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioComunitarioTA">0%</strong></td>
-                      <td style="text-align:center"><strong id="promedioComunitario">0%</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <footer>
-          <p>Fuente: Base de datos <code>cuestionario_comportamiento_proambiental_autosustentabilidad</code> | Última actualización: 25 de noviembre de 2025</p>
-        </footer>
       </div>
 
       <!-- Sección de Avances mejorada -->
@@ -3432,7 +3645,7 @@
         // Cargar datos de Supabase cuando se muestre la sección de indicadores
         if (sectionId === 'indicadores') {
           // Inicializar el dashboard proambiental
-          initDashboardProambiental();
+          initProambientalDashboard();
         }
         
         setTimeout(updateContentHeight, 50);
@@ -4525,7 +4738,7 @@
     }
 
     // --- DASHBOARD PROAMBIENTAL ---
-    function initDashboardProambiental() {
+    function initProambientalDashboard() {
       (async function(){
         // ---------- CONFIGURACIÓN ----------
         const SUPABASE_URL = "https://dutapywxsiuxboqsjqvf.supabase.co";
